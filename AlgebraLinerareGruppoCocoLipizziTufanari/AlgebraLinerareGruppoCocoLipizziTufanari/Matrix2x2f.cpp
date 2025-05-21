@@ -15,7 +15,8 @@ Matrix2x2f::Matrix2x2f()
 	a21 = 0; a22 = 1;
 	
 }
-
+//accca
+//jnibiubouylvb
 Matrix2x2f::Matrix2x2f(float a)
 {
 	a11 = a; a12 = a; 
