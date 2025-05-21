@@ -6,6 +6,7 @@
 #include "Vector4f.h"
 
 using namespace std;
+//sto impazzendo
 
 Matrix4x4f::Matrix4x4f() {
     a11 = 1; a12 = 0; a13 = 0; a14 = 0;
@@ -274,9 +275,9 @@ Matrix4x4f Matrix4x4f::inv()  {
     // Calcolo del determinante (usando la prima riga dei cofattori)
     float det = a11 * cof11 + a12 * cof12 + a13 * cof13 + a14 * cof14;
 
-    // Se il determinante è zero, restituisci identità e stampa errore
+    // Se il determinante ï¿½ zero, restituisci identitï¿½ e stampa errore
     if (det == 0.0f) {
-        std::cerr << "Errore: determinante uguale a zero; restituisco matrice identità\n";
+        std::cerr << "Errore: determinante uguale a zero; restituisco matrice identitï¿½\n";
         Matrix4x4f I;
         I.a11 = 1.0f; I.a12 = 0.0f; I.a13 = 0.0f; I.a14 = 0.0f;
         I.a21 = 0.0f; I.a22 = 1.0f; I.a23 = 0.0f; I.a24 = 0.0f;
