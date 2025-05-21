@@ -9,7 +9,7 @@ public:
 	float a11, a12;
 	float a21, a22;
 	
-	//costruttore identita
+	//Costruttore identita'
 	Matrix2x2f();
 
 	Matrix2x2f(float a11, float a12, 

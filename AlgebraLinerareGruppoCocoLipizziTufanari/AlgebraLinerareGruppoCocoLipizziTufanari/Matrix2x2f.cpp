@@ -7,7 +7,7 @@
 
 //aiutoooooooo
 using namespace std;
-// ciao sono matteo  ci sono riuscito due volte?
+
 
 Matrix2x2f::Matrix2x2f()
 {
@@ -75,7 +75,7 @@ Matrix2x2f Matrix2x2f :: operator/(float a)
 	else
 	{
 		return Matrix2x2f();
-		cout << "Error , impossible divide by 0" << endl;
+		cout << "Errore: divisione per zero in Matrix2x2f::operator/" << endl;
 	}
 
 }
@@ -224,7 +224,7 @@ bool Matrix2x2f::operator!=(const Matrix2x2f& other) const {
 ostream& operator<< (ostream& output, Matrix2x2f& v)
 {
 	// Imposta la precisione a 2 decimali (modifica a seconda delle tue esigenze)
-	output << fixed << setprecision(3);
+	output << fixed << setprecision(3); 
 	output << "[" << v.a11 << " , " << v.a12 << "]" << endl
 		   << "[" << v.a21 << " , " << v.a22 << "]" << endl;
 	return output;
