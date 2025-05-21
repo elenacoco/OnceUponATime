@@ -4,7 +4,7 @@
 #include "Vector2f.h"
 #include "Matrix2x2f.h"
 
-
+//aiutoooooooo
 using namespace std;
 
 Matrix2x2f::Matrix2x2f()
@@ -77,7 +77,7 @@ Matrix2x2f Matrix2x2f :: operator/(float a)
 
 }
 
-// M * v (v è considerato un vettore colonna)
+// M * v (v ï¿½ considerato un vettore colonna)
 Vector2f Matrix2x2f::operator*(Vector2f& vect) {
 	float x = a11 * vect.x + a12 * vect.y;
 	float y = a21 * vect.x + a22 * vect.y;
