@@ -5,6 +5,7 @@
 #include "Vector3f.h"
 
 using namespace std;
+//vedete qualcosa?
 
 Matrix3x3f::Matrix3x3f()
 {
@@ -110,7 +111,7 @@ Matrix3x3f& Matrix3x3f::operator/=(float s) {
 	return *this;
 }
 
-// M * v (v è considerato un vettore colonna)
+// M * v (v ï¿½ considerato un vettore colonna)
 Vector3f Matrix3x3f::operator*(Vector3f& vect) {
 	float x = a11 * vect.x + a12 * vect.y + a13 * vect.z;
 	float y = a21 * vect.x + a22 * vect.y + a23 * vect.z;
