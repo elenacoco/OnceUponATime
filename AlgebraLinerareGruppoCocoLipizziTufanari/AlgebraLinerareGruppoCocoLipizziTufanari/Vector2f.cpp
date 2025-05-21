@@ -1,7 +1,7 @@
 
 #include "Vector2f.h"
 #include <iostream>
-
+//spero di aver risolto
 using namespace std;
 Vector2f::Vector2f()
 {
