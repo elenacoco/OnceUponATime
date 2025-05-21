@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 
-
+//boh cacca
 using namespace std;
 Vector4f::Vector4f()
 {
