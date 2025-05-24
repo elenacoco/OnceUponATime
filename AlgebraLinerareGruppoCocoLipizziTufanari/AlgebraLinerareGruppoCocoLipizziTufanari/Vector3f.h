@@ -13,8 +13,8 @@ public:
 	Vector3f(float x, float y, float z);
 	//Creo un vettore che ha le componenti uguali
 	Vector3f(float a);
-
-	//copy construtor??
+	//Copy construtor
+	Vector3f(const Vector3f& v);
 
 
 	Vector3f operator+(Vector3f s); // sum of 2 array of dim 3 ina new array
@@ -22,10 +22,8 @@ public:
 
 
 	Vector3f& operator+=(Vector3f s);	 // operator += changing the array
-	//void operator+=(Vector3f v);	 // operator += changing the array
 
 	Vector3f& operator-=(Vector3f s);    // operator -=changing the array
-	//void operator-=(Vector3f v);    // operator -=changing the array
 
 
 	Vector3f& operator= (const Vector3f s);    // operator = operatore di assegnazione
@@ -34,10 +32,8 @@ public:
 	Vector3f operator/ (float a);       //division between array an scalar in a new array
 
 	Vector3f& operator*= (float a);       //product between array an scalar changing the array
-	//void operator*= (float a);       //product between array an scalar changing the array
 
 	Vector3f& operator/= (float a);       //division between array an scalar changing the array
-	//void operator/= (float a);       //division between array an scalar changing the array
 
 
 	//friend Vector3f operator*(float f, const Vector3f& v); //s * v
@@ -49,15 +45,12 @@ public:
 
 	float norm(); // lunghezza del vettore
 	void normalize(); //cambia il vettore
-	Vector3f getNormalized(); // restituisce in nuovo vettore
+	Vector3f getNormalized(); // restituisce un nuovo vettore
 
 	bool operator==(const Vector3f& other) const;
 	bool operator!=(const Vector3f& other) const;
 
-
-	friend ostream& operator<<(ostream& output, Vector3f& v); // operatore put
-
 };
 
 
-
+ostream& operator<<(ostream& output, Vector3f& v); // operatore put

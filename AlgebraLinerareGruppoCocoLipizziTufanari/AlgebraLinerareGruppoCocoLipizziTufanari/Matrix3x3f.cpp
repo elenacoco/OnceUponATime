@@ -21,6 +21,19 @@ Matrix3x3f::Matrix3x3f(float a)
 	a31 = a; a32 = a; a33 = a;
 }
 
+Matrix3x3f::Matrix3x3f(Vector3f row1, Vector3f row2, Vector3f row3)
+{
+	a11 = row1.x; 
+	a12 = row1.y; 
+	a13 = row1.z;
+	a21 = row2.x; 
+	a22 = row2.y; 
+	a23 = row2.z;
+	a31 = row3.x; 
+	a32 = row3.y; 
+	a33 = row3.z;
+}
+
 Matrix3x3f::Matrix3x3f(float a11, float a12, float a13, float a21, float a22, float a23, float a31, float a32, float a33)
 {
 	this->a11 = a11; this->a12 = a12; this->a13 = a13;
@@ -29,6 +42,19 @@ Matrix3x3f::Matrix3x3f(float a11, float a12, float a13, float a21, float a22, fl
 }
 
 
+
+Matrix3x3f::Matrix3x3f(const Matrix3x3f& m)
+{
+	a11 = m.a11; 
+	a12 = m.a12; 
+	a13 = m.a13;
+	a21 = m.a21; 
+	a22 = m.a22; 
+	a23 = m.a23;
+	a31 = m.a31; 
+	a32 = m.a32; 
+	a33 = m.a33;
+}
 
 Matrix3x3f Matrix3x3f::operator+(Matrix3x3f other)
 {
@@ -120,7 +146,8 @@ Vector3f Matrix3x3f::operator*(Vector3f& vect) {
 	return Vector3f(x, y, z);
 }
 
-Matrix3x3f Matrix3x3f::operator*(const Matrix3x3f& othermatrix) const {
+Matrix3x3f Matrix3x3f::operator*(const Matrix3x3f& othermatrix)
+{
 	float a = a11 * othermatrix.a11 + a12 * othermatrix.a21 + a13 * othermatrix.a31;
 	float b = a11 * othermatrix.a12 + a12 * othermatrix.a22 + a13 * othermatrix.a32;
 	float c = a11 * othermatrix.a13 + a12 * othermatrix.a23 + a13 * othermatrix.a33;
@@ -148,6 +175,7 @@ float Matrix3x3f::det()
 		    - a12 * (a21 * a33 - a23 * a31)
 		    + a13 * (a21 * a32 - a22 * a31)));
 }
+
 Matrix3x3f Matrix3x3f::inv() 
 {
 	float determinante = det();
@@ -206,7 +234,7 @@ bool Matrix3x3f::operator!=(const Matrix3x3f& other) const {
 
 ostream& operator<< (ostream& output, Matrix3x3f& v)
 {
-	// Imposta la precisione a 2 decimali (modifica a seconda delle tue esigenze)
+	// Imposta la precisione a 3 decimali
 	output << fixed << setprecision(3);
 	output << "[" << v.a11 << " , " << v.a12 << " , " << v.a13 << "]" << endl
 		   << "[" << v.a21 << " , " << v.a22 << " , " << v.a23 << "]" << endl

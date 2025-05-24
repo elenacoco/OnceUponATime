@@ -31,6 +31,14 @@ Vector4f::Vector4f(float a, float b, float c, float d)
 
 }
 
+Vector4f::Vector4f(const Vector4f& v)
+{
+	x = v.x;
+	y = v.y;
+	z = v.z;
+	w = v.w;
+}
+
 Vector4f Vector4f::operator+(Vector4f othervect)
 {
 
@@ -53,14 +61,7 @@ Vector4f Vector4f :: operator+= (Vector4f other)
 	w += other.w;
 	return *this;
 }
-//
-//void Vector4f::operator+=(Vector4f v)
-//{
-//	x += v.x;
-//	y += v.y;
-//	z += v.z;
-//	w += v.w;
-//}
+
 
 Vector4f Vector4f :: operator-= (Vector4f other)
 {
@@ -71,14 +72,7 @@ Vector4f Vector4f :: operator-= (Vector4f other)
 
 	return *this;
 }
-//
-//void Vector4f::operator-=(Vector4f v)
-//{
-//	x -= v.x;
-//	y -= v.y;
-//	z -= v.z;
-//	w -= v.w;
-//}
+
 
 Vector4f& Vector4f :: operator= (const Vector4f other)
 {
@@ -98,7 +92,16 @@ Vector4f Vector4f::operator*(float f) // prodotto tra vettore e scalare
 
 Vector4f Vector4f::operator/(float f) // divisione tra vettore e scalare
 {
-	return Vector4f(x / f,  y / f,  z / f,  w/f);
+	if (f != 0)
+	{
+		return Vector4f(x / f,  y / f,  z / f,  w/f);
+	}
+	else
+	{
+		return *this;
+		std::cout << "Errore, impossibile dividere per zero";
+	}
+	
 }
 
 Vector4f& Vector4f :: operator*=  (float f) // prodotto tra vettore e scalare
@@ -109,35 +112,32 @@ Vector4f& Vector4f :: operator*=  (float f) // prodotto tra vettore e scalare
 	w *= f;
 	return *this;
 }
-//void Vector4f::operator*=(Vector4f v)
-//{
-//	x *= v.x;
-//	y *= v.y;
-//	z *= v.z;
-//	w *= v.w;
-//}
+
 
 Vector4f& Vector4f:: operator/= (float f)  // divisione tra vettore e scalare
 {
-	x /= f;
-	y /= f;
-	z /= f;
-	w /= f;
-	return *this;
+	if (f != 0)
+	{
+		x /= f;
+		y /= f;
+		z /= f;
+		w /= f;
+		return *this;
+	}
+	else
+	{
+		return *this;
+		std::cout << "Errore, impossibile dividere per zero";
+	}
+	
 }
 
-//void Vector4f::operator/=(Vector4f v)
+
+
+//Vector4f operator*(float f, const Vector4f& v)
 //{
-//	x /= v.x;
-//	y /= v.y;
-//	z /= v.z;
-//	w /= v.w;
+//	return Vector4f(f * v.x, f * v.y, f * v.z, f * v.w);
 //}
-
-Vector4f operator*(float f, const Vector4f& v)
-{
-	return Vector4f(f * v.x, f * v.y, f * v.z, f * v.w);
-}
 
 float Vector4f::dotProd(Vector4f other) // Prodotto scalare tra due vettori
 {

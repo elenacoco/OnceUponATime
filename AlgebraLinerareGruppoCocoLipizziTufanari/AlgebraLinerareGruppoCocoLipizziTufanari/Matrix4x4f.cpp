@@ -21,6 +21,26 @@ Matrix4x4f::Matrix4x4f(float a) {
     a41 = a42 = a43 = a44 = a;
 }
 
+Matrix4x4f::Matrix4x4f(Vector4f row1, Vector4f row2, Vector4f row3, Vector4f row4)
+{
+    a11 = row1.x; 
+    a12 = row1.y; 
+    a13 = row1.z; 
+    a14 = row1.w;
+    a21 = row2.x; 
+    a22 = row2.y;
+    a23 = row2.z; 
+    a24 = row2.w;
+    a31 = row3.x; 
+    a32 = row3.y;
+    a33 = row3.z;
+    a34 = row3.w;
+    a41 = row4.x; 
+    a42 = row4.y; 
+    a43 = row4.z; 
+    a44 = row4.w;
+}
+
 Matrix4x4f::Matrix4x4f(float a11, float a12, float a13, float a14,
     float a21, float a22, float a23, float a24,
     float a31, float a32, float a33, float a34,
@@ -29,6 +49,26 @@ Matrix4x4f::Matrix4x4f(float a11, float a12, float a13, float a14,
     this->a21 = a21; this->a22 = a22; this->a23 = a23; this->a24 = a24;
     this->a31 = a31; this->a32 = a32; this->a33 = a33; this->a34 = a34;
     this->a41 = a41; this->a42 = a42; this->a43 = a43; this->a44 = a44;
+}
+
+Matrix4x4f::Matrix4x4f(const Matrix4x4f& m)
+{
+    a11 = m.a11; 
+    a12 = m.a12; 
+    a13 = m.a13; 
+    a14 = m.a14;
+    a21 = m.a21; 
+    a22 = m.a22; 
+    a23 = m.a23; 
+    a24 = m.a24;
+    a31 = m.a31; 
+    a32 = m.a32; 
+    a33 = m.a33; 
+    a34 = m.a34;
+    a41 = m.a41; 
+    a42 = m.a42; 
+    a43 = m.a43; 
+    a44 = m.a44;
 }
 
 Matrix4x4f Matrix4x4f::operator+(Matrix4x4f other) {
@@ -274,15 +314,10 @@ Matrix4x4f Matrix4x4f::inv()  {
     // Calcolo del determinante (usando la prima riga dei cofattori)
     float det = a11 * cof11 + a12 * cof12 + a13 * cof13 + a14 * cof14;
 
-    // Se il determinante è zero, restituisci identità e stampa errore
+    // Se il determinante è zero, restituisci la matrice invariata
     if (det == 0.0f) {
-        std::cerr << "Errore: determinante uguale a zero; restituisco matrice identità\n";
-        Matrix4x4f I;
-        I.a11 = 1.0f; I.a12 = 0.0f; I.a13 = 0.0f; I.a14 = 0.0f;
-        I.a21 = 0.0f; I.a22 = 1.0f; I.a23 = 0.0f; I.a24 = 0.0f;
-        I.a31 = 0.0f; I.a32 = 0.0f; I.a33 = 1.0f; I.a34 = 0.0f;
-        I.a41 = 0.0f; I.a42 = 0.0f; I.a43 = 0.0f; I.a44 = 1.0f;
-        return I;
+        std::cout << "Errore: determinante uguale a zero\n";
+        return *this;
     }
 
     // Calcolo dell'inversa come matrice aggiunta / determinante

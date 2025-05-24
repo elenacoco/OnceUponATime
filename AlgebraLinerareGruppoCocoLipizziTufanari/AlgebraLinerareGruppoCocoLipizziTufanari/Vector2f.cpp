@@ -1,7 +1,7 @@
 
 #include "Vector2f.h"
 #include <iostream>
-//spero di aver risolto
+
 using namespace std;
 Vector2f::Vector2f()
 {
@@ -19,6 +19,12 @@ Vector2f::Vector2f(float a, float b)
 {
 	x = a;
 	y = b;
+}
+
+Vector2f::Vector2f(const Vector2f& v)
+{
+	x = v.x;
+	y = v.y;
 }
 
 
@@ -42,12 +48,7 @@ Vector2f& Vector2f :: operator+= (Vector2f other)
 	
 	return *this;
 }
-//
-//void Vector2f::operator+=(Vector2f v)
-//{
-//	x += v.x;
-//	y  += v.y;
-//}
+
 
 Vector2f& Vector2f :: operator-= (Vector2f other)
 {
@@ -56,11 +57,7 @@ Vector2f& Vector2f :: operator-= (Vector2f other)
 
 	return *this;
 }
-//void Vector2f::operator+=(Vector2f v)
-//{
-//	x -= v.x;
-//	y -= v.y;
-//}
+
 
 Vector2f& Vector2f :: operator= (const Vector2f other)
 {
@@ -74,7 +71,16 @@ Vector2f& Vector2f :: operator= (const Vector2f other)
 
 Vector2f Vector2f:: operator/ (float f)  // divisione tra vettore e scalare
 {
-	return Vector2f(x / f, y / f);
+	if (f != 0)
+	{
+		return Vector2f(x / f, y / f);
+	}
+	else
+	{
+		return *this;
+		std::cout << "Errore, impossibile dividere per zero";
+	}
+	
 }
 
 
@@ -83,10 +89,6 @@ Vector2f Vector2f :: operator*  (float f) // prodotto tra vettore e scalare
 	return Vector2f(x * f, y * f);
 }
 
-
-
-
-
 Vector2f& Vector2f :: operator*=  (float f) // prodotto tra vettore e scalare
 {
 	x *= f;
@@ -94,31 +96,26 @@ Vector2f& Vector2f :: operator*=  (float f) // prodotto tra vettore e scalare
 	return *this;
 }
 
-//void Vector2f::operator*=(float num)
-//{
-//	x *= num;
-//	y *= num;
-//}
+
 Vector2f& Vector2f:: operator/= (float f)  // divisione tra vettore e scalare
 {
-	x /= f;
-	y /= f;
-	return *this;
+	if (f != 0)
+	{
+		x /= f;
+		y /= f;
+		return *this;
+	}
+	else
+	{
+		return *this;
+		std::cout << "Errore, impossibile dividere per zero";
+	}
 }
 
-
-//void Vector2f::operator*=(float num)
+//Vector2f operator*(float f, const Vector2f& v) //non sappiamo se cancellarla
 //{
-//	x /= num;
-//	y /= num;
+//	return Vector2f(f * v.x, f * v.y);
 //}
-
-Vector2f operator*(float f, const Vector2f& v) 
-{
-	return Vector2f(f * v.x, f * v.y);
-}
-
-
 
 
 float Vector2f::dotProd(Vector2f other) // Prodotto scalare tra due vettori
@@ -129,7 +126,7 @@ float Vector2f::dotProd(Vector2f other) // Prodotto scalare tra due vettori
 	return xtot + ytot;
 }
 
-float Vector2f::operator*(Vector2f v)
+float Vector2f::operator*(Vector2f v) // Prodotto scalare tra due vettori 
 {
 	return x * v.x + y * v.y;
 }
@@ -139,7 +136,7 @@ float Vector2f::norm()
 	return sqrt(x * x + y * y);
 }
 
-void Vector2f::normalize()
+void Vector2f::normalize() //Normalizza il vettore su cui sto lavorando
 {
 	float len = norm();
 	if (len != 0.0f)
@@ -148,7 +145,7 @@ void Vector2f::normalize()
 		std::cout << "la norma 2 del vettore è 0!";
 }
 
-Vector2f Vector2f::getNormalized()
+Vector2f Vector2f::getNormalized() //Fa una copia del vettore normalizzato
 {
 	float len = norm();
 	if (len != 0.0f)

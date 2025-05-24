@@ -6,7 +6,7 @@
 
 
 using namespace std;
-//caio ragazze
+
 Matrix2x2f::Matrix2x2f()
 {
 	a11 = 1; a12 = 0;
@@ -36,7 +36,13 @@ Matrix2x2f::Matrix2x2f(Vector2f row1, Vector2f row2)
 	a22 = row2.y;
 }
 
-
+Matrix2x2f::Matrix2x2f(const Matrix2x2f& m)
+{
+	a11 = m.a11; 
+	a12 = m.a12;
+	a21 = m.a21; 
+	a22 = m.a22;
+}
 
 Matrix2x2f Matrix2x2f::operator+(Matrix2x2f other)
 {
@@ -71,7 +77,7 @@ Matrix2x2f Matrix2x2f :: operator/(float a)
 	}
 	else
 	{
-		return Matrix2x2f();
+		return *this; //ritorna la matrice senza cambiare nulla
 		cout << "Error , impossible divide by 0" << endl;
 	}
 
@@ -105,27 +111,12 @@ Matrix2x2f& Matrix2x2f::operator+=(Matrix2x2f s) {
 	return *this;
 }
 
-//void Matrix2x2f::operator+=(Matrix2x2f matrix)
-//{
-//	this->a11 += matrix.a11;
-//	this->a12 += matrix.a12;
-//	this->a21 += matrix.a21;
-//	this->a22 += matrix.a22;
-//}
-
 Matrix2x2f& Matrix2x2f::operator-=(Matrix2x2f s) {
 	a11 -= s.a11; a12 -= s.a12;
 	a21 -= s.a21; a22 -= s.a22;
 	return *this;
 }
 
-//void Matrix2x2f::operator+=(Matrix2x2f matrix)
-//{
-//	this->a11 -= matrix.a11;
-//	this->a12 -= matrix.a12;
-//	this->a21 -= matrix.a21;
-//	this->a22 -= matrix.a22;
-//}
 
 Matrix2x2f& Matrix2x2f::operator=(Matrix2x2f s) {
 	a11 = s.a11; a12 = s.a12;
@@ -138,16 +129,10 @@ Matrix2x2f& Matrix2x2f::operator*=(float s) {
 	a21 *= s; a22 *= s;
 	return *this;
 }
-//
-//void Matrix2x2f::operator*=(float s) {
-//	a11 *= s; a12 *= s;
-//	a21 *= s; a22 *= s;
-//}
 
 
-
-
-Matrix2x2f& Matrix2x2f::operator/=(float s) {
+Matrix2x2f& Matrix2x2f::operator/=(float s) 
+{
 	if (s != 0.0f) {
 		a11 /= s; a12 /= s;
 		a21 /= s; a22 /= s;
@@ -157,16 +142,6 @@ Matrix2x2f& Matrix2x2f::operator/=(float s) {
 	}
 	return *this;
 }
-////
-////void Matrix2x2f::operator/=(float s) {
-////	if (s != 0.0f) {
-////		a11 /= s; a12 /= s;
-////		a21 /= s; a22 /= s;
-////	}
-////	else {
-////		cout << "Errore: divisione per zero in Matrix2x2f::operator/=" << endl;
-////	}
-////}
 
 
 float Matrix2x2f::det()
@@ -198,16 +173,6 @@ Matrix2x2f Matrix2x2f::traspose()
 		
 	);
 }
-/*
-bool Matrix2x2f::isIdentity() const {
-	return a11 == 1.0f && a12 == 0.0f &&
-		   a21 == 0.0f && a22 == 1.0f;
-}
-
-bool Matrix2x2f::isZero() const {
-	return a11 == 0.0f && a12 == 0.0f &&
-		   a21 == 0.0f && a22 == 0.0f;
-}*/
 
 bool Matrix2x2f::operator==(const Matrix2x2f& other) const {
 	return a11 == other.a11 && a12 == other.a12 &&
@@ -220,7 +185,7 @@ bool Matrix2x2f::operator!=(const Matrix2x2f& other) const {
 
 ostream& operator<< (ostream& output, Matrix2x2f& v)
 {
-	// Imposta la precisione a 2 decimali (modifica a seconda delle tue esigenze)
+	// Imposta la precisione a 3 decimali, da capire se serve
 	output << fixed << setprecision(3);
 	output << "[" << v.a11 << " , " << v.a12 << "]" << endl
 		   << "[" << v.a21 << " , " << v.a22 << "]" << endl;

@@ -24,7 +24,12 @@ Vector3f::Vector3f(float a, float b, float c)
 	z = c;
 }
 
-
+Vector3f::Vector3f(const Vector3f& v)
+{
+	x = v.x;
+	y = v.y;
+	z = v.z;
+}
 
 
 Vector3f Vector3f::operator+(Vector3f othervect)
@@ -49,14 +54,6 @@ Vector3f& Vector3f :: operator+= (Vector3f other)
 	return *this;
 }
 
-//
-//void Vector3f :: operator+= (Vector3f other)
-//{
-//	x += other.x;
-//	y += other.y;
-//	z += other.z;
-//}
-
 Vector3f& Vector3f :: operator-= (Vector3f other)
 {
 	x -= other.x;
@@ -65,14 +62,6 @@ Vector3f& Vector3f :: operator-= (Vector3f other)
 
 	return *this;
 }
-
-//
-//void Vector3f :: operator-= (Vector3f other)
-//{
-//	x -= other.x;
-//	y -= other.y;
-//	z -= other.z;
-//}
 
 Vector3f& Vector3f :: operator= (const Vector3f other)
 {
@@ -92,7 +81,16 @@ Vector3f Vector3f :: operator*  (float f) // prodotto tra vettore e scalare
 
 Vector3f Vector3f:: operator/ (float f)  // divisione tra vettore e scalare
 {
-	return Vector3f(x / f, y / f, z / f);
+	if (f != 0)
+	{
+		return Vector3f(x / f, y / f, z / f);
+	}
+	else
+	{
+		return *this;
+		std::cout << "Errore, impossibile dividere per zero";
+	}
+	
 }
 
 Vector3f& Vector3f :: operator*=  (float f) // prodotto tra vettore e scalare
@@ -102,29 +100,25 @@ Vector3f& Vector3f :: operator*=  (float f) // prodotto tra vettore e scalare
 	z *= f;
 	return *this;
 }
-//
-//void Vector3f :: operator*=  (float f) // prodotto tra vettore e scalare
-//{
-//	x *= f;
-//	y *= f;
-//	z *= f;
-//}
+
 
 Vector3f& Vector3f:: operator/= (float f)  // divisione tra vettore e scalare
 {
-	x /= f;
-	y /= f;
-	z /= f;
-	return *this;
+	
+	if (f != 0)
+	{
+		x /= f;
+		y /= f;
+		z /= f;
+		return *this;
+	}
+	else
+	{
+		return *this;
+		std::cout << "Errore, impossibile dividere per zero";
+	}
 }
 
-//void Vector3f:: operator/= (float f)  // divisione tra vettore e scalare
-//{
-//	x /= f;
-//	y /= f;
-//	z /= f;
-//	
-//}
 //
 //Vector3f operator*(float f, const Vector3f& v)
 //{
