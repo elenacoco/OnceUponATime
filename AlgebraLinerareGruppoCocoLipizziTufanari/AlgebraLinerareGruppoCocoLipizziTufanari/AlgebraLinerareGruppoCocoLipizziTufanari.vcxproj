@@ -141,7 +141,6 @@
     <ClInclude Include="Vector4f.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LibreriaAlgerbraLinerare.cpp" />
     <ClCompile Include="Matrix2x2f.cpp" />
     <ClCompile Include="Matrix3x3f.cpp" />
     <ClCompile Include="Matrix4x4f.cpp" />
