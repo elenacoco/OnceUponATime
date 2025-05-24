@@ -12,3 +12,8 @@
 *.obj
 *.idb
 *.pdb
+/Graphics/x64/Debug/Graphics.tlog
+*.recipe
+*.ilk
+*.log
+/x64/Debug
