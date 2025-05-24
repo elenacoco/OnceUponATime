@@ -4,3 +4,11 @@
 
 /.vs
 
+/AlgebraLinerareGruppoCocoLipizziTufanari/.vs
+/AlgebraLinerareGruppoCocoLipizziTufanari/x64/Debug/AlgebraL.d6774d6a.tlog
+/AlgebraLinerareGruppoCocoLipizziTufanari/x64/Debug/AlgebraLinerareGruppoCocoLipizziTufanari.exe.recipe
+/AlgebraLinerareGruppoCocoLipizziTufanari/x64/Debug/AlgebraLinerareGruppoCocoLipizziTufanari.lib.recipe
+/AlgebraLinerareGruppoCocoLipizziTufanari/x64/Debug/AlgebraLinerareGruppoCocoLipizziTufanari.log
+*.obj
+*.idb
+*.pdb
