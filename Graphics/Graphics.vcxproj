@@ -151,6 +151,9 @@
     <None Include="provaFS.frag" />
     <None Include="provaVS.vert" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="pavimento.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -16,6 +16,9 @@
     <Filter Include="File di risorse\Shaders">
       <UniqueIdentifier>{cf70bbbf-52a2-40b8-a97e-57caff6f043c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="File di risorse\Textures">
+      <UniqueIdentifier>{076e3133-2213-4516-a9c1-4ed48f524d8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,5 +48,10 @@
   <ItemGroup>
     <None Include="provaVS.vert" />
     <None Include="provaFS.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="pavimento.jpg">
+      <Filter>File di risorse\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
