@@ -1,6 +1,6 @@
 #pragma once
 #include "importGL.h"
-#include "utils.cpp"
+#include "utils.h"
 
 using namespace std;
 
