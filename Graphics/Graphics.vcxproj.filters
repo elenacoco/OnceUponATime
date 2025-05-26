@@ -30,6 +30,9 @@
     <ClCompile Include="utils.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h">
@@ -42,6 +45,12 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="stb_image.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="importGL.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>
