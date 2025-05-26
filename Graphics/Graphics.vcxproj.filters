@@ -38,6 +38,9 @@
     <ClInclude Include="VBO.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="provaVS.vert" />
