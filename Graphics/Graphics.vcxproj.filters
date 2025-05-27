@@ -33,6 +33,9 @@
     <ClCompile Include="Shader.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="VAO.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h">
