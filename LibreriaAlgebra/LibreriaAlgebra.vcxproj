@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AlgebraLineare.h" />
     <ClInclude Include="Matrix2x2f.h" />
     <ClInclude Include="Matrix3x3f.h" />
     <ClInclude Include="Matrix4x4f.h" />

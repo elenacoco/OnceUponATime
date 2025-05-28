@@ -33,6 +33,9 @@
     <ClInclude Include="Vector4f.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="AlgebraLineare.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Matrix2x2f.cpp">

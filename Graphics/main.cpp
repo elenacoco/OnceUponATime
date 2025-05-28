@@ -9,8 +9,6 @@
 #include "Shader.h"
 #include <assimp/Importer.hpp>
 
-#include <Vector3f.h>
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
