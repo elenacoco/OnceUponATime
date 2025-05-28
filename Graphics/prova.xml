@@ -20,6 +20,26 @@
 	</texture>
 
 	<models>
+		<model>
+			<name>Libro</name>
+			<path>models/Libro/Libro.obj</path>
+		</model>
 		
+		<model>
+			<name>Mela</name>
+			<path>models/Mela/Mela.obj</path>
+		</model>
+		
+		<model>
+			<name>Lampada</name>
+			<path>models/Lampada/Lampada.obj</path>
+		</model>
+		
+		<model>
+			<name>Rosa</name>
+			<path>models/Rosa/Rosa.obj</path>
+		</model>
+			
+			
 	</models>
 </scene>

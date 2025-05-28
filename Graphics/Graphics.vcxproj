@@ -139,23 +139,29 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ReadXML.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="VAO.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h" />
     <ClInclude Include="importGL.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="rapidxml\rapidxml.hpp" />
     <ClInclude Include="rapidxml\rapidxml_iterators.hpp" />
     <ClInclude Include="rapidxml\rapidxml_print.hpp" />
     <ClInclude Include="rapidxml\rapidxml_utils.hpp" />
+    <ClInclude Include="ReadXML.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="VAO.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="provaFS.frag" />
