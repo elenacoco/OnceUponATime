@@ -3,6 +3,9 @@
 #include <vector>
 #include "Vertex.h"
 #include "Shader.h"
+#include "VAO.h"
+#include "VBO.h"
+#include "EBO.h"
 
 using namespace std;
 
@@ -15,17 +18,15 @@ public:
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
 	//vector<Texture> textures;
+	unsigned int VAO; //così posso utilizzarla nel draw
 
-	// Constructor
-	Mesh(vector<float> vertices, vector<unsigned int> indices);
+	//costruttore
+	Mesh(vector<Vertex> vertices, vector<unsigned int> indices);
 
 	//disegno le mesh
-	void Draw(Shader &shader);
+	void drawMesh(Shader &shader);
 
 private:
-
-	//dati per il rendering
-	unsigned int VAO, VBO, EBO;
 
 	//setup delle mesh
 	void setMesh();
