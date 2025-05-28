@@ -59,6 +59,9 @@
     <ClInclude Include="utils.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="provaVS.vert" />
