@@ -164,6 +164,9 @@
   <ItemGroup>
     <Image Include="pavimento.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="prova.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

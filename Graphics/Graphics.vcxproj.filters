@@ -19,6 +19,9 @@
     <Filter Include="File di risorse\Textures">
       <UniqueIdentifier>{076e3133-2213-4516-a9c1-4ed48f524d8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="File di intestazione\XML">
+      <UniqueIdentifier>{31476741-3aca-4c74-8b5b-8ed1cd7fe057}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,25 +66,34 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="rapidxml\rapidxml.hpp">
-      <Filter>File di intestazione</Filter>
+      <Filter>File di intestazione\XML</Filter>
     </ClInclude>
     <ClInclude Include="rapidxml\rapidxml_iterators.hpp">
-      <Filter>File di intestazione</Filter>
+      <Filter>File di intestazione\XML</Filter>
     </ClInclude>
     <ClInclude Include="rapidxml\rapidxml_print.hpp">
-      <Filter>File di intestazione</Filter>
+      <Filter>File di intestazione\XML</Filter>
     </ClInclude>
     <ClInclude Include="rapidxml\rapidxml_utils.hpp">
-      <Filter>File di intestazione</Filter>
+      <Filter>File di intestazione\XML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="provaVS.vert" />
-    <None Include="provaFS.frag" />
+    <None Include="provaFS.frag">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
+    <None Include="provaVS.vert">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="pavimento.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="prova.xml">
+      <Filter>File di risorse</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
