@@ -25,8 +25,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+//const unsigned int SCR_WIDTH = 800;// Prende la dimensione dello schermo dall'xml;
+//const unsigned int SCR_HEIGHT = 600;
 
 string vertexPath = Utils::readFile("provaVS.vert");
 const char* vertexShaderSource = vertexPath.c_str();
