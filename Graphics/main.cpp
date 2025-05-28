@@ -6,8 +6,20 @@
 #include "stb_image.h"
 
 #include <iostream>
+#include<string>
+#include<fstream>
+#include<vector>
+
 #include "Shader.h"
 #include <assimp/Importer.hpp>
+
+#include "rapidxml/rapidxml.hpp"
+//#include "rapidxml/rapidxml_iterators.hpp"
+#include "rapidxml/rapidxml_print.hpp"
+//#include "rapidxml/rapidxml_utils.hpp"
+
+using namespace rapidxml;
+using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
@@ -37,6 +49,52 @@ const char* fragmentShaderSource = fragmentPath.c_str();
 
 int main()
 {
+    //RapidXMl
+    xml_document<> doc;
+    xml_node<>* root_node;
+
+    ifstream file("prova.xml");
+
+    vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+
+    buffer.push_back('\0');
+
+    doc.parse<0>(&buffer[0]);
+
+    root_node = doc.first_node("scene");
+
+   
+    int widthWindow = stoi(root_node->first_node("window")->first_node("width")->value());
+    int heightWindow = stoi(root_node->first_node("window")->first_node("height")->value());
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -50,7 +108,7 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(widthWindow, heightWindow, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;

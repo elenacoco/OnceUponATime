@@ -9,7 +9,7 @@
 
 using namespace rapidxml;
 using namespace std;
-
+//Classe da usare per non testare tutto nel main
 //creo unn doc RAPIDXML
 class Reading
 {

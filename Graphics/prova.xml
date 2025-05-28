@@ -2,8 +2,8 @@
 
 <scene>
 	<window>
-		<width>1920</width>
-		<height>1080</height>
+		<width>1080</width>
+		<height>720</height>
 		
 	</window>
 
@@ -16,23 +16,24 @@
 	</lights>
 
 	<texture>
-		
+		<name>Pavimento</name>
+		<path>Textures/pavimento.png</path>
 	</texture>
 
 	<models>
 		<model>
 			<name>Libro</name>
-			<path>models/Libro/Libro.obj</path>
+			<path>Models/Libro/Libro.obj</path>
 		</model>
 		
 		<model>
 			<name>Mela</name>
-			<path>models/Mela/Mela.obj</path>
+			<path>Models/Mela/Mela.obj</path>
 		</model>
 		
 		<model>
 			<name>Lampada</name>
-			<path>models/Lampada/Lampada.obj</path>
+			<path>Models/Lampada/Lampada.obj</path>
 		</model>
 		
 		<model>
