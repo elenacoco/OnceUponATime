@@ -17,3 +17,5 @@
 *.ilk
 *.log
 /x64/Debug
+/LibreriaAlgebra/x64/Debug/LibreriaAlgebra.tlog
+/LibreriaAlgebra/x64/Debug/LibreriaAlgebra.pch
