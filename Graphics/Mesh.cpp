@@ -11,7 +11,18 @@ Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture
 
 void Mesh::drawMesh(Shader& shader)
 {
-	//da capire
+	unsigned int diffuseNum = 1;
+	unsigned int specularNum = 1;
+	unsigned int normalNum = 1;
+
+	for (unsigned int i = 0; i < textures.size(); i++)
+	{
+		glActiveTexture(GL_TEXTURE0 + i);
+		string number;
+		string name = textures[i].type;
+
+
+	}
 }
 
 void Mesh::setMesh()
