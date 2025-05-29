@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 class Texture
 {
 public:
@@ -12,9 +14,8 @@ public:
 	GLuint id;
 	GLenum type;
 	GLuint unit;
-	string name;
 
-	Texture(string name, const char* image, GLenum type, GLuint unit, GLenum format, GLenum pixelType);
+	Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLenum pixelType);
 	~Texture();
 
 	void bind();

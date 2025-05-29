@@ -1,6 +1,8 @@
 #pragma once
 #include <AlgebraLineare.h>
+#include <string>
 
+using namespace std;
 
 struct Vertex
 {
@@ -11,4 +13,10 @@ struct Vertex
 	Vector3f tangent; //location 4
 	Vector3f bitangent;  //location 5 
 
+};
+
+struct Texture
+{
+	unsigned int id;
+	string name;
 };

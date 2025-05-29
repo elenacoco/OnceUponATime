@@ -19,7 +19,7 @@ void Mesh::drawMesh(Shader& shader)
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
 		string number;
-		string name = textures[i].type;
+		string name = textures[i].name;
 
 
 	}

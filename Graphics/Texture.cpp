@@ -1,10 +1,9 @@
 #include "Texture.h"
 
-Texture::Texture(string name, const char* image, GLenum type, GLuint unit, GLenum format, GLenum pixelType)
+Texture::Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLenum pixelType)
 {
 	this->type = type;
 	this->unit = unit;
-	this->name = name;
 
 	glGenTextures(1, &id);
 
