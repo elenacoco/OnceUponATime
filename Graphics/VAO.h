@@ -14,8 +14,7 @@ public:
     void bind() const;
     void unbind() const;
 
-    void setAttribute(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* offset) const;
-    void enableAttribute(GLuint index) const;
+    void setEnableAttribute(GLuint locationAttrib, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* offset) const;
 
     GLuint getID() const;
 };

@@ -16,13 +16,12 @@ void VAO::unbind() const {
     glBindVertexArray(0);
 }
 
-void VAO::setAttribute(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* offset) const {
-    glVertexAttribPointer(index, size, type, normalized, stride, offset);
+void VAO::setEnableAttribute(GLuint locationAttrib, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* offset) const 
+{
+    glVertexAttribPointer(locationAttrib, size, type, normalized, stride, offset);
+    glEnableVertexAttribArray(locationAttrib);
 }
 
-void VAO::enableAttribute(GLuint index) const {
-    glEnableVertexAttribArray(index);
-}
 
 GLuint VAO::getID() const {
     return id;

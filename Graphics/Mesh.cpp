@@ -16,5 +16,21 @@ void Mesh::drawMesh(Shader& shader)
 
 void Mesh::setMesh()
 {
-	//non posso usare le funzioni del vao, forse perchè sono costanti?
+	VAO.bind();
+
+	VBO VBO(vertices);
+	EBO EBO(indices);
+
+	//setto e attivo tutti gli attributi dei vertici
+	VAO.setEnableAttribute(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+	VAO.setEnableAttribute(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+	VAO.setEnableAttribute(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+	VAO.setEnableAttribute(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+	VAO.setEnableAttribute(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
+	VAO.setEnableAttribute(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
+
+	//scollego per evitare di modificarli involontariamente
+	VBO.unbind();
+	EBO.unbind();
+	VAO.unbind();
 }

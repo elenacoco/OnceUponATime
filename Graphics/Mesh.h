@@ -18,7 +18,7 @@ public:
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
 	//vector<Texture> textures;
-	unsigned int VAO; //così posso utilizzarla nel draw
+	VAO VAO; //così posso utilizzarla nel draw
 
 	//costruttore
 	Mesh(vector<Vertex> vertices, vector<unsigned int> indices);
