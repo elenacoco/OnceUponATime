@@ -1,7 +1,7 @@
 #pragma once
 
 #include "importGL.h"
-#include "Vertex.h"
+#include "structs.h"
 #include <vector> 
 
 

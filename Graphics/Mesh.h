@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Vertex.h"
+#include "structs.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "VAO.h"
@@ -18,11 +18,11 @@ public:
 	
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
-	vector<Texture> textures;
+	vector<Textures> textures;
 	VAO VAO; //così posso utilizzarla nel draw
 
 	//costruttore
-	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
+	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Textures> textures);
 
 	//disegno le mesh
 	void drawMesh(Shader &shader);

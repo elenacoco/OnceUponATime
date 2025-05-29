@@ -15,7 +15,7 @@ struct Vertex
 
 };
 
-struct Texture
+struct Textures
 {
 	unsigned int id;
 	string name;
