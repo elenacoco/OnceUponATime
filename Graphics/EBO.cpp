@@ -10,7 +10,7 @@ EBO::EBO(const std::vector<GLuint>& indices)
 
 EBO::~EBO()
 {
-    glDeleteBuffers(1, &id);
+    //glDeleteBuffers(1, &id);
 }
 
 void EBO::bind() const

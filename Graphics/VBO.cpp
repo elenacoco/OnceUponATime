@@ -10,7 +10,7 @@ VBO::VBO(vector<Vertex> &vertices)
 
 VBO::~VBO()
 {
-	glDeleteBuffers(1, &id);
+	//glDeleteBuffers(1, &id);
 }
 
 void VBO::bind() const

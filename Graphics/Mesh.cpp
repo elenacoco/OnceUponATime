@@ -64,6 +64,6 @@ void Mesh::setMesh()
 
 	//scollego per evitare di modificarli involontariamente
 	VBO.unbind();
-	EBO.unbind();
+	//EBO.unbind();
 	VAO.unbind();
 }
