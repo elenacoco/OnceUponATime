@@ -38,14 +38,19 @@ public:
 
 	//friend Vector3f operator*(float f, const Vector3f& v); //s * v
 
-	float dotProd(Vector3f s); // prodotto scalare tra due vettore
+	// prodotto scalare tra due vettore
+	float dotProd(Vector3f s); 
 	float operator*(Vector3f v); // prodotto scalare tra due vettore
 
-	Vector3f crossProd(Vector3f s); // prodotto vettorale tra 2 vettori
+	// prodotto vettorale tra 2 vettori
+	Vector3f crossProd(Vector3f s); 
 
-	float norm(); // lunghezza del vettore
-	void normalize(); //cambia il vettore
-	Vector3f getNormalized(); // restituisce un nuovo vettore
+	 //lunghezza del vettore
+	float norm();
+	//normalizza il vettore senza crearne una copia
+	Vector3f& normalize();
+	//normalizza una copia del vettore
+	Vector3f getNormalized(); 
 
 	bool operator==(const Vector3f& other) const;
 	bool operator!=(const Vector3f& other) const;

@@ -1,6 +1,6 @@
 #include"Model.h"
 
-Model::Model(char* path)
+Model::Model(string path)
 {
 	loadModel(path);
 }
@@ -28,13 +28,13 @@ void Model::loadModel(string path)
 
 void Model::processNode(aiNode* node, const aiScene* scene)
 {
-    for (unsigned int i = 0; node->mNumMeshes; i++)
+    for (unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(processMesh(mesh, scene));
     }
 
-    for (unsigned int i = 0; node->mNumChildren; i++)
+    for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
         processNode(node->mChildren[i], scene);
     }
@@ -46,7 +46,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     vector<unsigned int> indices;
     vector<Textures> textures;
 
-    for (unsigned int i = 0; mesh->mFaces; i++)
+    for (unsigned int i = 0; i < mesh->mNumVertices; i++)
     {   
         Vertex v;
 
@@ -76,10 +76,10 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     }
 
     //indici
-    for (unsigned int i = 0; mesh->mNumFaces; i++)
+    for (unsigned int i = 0; i < mesh->mNumFaces; i++)
     {
         aiFace face = mesh->mFaces[i];
-        for (unsigned int j = 0; face.mNumIndices; i++)
+        for (unsigned int j = 0; j < face.mNumIndices; i++)
         {
             indices.push_back(face.mIndices[j]);
         }

@@ -16,7 +16,7 @@ public:
     vector<Mesh> meshes;
     string directory;
 
-    Model(char* path);
+    Model(string path);
 
     void drawModel(Shader& shader);
 

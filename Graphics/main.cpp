@@ -1,9 +1,9 @@
 #define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "stb_image.h"
 
 #include <iostream>
 #include<string>
@@ -11,12 +11,18 @@
 #include<vector>
 
 #include "Shader.h"
+#include "VAO.h"
+#include "VBO.h"
+#include "EBO.h"
 #include <assimp/Importer.hpp>
 
 #include "rapidxml/rapidxml.hpp"
-//#include "rapidxml/rapidxml_iterators.hpp"
 #include "rapidxml/rapidxml_print.hpp"
+//#include "rapidxml/rapidxml_iterators.hpp"
 //#include "rapidxml/rapidxml_utils.hpp"
+
+#include <AlgebraLineare.h>
+#include "Model.h"
 
 using namespace rapidxml;
 using namespace std;
@@ -47,52 +53,22 @@ const char* fragmentShaderSource = fragmentPath.c_str();
 //"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 //"}\n\0";
 
+
+
 int main()
 {
     //RapidXMl
     xml_document<> doc;
     xml_node<>* root_node;
-
     ifstream file("prova.xml");
-
     vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
-
     buffer.push_back('\0');
-
     doc.parse<0>(&buffer[0]);
 
     root_node = doc.first_node("scene");
 
-   
     int widthWindow = stoi(root_node->first_node("window")->first_node("width")->value());
     int heightWindow = stoi(root_node->first_node("window")->first_node("height")->value());
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     
     // glfw: initialize and configure
@@ -128,62 +104,49 @@ int main()
 
 
     Shader shader("provaVS.vert", "provaFS.frag");
+    //Shader shader(vertexShaderSource, fragmentShaderSource);
 
-
-
-    //// build and compile our shader program
-    //// ------------------------------------
-    //// vertex shader
-    //unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    //glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    //glCompileShader(vertexShader);
-    //// check for shader compile errors
-    //int success;
-    //char infoLog[512];
-    //glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    //if (!success)
-    //{
-    //    glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-    //    std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-    //}
-    //// fragment shader
-    //unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    //glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    //glCompileShader(fragmentShader);
-    //// check for shader compile errors
-    //glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    //if (!success)
-    //{
-    //    glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-    //    std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-    //}
-    //// link shaders
-    //unsigned int shaderProgram = glCreateProgram();
-    //glAttachShader(shaderProgram, vertexShader);
-    //glAttachShader(shaderProgram, fragmentShader);
-    //glLinkProgram(shaderProgram);
-    //// check for linking errors
-    //glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    //if (!success) {
-    //    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-    //    std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-    //}
-    //glDeleteShader(vertexShader);
-    //glDeleteShader(fragmentShader);
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    float vertices[] = {
-        //posizione             //texture
-         0.5f,  0.5f, 0.0f,     1.0f, 1.0f,// top right
-         0.5f, -0.5f, 0.0f,     1.0f, 0.0f,// bottom right
-        -0.5f, -0.5f, 0.0f,     0.0f, 0.0f,// bottom left
-        -0.5f,  0.5f, 0.0f,     0.0f, 1.0f// top left 
+    //float vertices[] = {
+    //    //posizione             //texture
+    //     0.5f,  0.5f, 0.0f,     1.0f, 1.0f,// top right
+    //     0.5f, -0.5f, 0.0f,     1.0f, 0.0f,// bottom right
+    //    -0.5f, -0.5f, 0.0f,     0.0f, 0.0f,// bottom left
+    //    -0.5f,  0.5f, 0.0f,     0.0f, 1.0f// top left 
+    //};
+    //unsigned int indices[] = {  // note that we start from 0!
+    //    0, 1, 3,  // first Triangle
+    //    1, 2, 3   // second Triangle
+    //};
+
+
+
+    // Vertices coordinates
+    float vertices[] =
+    { //     COORDINATES     /        COLORS      /   TexCoord  //
+        -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
+        -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
+         0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
+         0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
+         0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	2.5f, 5.0f
     };
-    unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 3,  // first Triangle
-        1, 2, 3   // second Triangle
+
+    // Indices for vertices order
+    unsigned int indices[] =
+    {
+        0, 1, 2,
+        0, 2, 3,
+        0, 1, 4,
+        1, 2, 4,
+        2, 3, 4,
+        3, 0, 4
     };
+
+
+    //Model prova = Model("Lamp_sf.blend");
+
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -198,11 +161,14 @@ int main()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     //attributi di posizione
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    //attributi della texture
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	//attributi del colore
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    //attributi della texture
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -238,6 +204,12 @@ int main()
     }
     stbi_image_free(data);
 
+	float rotation = 0.0f; // angolo di rotazione iniziale
+	double lastTime = glfwGetTime(); // tempo dell'ultimo frame
+
+
+	glEnable(GL_DEPTH_TEST); // abilitare il test di profondità per evitare che i poligoni vengano disegnati sopra ad altri
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -249,15 +221,43 @@ int main()
         // render
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glBindTexture(GL_TEXTURE_2D, pavimento);
 
         // draw our first triangle
         glUseProgram(shader.shaderID);
+
+
+		double currentTime = glfwGetTime(); // tempo corrente
+		if (currentTime - lastTime >= 1.0 / 60.0) // aggiorna ogni 1/60 di secondo
+		{
+			rotation += 1.0f; // incrementa l'angolo di rotazione
+			lastTime = currentTime; // aggiorna il tempo dell'ultimo frame
+		}
+
+
+        Matrix4x4f model = Matrix4x4f();
+        model = model.model(Vector3f(0), Vector3f(1), rotation, Vector3f(0.0f, 1.0f, 0.0f));
+        Matrix4x4f view = Matrix4x4f();
+        //view = view.view(Vector3f(0.0f, 0.5f, 2.0f), Vector3f(0), Vector3f(0.0f, 1.0f, 0.0f));
+        Vector3f vec = Vector3f(0.0f, -0.5f, -2.0f);
+		view = view.translate(vec); // sposto la camera indietro di 2 unità lungo l'asse z
+        Matrix4x4f proj = Matrix4x4f();
+        proj = proj.perspectiveSimplify(45.0f, (float)(width/height), 0.1f, 100.0f);
+
+        glUniformMatrix4fv(glGetUniformLocation(shader.shaderID, "model"), 1, GL_TRUE, &model.a11); //BISOGNA TRASPORRE LE MATRICI!!!!!!!!!
+        glUniformMatrix4fv(glGetUniformLocation(shader.shaderID, "view"), 1, GL_TRUE, &view.a11);
+        glUniformMatrix4fv(glGetUniformLocation(shader.shaderID, "proj"), 1, GL_TRUE, &proj.a11);
+
+		//cout << "Model Matrix: " << model << endl;
+		//cout << "View Matrix: " << view << endl;
+		//cout << "Projection Matrix: " << proj << endl;
+
+
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         //glDrawArrays(GL_TRIANGLES, 0, 6);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
         // glBindVertexArray(0); // no need to unbind it every time 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

@@ -369,7 +369,7 @@ Matrix4x4f Matrix4x4f::scale(Vector3f& d)
     Matrix4x4f mat(d.x, 0.0f, 0.0f, 0.0f,
                   0.0f, d.y, 0.0f, 0.0f,
                   0.0f, 0.0f, d.z, 0.0f,
-                  0.0f, 0.0f, 0.0f, 0.0f);
+                  0.0f, 0.0f, 0.0f, 1.0f);
 
     return *this * mat;
 }
@@ -414,8 +414,25 @@ Matrix4x4f Matrix4x4f::perspective(float top, float bottom, float right, float l
     mat.a34 = -(2 * far * near) / (far - near);
     mat.a43 = -1.0f;
 
-        return *this *mat;
+        return *this * mat;
 }
+
+Matrix4x4f Matrix4x4f::perspectiveSimplify(float fov, float aspect, float near, float far) 
+{
+    float rad = fov * (M_PI / 180.0f);
+    float tanHalfFov = tan(rad / 2.0f);
+
+	Matrix4x4f mat = Matrix4x4f(); // matrice identità
+    mat.a11 = 1.0f / (aspect * tanHalfFov);
+    mat.a22 = 1.0f / (tanHalfFov);
+    mat.a33 = -(far + near) / (far - near);
+    mat.a34 = -(2.0f * far * near) / (far - near);
+    mat.a43 = -1.0f;
+    mat.a44 = 0.0f;
+
+    return *this * mat;
+}
+
 
 Matrix4x4f Matrix4x4f::ortho(float top, float bottom, float right, float left, float near , float far)
 {
@@ -428,7 +445,7 @@ Matrix4x4f Matrix4x4f::ortho(float top, float bottom, float right, float left, f
     mat.a33 = -2 / (far - near);
     mat.a34 = -(far + near) / (far - near);
 
-    return Matrix4x4f();
+    return *this * mat;
 }
 
 Matrix4x4f Matrix4x4f::model(Vector3f t, Vector3f s, float degrees, Vector3f axis)
@@ -440,6 +457,36 @@ Matrix4x4f Matrix4x4f::model(Vector3f t, Vector3f s, float degrees, Vector3f axi
     model = model.scale(s);
 
     return model;
+}
+
+Matrix4x4f Matrix4x4f::view(Vector3f eye, Vector3f lookAt, Vector3f up)
+{
+    Vector3f x_v;
+    Vector3f y_v;
+    Vector3f z_v;
+        
+    z_v = (eye - lookAt).normalize();
+    x_v = (up.crossProd(z_v)).normalize();
+    y_v = (z_v.crossProd(x_v)).normalize();
+
+    Matrix4x4f mat = Matrix4x4f();
+
+    mat.a11 = x_v.x;
+    mat.a12 = x_v.y;
+    mat.a13 = x_v.z;
+    mat.a14 = eye.x;
+
+    mat.a21 = y_v.x;
+    mat.a22 = y_v.y;
+    mat.a23 = y_v.z;
+    mat.a24 = eye.y;
+
+    mat.a31 = z_v.x;
+    mat.a32 = z_v.y;
+    mat.a33 = z_v.z;
+    mat.a34 = eye.z;
+
+    return mat;
 }
 
 

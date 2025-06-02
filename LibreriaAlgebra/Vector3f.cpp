@@ -153,13 +153,15 @@ float Vector3f::norm()
 	return sqrt(x * x + y * y + z * z);
 }
 
-void Vector3f::normalize()
+Vector3f& Vector3f::normalize()
 {
 	float len = norm();
 	if (len != 0.0f)
-		*this = *this / len;
+		*this /= len;
 	else
 		std::cout << "la norma 2 del vettore è 0!";
+
+	return *this;
 }
 
 Vector3f Vector3f::getNormalized()

@@ -22,6 +22,9 @@
     <Filter Include="File di intestazione\XML">
       <UniqueIdentifier>{31476741-3aca-4c74-8b5b-8ed1cd7fe057}</UniqueIdentifier>
     </Filter>
+    <Filter Include="File di risorse\Model">
+      <UniqueIdentifier>{37256754-f996-4963-ba5b-af55972745e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -58,6 +61,9 @@
       <Filter>File di origine</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="LibreriaAlgerbraLinerare.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -120,6 +126,9 @@
     </None>
     <None Include="provaVS.vert">
       <Filter>File di risorse\Shaders</Filter>
+    </None>
+    <None Include="Lamp_sf.blend">
+      <Filter>File di risorse\Model</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
