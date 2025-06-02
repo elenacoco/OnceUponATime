@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -356,12 +357,50 @@ Matrix4x4f Matrix4x4f::inv()  {
 //Traslazione
 Matrix4x4f Matrix4x4f::translate(Vector3f& v)
 {
-    Matrix4x4f(1.0f, 0.0f, 0.0f, v.x,
-               0.0f, 1.0f, 0.0f, v.y,
-               0.0f, 0.0f, 1.0f, v.z,
-               0.0, 0.0f, 0.0f, 1.0f);
+    Matrix4x4f mat(1.0f, 0.0f, 0.0f, v.x,
+                   0.0f, 1.0f, 0.0f, v.y,
+                   0.0f, 0.0f, 1.0f, v.z,
+                   0.0, 0.0f, 0.0f, 1.0f);
+    return *this * mat;
 }
 
+Matrix4x4f Matrix4x4f::scale(Vector3f& d)
+{
+    Matrix4x4f mat(d.x, 0.0f, 0.0f, 0.0f,
+                  0.0f, d.y, 0.0f, 0.0f,
+                  0.0f, 0.0f, d.z, 0.0f,
+                  0.0f, 0.0f, 0.0f, 0.0f);
+
+    return *this * mat;
+}
+
+Matrix4x4f Matrix4x4f::rotation(float degrees, Vector3f& axis)
+{
+    Matrix4x4f mat = Matrix4x4f(); // matrice identita
+
+    float radians = degrees * (M_PI / 180.0f);
+    float cosTheta = cos(radians);
+    float sinTheta = sin(radians);
+    float oneMinusCosTheta = 1.0f - cosTheta;
+
+    float x = axis.x;
+    float y = axis.y;
+    float z = axis.z;
+
+    mat.a11 = cosTheta + x * x * oneMinusCosTheta;
+    mat.a12 = x * y * oneMinusCosTheta - z * sinTheta;
+    mat.a13 = x * z * oneMinusCosTheta + y * sinTheta;
+
+    mat.a21 = y * x * oneMinusCosTheta + z * sinTheta;
+    mat.a22 = cosTheta + y * y * oneMinusCosTheta;
+    mat.a23 = y * z * oneMinusCosTheta - x * sinTheta;
+
+    mat.a31 = z * x * oneMinusCosTheta - y * sinTheta;
+    mat.a32 = z * y * oneMinusCosTheta + x * sinTheta;
+    mat.a33 = cosTheta + z * z * oneMinusCosTheta;
+   
+    return *this * mat;
+}
 
 
 bool Matrix4x4f::operator==(const Matrix4x4f& other) const {

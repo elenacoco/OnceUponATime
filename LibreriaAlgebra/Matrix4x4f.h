@@ -49,8 +49,8 @@ public:
     Matrix4x4f inv();
 
     Matrix4x4f translate(Vector3f& s);
-    Matrix4x4f scale(Vector3f s);
-    Matrix4x4f rotation(float degrees, Vector3f axis);
+    Matrix4x4f scale(Vector3f& s);
+    Matrix4x4f rotation(float degrees, Vector3f& axis);
 
 
     bool operator==(const Matrix4x4f& other) const;
