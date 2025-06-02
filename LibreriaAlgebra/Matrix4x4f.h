@@ -52,6 +52,10 @@ public:
     Matrix4x4f scale(Vector3f& s);
     Matrix4x4f rotation(float degrees, Vector3f& axis);
 
+    Matrix4x4f perspective(float top, float bottom, float right, float left, float near, float far);
+    Matrix4x4f ortho(float top, float bottom, float right, float left, float near, float far);
+
+    Matrix4x4f model(Vector3f t, Vector3f s, float degrees, Vector3f axis);
 
     bool operator==(const Matrix4x4f& other) const;
     bool operator!=(const Matrix4x4f& other) const;

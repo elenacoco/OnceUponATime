@@ -402,6 +402,47 @@ Matrix4x4f Matrix4x4f::rotation(float degrees, Vector3f& axis)
     return *this * mat;
 }
 
+Matrix4x4f Matrix4x4f::perspective(float top, float bottom, float right, float left, float near , float far)
+{
+    Matrix4x4f mat = Matrix4x4f(0);//matrice nulla
+
+    mat.a11 = (2 * near) / (right - left); 
+    mat.a13 = (right + left) / (right - left);
+    mat.a22 = (2 * near) / (top - bottom);
+    mat.a23 = (top + bottom) / (top - bottom);
+    mat.a33 = -(far + near) / (far - near);
+    mat.a34 = -(2 * far * near) / (far - near);
+    mat.a43 = -1.0f;
+
+        return *this *mat;
+}
+
+Matrix4x4f Matrix4x4f::ortho(float top, float bottom, float right, float left, float near , float far)
+{
+    Matrix4x4f mat = Matrix4x4f();//identita
+
+    mat.a11 = 2 / (right - left);
+    mat.a14 = (right + left) / (right - left);
+    mat.a22 = 2 / (top - bottom);
+    mat.a24 = -(top + bottom) / (top - bottom);
+    mat.a33 = -2 / (far - near);
+    mat.a34 = -(far + near) / (far - near);
+
+    return Matrix4x4f();
+}
+
+Matrix4x4f Matrix4x4f::model(Vector3f t, Vector3f s, float degrees, Vector3f axis)
+{
+    Matrix4x4f model;
+
+    model = model.translate(t);
+    model = model.rotation(degrees, axis);
+    model = model.scale(s);
+
+    return model;
+}
+
+
 
 bool Matrix4x4f::operator==(const Matrix4x4f& other) const {
     return a11 == other.a11 && a12 == other.a12 && a13 == other.a13 && a14 == other.a14 &&
