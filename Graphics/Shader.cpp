@@ -49,3 +49,18 @@ Shader::Shader(const string& vertexPath, const string& fragmentPath)
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 }
+
+Shader::~Shader()
+{
+	glDeleteShader(shaderID);
+}
+
+void Shader::useProgram()
+{
+	glUseProgram(shaderID);
+}
+
+void Shader::setInt(const char* uniform, int value)
+{
+	glUniform1i(glGetUniformLocation(shaderID, uniform), value);
+}
