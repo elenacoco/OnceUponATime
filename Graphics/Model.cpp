@@ -18,7 +18,7 @@ void Model::loadModel(string path)
 	
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) 
     {
-        cout << "ERRORE DI ASSIMP" << import.GetErrorString() << endl;
+        cout << "ERRORE DI ASSIMP " << import.GetErrorString() << endl;
         return;
     }
     directory = path.substr(0, path.find_last_of('/'));
@@ -57,10 +57,14 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         vector.z = mesh->mVertices[i].z;
         v.position = vector;
         //normali
-        vector.x = mesh->mNormals[i].x;
-        vector.y = mesh->mNormals[i].y;
-        vector.z = mesh->mNormals[i].z;
-        v.normal = vector;
+		if (mesh->mNormals) //controlla se ci sono normali
+		{
+			Vector3f vector;
+			vector.x = mesh->mNormals[i].x;
+			vector.y = mesh->mNormals[i].y;
+			vector.z = mesh->mNormals[i].z;
+			v.normal = vector;
+		}
         //texture
         if (mesh->mTextureCoords[0]) //controlla solo la texture nello slot 0?
         {
@@ -79,13 +83,20 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     for (unsigned int i = 0; i < mesh->mNumFaces; i++)
     {
         aiFace face = mesh->mFaces[i];
-        for (unsigned int j = 0; j < face.mNumIndices; i++)
+        for (unsigned int j = 0; j < face.mNumIndices; j++)
         {
             indices.push_back(face.mIndices[j]);
         }
     }
 
     //per ora niente materiali
+	if (textures.empty())
+	{
+		Texture defaultTexture = Texture("pavimento.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
+		defaultTexture.bind(); // Bind the default texture to ensure it's ready for use
+		Textures tex = { defaultTexture.id, "texture_diffuse" };
+		textures.push_back(tex);
+	}
 
     return Mesh(vertices, indices, textures);
 }

@@ -27,7 +27,7 @@ void Mesh::drawMesh(Shader& shader)
 		{
 			number = to_string(diffuseNum++);
 		}
-		else if (name == "texture_speculatr")
+		else if (name == "texture_specular")
 		{
 			number = to_string(specularNum++);
 		}
