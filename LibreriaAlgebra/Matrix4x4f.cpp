@@ -472,17 +472,17 @@ Matrix4x4f Matrix4x4f::view(Vector3f eye, Vector3f lookAt, Vector3f up)
     Matrix4x4f mat = Matrix4x4f();
 
     mat.a11 = x_v.x;
-    mat.a12 = x_v.y;
-    mat.a13 = x_v.z;
+    mat.a12 = y_v.x;
+    mat.a13 = z_v.x;
     mat.a14 = eye.x;
 
-    mat.a21 = y_v.x;
+    mat.a21 = x_v.y;
     mat.a22 = y_v.y;
-    mat.a23 = y_v.z;
+    mat.a23 = z_v.y;
     mat.a24 = eye.y;
 
-    mat.a31 = z_v.x;
-    mat.a32 = z_v.y;
+    mat.a31 = x_v.z;
+    mat.a32 = y_v.z;
     mat.a33 = z_v.z;
     mat.a34 = eye.z;
 

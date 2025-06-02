@@ -252,8 +252,8 @@ int main()
         Matrix4x4f model = Matrix4x4f();
         model = model.model(Vector3f(0), Vector3f(1), rotation, Vector3f(0.0f, 1.0f, 0.0f));
         Matrix4x4f view = Matrix4x4f();
-        //view = view.view(Vector3f(0.0f, 0.5f, 2.0f), Vector3f(0), Vector3f(0.0f, 1.0f, 0.0f));
-        Vector3f vec = Vector3f(0.0f, -0.5f, -2.0f);
+        //view = view.view(Vector3f(0.0f, 0.5f, -2.0f), Vector3f(0), Vector3f(0.0f, 1.0f, 0.0f)); //non mi convince
+        Vector3f vec = Vector3f(0.0f, -0.7f, -2.0f);
 		view = view.translate(vec); // sposto la camera indietro di 2 unità lungo l'asse z
         Matrix4x4f proj = Matrix4x4f();
         proj = proj.perspectiveSimplify(45.0f, (float)(widthWindow/heightWindow), 0.1f, 100.0f);
