@@ -138,6 +138,9 @@
     <Image Include="Lamp_bump.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
+    <Image Include="Pascal_diffuse.jpeg">
+      <Filter>File di risorse\Textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="prova.xml">
