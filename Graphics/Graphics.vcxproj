@@ -171,11 +171,12 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Lamp_sf.blend" />
     <None Include="provaFS.frag" />
     <None Include="provaVS.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Lamp_bottom_Albedo.jpg" />
+    <Image Include="Lamp_bump.jpg" />
     <Image Include="pavimento.jpg" />
   </ItemGroup>
   <ItemGroup>

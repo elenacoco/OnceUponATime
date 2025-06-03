@@ -142,8 +142,8 @@ int main()
     };
 
 
-    Model prova = Model("cubo.obj"); //Non funziona
-    //Model prova = Model(""); //Non funziona
+    Model prova = Model("Lamp_sf.blend");
+    //Model prova = Model("");
 
 	bool piramide = true;
     unsigned int VBO, VAO, EBO;
@@ -204,7 +204,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     //flitri
     int width, height, numChannels;
-    unsigned char* data = stbi_load("pavimento.jpg", &width, &height, &numChannels, 0);
+    unsigned char* data = stbi_load("Lamp_bottom_Albedo.jpg", &width, &height, &numChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data); //COLLEGA EFFETTIVAMENTE LA TEXTUREEEE, se no si vede nero
@@ -256,7 +256,7 @@ int main()
         model = model.model(Vector3f(0), Vector3f(scale), rotation, Vector3f(0.0f, 1.0f, 0.0f));
         Matrix4x4f view = Matrix4x4f();
         //view = view.view(Vector3f(0.0f, 0.5f, -2.0f), Vector3f(0), Vector3f(0.0f, 1.0f, 0.0f)); //non mi convince
-        Vector3f vec = Vector3f(0.0f, -0.7f, -5.0f);
+        Vector3f vec = Vector3f(0.0f, -0.7f, -50.0f);
 		view = view.translate(vec); // sposto la camera indietro di 2 unità lungo l'asse z
         Matrix4x4f proj = Matrix4x4f();
         proj = proj.perspectiveSimplify(45.0f, (float)(widthWindow/heightWindow), 0.1f, 100.0f);

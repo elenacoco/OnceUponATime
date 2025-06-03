@@ -127,12 +127,15 @@
     <None Include="provaVS.vert">
       <Filter>File di risorse\Shaders</Filter>
     </None>
-    <None Include="Lamp_sf.blend">
-      <Filter>File di risorse\Model</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="pavimento.jpg">
+      <Filter>File di risorse\Textures</Filter>
+    </Image>
+    <Image Include="Lamp_bottom_Albedo.jpg">
+      <Filter>File di risorse\Textures</Filter>
+    </Image>
+    <Image Include="Lamp_bump.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
   </ItemGroup>

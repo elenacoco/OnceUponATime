@@ -9,4 +9,5 @@ uniform sampler2D texture; //non viene modificata dallo shader
 void main()
 {
 	FragColor = texture(texture, coordTex);
+	//FragColor = vec4(1.0, 1.0, 0.0, 1.0);
 }
