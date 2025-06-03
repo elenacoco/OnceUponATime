@@ -4,21 +4,21 @@
 	<window>
 		<width>1080</width>
 		<height>720</height>
-		
 	</window>
-
-	<materials>
-		
-	</materials>
 
 	<lights>
 		
 	</lights>
 
-	<texture>
-		<name>Pavimento</name>
-		<path>Textures/pavimento.png</path>
-	</texture>
+	<textures>
+		<texture>
+			<name>Lampada</name>
+			<path>Lamp_diffuse.jpg</path>
+			<type>diffuse</type>
+		</texture>
+		
+		
+	</textures>
 
 	<models>
 		<model>

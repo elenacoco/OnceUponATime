@@ -52,7 +52,7 @@ Shader::Shader(const string& vertexPath, const string& fragmentPath)
 
 Shader::~Shader()
 {
-	glDeleteShader(shaderID);
+	//glDeleteProgram(shaderID);
 }
 
 void Shader::useProgram()

@@ -132,7 +132,7 @@
     <Image Include="pavimento.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
-    <Image Include="Lamp_bottom_Albedo.jpg">
+    <Image Include="Lamp_diffuse.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
     <Image Include="Lamp_bump.jpg">

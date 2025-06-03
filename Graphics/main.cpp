@@ -21,34 +21,20 @@
 #include <AlgebraLineare.h>
 #include "Model.h"
 
+//OCCHIO AI DISTRUTTORI!!!!!!
+
 using namespace rapidxml;
 using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
-// settings
-//const unsigned int SCR_WIDTH = 800;// Prende la dimensione dello schermo dall'xml;
-//const unsigned int SCR_HEIGHT = 600;
-
-string vertexPath = Utils::readFile("provaVS.vert");
-const char* vertexShaderSource = vertexPath.c_str();
-
-string fragmentPath = Utils::readFile("provaFS.frag");
-const char* fragmentShaderSource = fragmentPath.c_str();
-
-//const char* vertexShaderSource = "#version 330 core\n"
-//"layout (location = 0) in vec3 aPos;\n"
-//"void main()\n"
-//"{\n"
-//"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-//"}\0";
-//const char* fragmentShaderSource = "#version 330 core\n"
-//"out vec4 FragColor;\n"
-//"void main()\n"
-//"{\n"
-//"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-//"}\n\0";
+//lo facciamo direttamente nella classe shader che chiamiamo nel main
+//string vertexPath = Utils::readFile("provaVS.vert");
+//const char* vertexShaderSource = vertexPath.c_str();
+//
+//string fragmentPath = Utils::readFile("provaFS.frag");
+//const char* fragmentShaderSource = fragmentPath.c_str();
 
 
 
@@ -101,26 +87,9 @@ int main()
 
 
     Shader shader("provaVS.vert", "provaFS.frag");
-    //Shader shader(vertexShaderSource, fragmentShaderSource);
 
 
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
-    //float vertices[] = {
-    //    //posizione             //texture
-    //     0.5f,  0.5f, 0.0f,     1.0f, 1.0f,// top right
-    //     0.5f, -0.5f, 0.0f,     1.0f, 0.0f,// bottom right
-    //    -0.5f, -0.5f, 0.0f,     0.0f, 0.0f,// bottom left
-    //    -0.5f,  0.5f, 0.0f,     0.0f, 1.0f// top left 
-    //};
-    //unsigned int indices[] = {  // note that we start from 0!
-    //    0, 1, 3,  // first Triangle
-    //    1, 2, 3   // second Triangle
-    //};
-
-
-
-    // Vertices coordinates
+    //PIRAMIDE
     float vertices[] =
     { //     COORDINATES     /        COLORS      /   TexCoord  //
         -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
@@ -142,7 +111,7 @@ int main()
     };
 
 
-    Model prova = Model("Lamp_sf.blend");
+    Model prova = Model("cubo.obj");
     //Model prova = Model("");
 
 	bool piramide = true;
@@ -196,31 +165,35 @@ int main()
     // uncomment this call to draw in wireframe polygons.
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    //texture
-    unsigned int pavimento;
-    glGenTextures(1, &pavimento);
-    glBindTexture(GL_TEXTURE_2D, pavimento);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    //flitri
-    int width, height, numChannels;
-    unsigned char* data = stbi_load("Lamp_bottom_Albedo.jpg", &width, &height, &numChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data); //COLLEGA EFFETTIVAMENTE LA TEXTUREEEE, se no si vede nero
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "non sono riuscito a caricare la texture" << endl;
-    }
-    stbi_image_free(data);
+    ////texture
+    //unsigned int texture;
+    //glGenTextures(1, &texture);
+    //glBindTexture(GL_TEXTURE_2D, texture);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    ////flitri
+    //int width, height, numChannels;
+    //unsigned char* data = stbi_load("Lamp_bottom_Albedo.jpg", &width, &height, &numChannels, 0);
+    //if (data)
+    //{
+    //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data); //COLLEGA EFFETTIVAMENTE LA TEXTUREEEE, se no si vede nero
+    //    glGenerateMipmap(GL_TEXTURE_2D);
+    //}
+    //else
+    //{
+    //    std::cout << "non sono riuscito a caricare la texture" << endl;
+    //}
+    //stbi_image_free(data);
+
+    //Texture texture1 = Texture("Lamp_diffuse.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE); //CLASSE TEXTURE FUNZIONA
+    //texture1.bind();
 
 	float rotation = 0.0f; // angolo di rotazione iniziale
 	double lastTime = glfwGetTime(); // tempo dell'ultimo frame
 
 
 	glEnable(GL_DEPTH_TEST); // abilitare il test di profondità per evitare che i poligoni vengano disegnati sopra ad altri
+
 
     // render loop
     // -----------
@@ -232,15 +205,13 @@ int main()
 
         // render
         // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f); //DA CAMBIARE
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //glBindTexture(GL_TEXTURE_2D, pavimento);
 
-        // draw our first triangle
         glUseProgram(shader.shaderID);
 
-
+        //setta la rotazione del modello
 		double currentTime = glfwGetTime(); // tempo corrente
 		if (currentTime - lastTime >= 1.0 / 60.0) // aggiorna ogni 1/60 di secondo
 		{
@@ -248,16 +219,17 @@ int main()
 			lastTime = currentTime; // aggiorna il tempo dell'ultimo frame
 		}
 
-        //per scalare il modello in base al tempo
+        //per scalare il modello in base al tempo (SI RIBALTA DOPO LA SCALA A ZERO!!!!)
         float time = glfwGetTime();
-        float scale = sin(time) * 0.5f + 1.0f; // varia tra 0.5 e 1.5
+        float scale = sin(time) * 1.0f + 0.0f; // funzione di scala nel tempo
 
+        //matrici per il 3d
         Matrix4x4f model = Matrix4x4f();
         model = model.model(Vector3f(0), Vector3f(scale), rotation, Vector3f(0.0f, 1.0f, 0.0f));
         Matrix4x4f view = Matrix4x4f();
-        //view = view.view(Vector3f(0.0f, 0.5f, -2.0f), Vector3f(0), Vector3f(0.0f, 1.0f, 0.0f)); //non mi convince
-        Vector3f vec = Vector3f(0.0f, -0.7f, -50.0f);
-		view = view.translate(vec); // sposto la camera indietro di 2 unità lungo l'asse z
+        //view = view.view(Vector3f(0.0f, 0.5f, -5.0f), Vector3f(0), Vector3f(0.0f, 0.5f, 0.5f)); //non mi convince
+        Vector3f vec = Vector3f(0.0f, -0.7f, -5.0f);
+		view = view.translate(vec); // sposto il mondo indietro di --- unità lungo l'asse z
         Matrix4x4f proj = Matrix4x4f();
         proj = proj.perspectiveSimplify(45.0f, (float)(widthWindow/heightWindow), 0.1f, 100.0f);
 
@@ -275,10 +247,6 @@ int main()
 			glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
 			glBindVertexArray(0); // no need to unbind it every time 
 		}
-        
-        //glDrawArrays(GL_TRIANGLES, 0, 6);
-        //glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
-        // glBindVertexArray(0); // no need to unbind it every time 
 
 		prova.drawModel(shader); // Draw the model
 

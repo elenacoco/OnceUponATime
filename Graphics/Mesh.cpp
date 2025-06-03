@@ -12,6 +12,7 @@ Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture
 //DA CAPIRE BENE!!!!!!!!
 void Mesh::drawMesh(Shader& shader)
 {
+
 	unsigned int diffuseNum = 1;
 	unsigned int specularNum = 1;
 	unsigned int normalNum = 1;
@@ -36,7 +37,7 @@ void Mesh::drawMesh(Shader& shader)
 			number = to_string(normalNum++);
 		}
 
-		shader.setInt(("material." + name + number).c_str(), i);
+		shader.setInt((name + number).c_str(), i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
 	}
 

@@ -72,6 +72,9 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             vec.x = mesh->mTextureCoords[0][i].x;
             vec.y = mesh->mTextureCoords[0][i].y;
             v.texCoords = vec;
+            if (i < 5) // per non stampare tutto
+                std::cout << "UV[" << i << "] = " << v.texCoords.x << ", " << v.texCoords.y << std::endl;
+
         }
         else
             v.texCoords = Vector2f(0.0f, 0.0f);
@@ -92,10 +95,20 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     //per ora niente materiali
 	if (textures.empty())
 	{
-		Texture defaultTexture = Texture("pavimento.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
+		Texture defaultTexture = Texture("Lamp_diffuse.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
+        std::cout << "CLASSE MODEL::Default texture ID: " << defaultTexture.id << std::endl;
+        if (defaultTexture.id == 0) 
+        {
+            std::cout << "ERRORE: Texture non caricata correttamente!" << std::endl;
+        }
+
 		defaultTexture.bind(); // Bind the default texture to ensure it's ready for use
 		Textures tex = { defaultTexture.id, "texture_diffuse" };
 		textures.push_back(tex);
+        Texture defaultTexture2 = Texture("Lamp_bump.jpg", GL_TEXTURE_2D, 1, GL_RGB, GL_UNSIGNED_BYTE);
+		defaultTexture2.bind(); // Bind the default texture to ensure it's ready for use
+		Textures tex2 = { defaultTexture2.id, "texture_specular" };
+		textures.push_back(tex2);
 	}
 
     return Mesh(vertices, indices, textures);

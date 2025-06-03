@@ -175,7 +175,7 @@
     <None Include="provaVS.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Lamp_bottom_Albedo.jpg" />
+    <Image Include="Lamp_diffuse.jpg" />
     <Image Include="Lamp_bump.jpg" />
     <Image Include="pavimento.jpg" />
   </ItemGroup>

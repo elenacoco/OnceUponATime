@@ -23,22 +23,24 @@ Texture::Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLe
 
 	if (data)
 	{
-		glTexImage2D(type, unit, 0, width, height, 0, format, pixelType, 0);
+		GLenum internalFormat = (numCh == 4) ? GL_RGBA : GL_RGB;
+		glTexImage2D(type, unit, internalFormat, width, height, 0, internalFormat, pixelType, data);
 		glGenerateMipmap(type);
+		std::cout << "CLASSE TEXTURE::Texture caricata con successo. ID: " << id << std::endl;
 	}
 	else
 	{
 		std::cout << "Errore nel caricamento della texture" << std::endl;
 	}
 
-	glBindTexture(type, 0);
+	//glBindTexture(type, 0);
 
 	stbi_image_free(data);
 }
 
 Texture::~Texture()
 {
-	glDeleteTextures(1, &id);
+	//glDeleteTextures(1, &id);
 }
 
 void Texture::bind()
