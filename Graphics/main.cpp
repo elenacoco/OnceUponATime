@@ -112,6 +112,7 @@ int main()
 
 
     Model prova = Model("piano.obj");
+    Model prova2 = Model("cubo.obj");
     //Model prova = Model("");
 
 	bool piramide = true;
@@ -228,7 +229,7 @@ int main()
         model = model.model(Vector3f(0), Vector3f(1), rotation, Vector3f(0.0f, 0.0f, 1.0f));
         Matrix4x4f view = Matrix4x4f();
         //view = view.view(Vector3f(0.0f, 0.5f, -5.0f), Vector3f(0), Vector3f(0.0f, 0.5f, 0.5f)); //non mi convince
-        Vector3f vec = Vector3f(0.0f, -0.7f, -5.0f);
+        Vector3f vec = Vector3f(0.0f, -0.7f, -15.0f);
 		view = view.translate(vec); // sposto il mondo indietro di --- unità lungo l'asse z
         Matrix4x4f proj = Matrix4x4f();
         proj = proj.perspectiveSimplify(45.0f, (float)(widthWindow/heightWindow), 0.1f, 100.0f);
@@ -249,6 +250,14 @@ int main()
 		}
 
 		prova.drawModel(shader); // Draw the model
+
+
+        Matrix4x4f model1 = Matrix4x4f();
+        model1 = model1.model(Vector3f(0.0f, 4.0f, 0.0f), Vector3f(1), rotation, Vector3f(0.0f, 1.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.shaderID, "model"), 1, GL_TRUE, &model1.a11); //BISOGNA TRASPORRE LE MATRICI!!!!!!!!!
+
+        prova2.drawModel(shader); // Draw the model
+
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

@@ -1,7 +1,8 @@
 #include"Model.h"
 
-Model::Model(string path)
+Model::Model(string path, vector<string> pathText)
 {
+    pathTexture = pathText;
 	loadModel(path);
 }
 
@@ -92,6 +93,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         }
     }
 
+    textures = loadTextures(pathTexture);
     //per ora niente materiali
 	if (textures.empty())
 	{
@@ -113,3 +115,54 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
     return Mesh(vertices, indices, textures);
 }
+
+//Funzione per caricare piu piu Texture su uno stesso modello(Diffuse, Normal, Specular, Roughness)
+vector<Textures> Model::loadTextures(vector<string> path)
+{
+    vector<Textures> vect;
+
+    if (path.empty())
+    {
+        cout << "NESSUNA TEXTURE CARICATA (PATH SBAGLIATO)"<<endl;
+        return vector<Textures>();
+
+    }
+    else 
+    {
+        for (int i = 0; i < path.size(); i++) 
+        {
+            Texture tx = Texture(path[i].c_str(), GL_TEXTURE_2D, i, GL_RGB, GL_UNSIGNED_BYTE);
+            tx.bind();
+
+            //Controllo di che tipo è la texture
+            if (path[i].find("diffuse"))
+            {
+                Textures tex = { tx.id , "texture_diffuse" };
+                vect.push_back(tex);
+            }
+
+            if (path[i].find("normal"))
+            {
+                Textures tex = { tx.id , "texture_normal" };           
+                vect.push_back(tex);
+            }
+
+            if (path[i].find("specular"))
+            {
+                Textures tex = { tx.id , "texture_specular" };
+                vect.push_back(tex);
+            }
+
+            if (path[i].find("roughness"))
+            {
+                Textures tex = { tx.id , "texture_roughness" };
+                vect.push_back(tex);
+            }
+        }
+    }
+        
+        
+
+    return vect;
+}
+

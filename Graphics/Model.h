@@ -15,8 +15,9 @@ public:
 
     vector<Mesh> meshes;
     string directory;
+    vector<string> pathTexture;
 
-    Model(string path);
+    Model(string path, vector<string> pathTex);
 
     void drawModel(Shader& shader);
 
@@ -25,5 +26,5 @@ private:
     void loadModel(string path);
     void processNode(aiNode* node, const aiScene* scene);
     Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-    vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
+    vector<Textures> loadTextures(vector<string> path);
 };
