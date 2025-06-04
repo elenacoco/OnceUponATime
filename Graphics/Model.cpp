@@ -1,5 +1,10 @@
 #include"Model.h"
 
+Model::Model(string path)
+{
+    loadModel(path);
+}
+
 Model::Model(string path, vector<string> pathText)
 {
     pathTexture = pathText;
@@ -94,23 +99,19 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     }
 
     textures = loadTextures(pathTexture);
-    //per ora niente materiali
+
+	//se non ci sono texture caricate, carica una texture di default
 	if (textures.empty())
 	{
 		Texture defaultTexture = Texture("pagina.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
-        std::cout << "CLASSE MODEL::Default texture ID: " << defaultTexture.id << std::endl;
+        std::cout << "CLASSE MODEL::Caricata Texture di Default, il suo ID: " << defaultTexture.id << std::endl;
         if (defaultTexture.id == 0) 
         {
             std::cout << "ERRORE: Texture non caricata correttamente!" << std::endl;
         }
-
 		defaultTexture.bind(); // Bind the default texture to ensure it's ready for use
 		Textures tex = { defaultTexture.id, "texture_diffuse" };
 		textures.push_back(tex);
-        Texture defaultTexture2 = Texture("Lamp_bump.jpg", GL_TEXTURE_2D, 1, GL_RGB, GL_UNSIGNED_BYTE);
-		defaultTexture2.bind(); // Bind the default texture to ensure it's ready for use
-		Textures tex2 = { defaultTexture2.id, "texture_specular" };
-		textures.push_back(tex2);
 	}
 
     return Mesh(vertices, indices, textures);
@@ -160,9 +161,6 @@ vector<Textures> Model::loadTextures(vector<string> path)
             }
         }
     }
-        
-        
-
     return vect;
 }
 

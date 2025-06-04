@@ -86,7 +86,7 @@ int main()
     }
 
 
-    Shader shader("provaVS.vert", "provaFS.frag");
+    Shader shader("provaLambert.vert", "provaLambert.frag");
 
 
     //PIRAMIDE
@@ -110,9 +110,10 @@ int main()
         3, 0, 4
     };
 
-
-    Model prova = Model("piano.obj");
-    Model prova2 = Model("cubo.obj");
+    vector<string> pathTexture1 = {"pagina_diffuse.jpg"};
+    vector<string> pathTexture2 = {"pavimento_diffuse.jpg"};
+    Model prova = Model("piano.obj", pathTexture1);
+    Model prova2 = Model("cubo.obj", pathTexture2);
     //Model prova = Model("");
 
 	bool piramide = true;

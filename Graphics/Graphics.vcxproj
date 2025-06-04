@@ -172,14 +172,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="provaFS.frag" />
+    <None Include="provaLambert.frag" />
+    <None Include="provaLambert.vert" />
     <None Include="provaVS.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Lamp_diffuse.jpg" />
     <Image Include="Lamp_bump.jpg" />
-    <Image Include="pagina.jpg" />
+    <Image Include="pagina_diffuse.jpg" />
     <Image Include="Pascal_diffuse.jpeg" />
-    <Image Include="pavimento.jpg" />
+    <Image Include="pavimento_diffuse.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="prova.xml" />

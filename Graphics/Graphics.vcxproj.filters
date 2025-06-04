@@ -127,9 +127,13 @@
     <None Include="provaVS.vert">
       <Filter>File di risorse\Shaders</Filter>
     </None>
+    <None Include="provaLambert.frag">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
+    <None Include="provaLambert.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="pavimento.jpg">
+    <Image Include="pavimento_diffuse.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
     <Image Include="Lamp_diffuse.jpg">
@@ -141,7 +145,7 @@
     <Image Include="Pascal_diffuse.jpeg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
-    <Image Include="pagina.jpg">
+    <Image Include="pagina_diffuse.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
   </ItemGroup>

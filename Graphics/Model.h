@@ -18,6 +18,7 @@ public:
     vector<string> pathTexture;
 
     Model(string path, vector<string> pathTex);
+    Model(string path);
 
     void drawModel(Shader& shader);
 

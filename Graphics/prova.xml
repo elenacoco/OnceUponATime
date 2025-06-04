@@ -6,41 +6,99 @@
 		<height>720</height>
 	</window>
 
+	<environment>
+		<backgroundColor r="0.1" g="0.1" b="0.2"/>
+		<ambientLight r="0.2" g="0.2" b="0.2"/>
+	</environment>
+	
 	<lights>
-		
+		<light>
+			<type>directional</type>
+			<direction x="1" y="-1" z="-1"/>
+			<color r="1.0" g="1.0" b="1.0"/>
+			<intensity>1.0</intensity>
+		</light>
+		<light>
+			<type>point</type>
+			<position x="0" y="5" z="5"/>
+			<color r="1.0" g="0.8" b="0.6"/>
+			<intensity>0.8</intensity>
+		</light>
 	</lights>
 
-	<textures>
-		<texture>
-			<name>Lampada</name>
-			<path>Lamp_diffuse.jpg</path>
-			<type>diffuse</type>
-		</texture>
-		
-		
-	</textures>
+	<camera>
+		<position x="0" y="-0.7" z="-15"/>
+		<target x="0" y="0" z="0"/>
+		<up x="0" y="1" z="0"/>
+		<fov>45</fov>
+	</camera>
 
 	<models>
 		<model>
 			<name>Libro</name>
-			<path>Models/Libro/Libro.obj</path>
+			<path>cubo.obj</path>
+			<textures>
+				<texture type="diffuse">pavimento_diffuse.jpg</texture>
+				<texture type="normal"></texture>
+				<texture type="specular"></texture>
+			</textures>
+			<transform>
+				<translate x="0" y="0" z="0"/>
+				<rotate axis="y" angle="0"/>
+				<scale x="0" y="0" z="0"/>
+			</transform>
 		</model>
 		
 		<model>
-			<name>Mela</name>
-			<path>Models/Mela/Mela.obj</path>
+			<name>Pascal</name>
+			<path>Pascal.fbx</path>
+			<textures>
+				<texture type="diffuse">Pascal_diffuse.jpeg</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="0"/>
+				<rotate axis="x" angle="90"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="0.5" y="0.5" z="0.5"/>
+			</transform>
 		</model>
 		
 		<model>
 			<name>Lampada</name>
-			<path>Models/Lampada/Lampada.obj</path>
+			<path>lamp.blend</path>
+			<textures>
+				<texture type="diffuse">Lamp_diffuse.jpg</texture>
+				<texture type="normal"></texture>
+				<texture type="specular"></texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="0"/>
+				<rotate axis="y" angle="0"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="0.2" y="0.2" z="0.2"/>
+			</transform>
 		</model>
 		
 		<model>
-			<name>Rosa</name>
-			<path>models/Rosa/Rosa.obj</path>
+			<name>GingerbreadMan</name>
+			<path>GBman.obj</path>
+			<textures>
+				<texture type="diffuse">GBMan_diffuse.png</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="0"/>
+				<rotate axis="y" angle="0"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="1" y="1" z="1"/>
+			</transform>
 		</model>
-			
-			
 	</models>
+
+	<animation> <!-- DA CAPIRE SE SERVE-->
+		<targetModel>Mela</targetModel>
+		<type>rotation</type>
+		<axis x="0" y="1" z="0"/>
+		<speed>45</speed> <!-- gradi al secondo -->
+	</animation>
+
 </scene>

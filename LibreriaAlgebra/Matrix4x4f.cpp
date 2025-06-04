@@ -459,7 +459,7 @@ Matrix4x4f Matrix4x4f::model(Vector3f translation, Vector3f scale, float degrees
     return model;
 }
 
-Matrix4x4f Matrix4x4f::view(Vector3f eye, Vector3f lookAt, Vector3f up)
+Matrix4x4f Matrix4x4f::view(Vector3f eye, Vector3f lookAt, Vector3f up) //capire se usare .dot()
 {
     Vector3f x_v;
     Vector3f y_v;
