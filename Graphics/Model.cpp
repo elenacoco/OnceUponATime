@@ -95,7 +95,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     //per ora niente materiali
 	if (textures.empty())
 	{
-		Texture defaultTexture = Texture("pavimento.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
+		Texture defaultTexture = Texture("GBMan_tx.png", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
         std::cout << "CLASSE MODEL::Default texture ID: " << defaultTexture.id << std::endl;
         if (defaultTexture.id == 0) 
         {

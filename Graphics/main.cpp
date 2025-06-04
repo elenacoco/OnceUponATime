@@ -111,7 +111,7 @@ int main()
     };
 
 
-    Model prova = Model("cubo.obj");
+    Model prova = Model("GBman.obj");
     //Model prova = Model("");
 
 	bool piramide = true;
@@ -221,7 +221,7 @@ int main()
 
         //per scalare il modello in base al tempo (SI RIBALTA DOPO LA SCALA A ZERO!!!!)
         float time = glfwGetTime();
-        float scale = sin(time) * 1.0f + 0.0f; // funzione di scala nel tempo
+        float scale = abs(sin(time)); // funzione di scala nel tempo
 
         //matrici per il 3d
         Matrix4x4f model = Matrix4x4f();

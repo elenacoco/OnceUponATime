@@ -1,0 +1,20 @@
+# Pagina verticale sul piano YZ, con UV e normali
+
+# Vertici (X Y Z)
+v  0.0 0.0  0.0
+v  0.0 2.0  0.0
+v  0.0 0.0 -3.0
+v  0.0 2.0 -3.0
+
+# Coordinate UV (U V)
+vt 0.0 0.0
+vt 0.0 1.0
+vt 1.0 0.0
+vt 1.0 1.0
+
+# Normali (X Y Z) - perpendicolare al piano YZ, quindi lungo X positivo
+vn 1.0 0.0 0.0
+
+# Facce (v/vt/vn)
+f 1/1/1 2/2/1 4/4/1
+f 1/1/1 4/4/1 3/3/1
