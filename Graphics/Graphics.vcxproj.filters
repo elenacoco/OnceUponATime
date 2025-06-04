@@ -130,7 +130,9 @@
     <None Include="provaLambert.frag">
       <Filter>File di risorse\Shaders</Filter>
     </None>
-    <None Include="provaLambert.vert" />
+    <None Include="provaLambert.vert">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="pavimento_diffuse.jpg">
