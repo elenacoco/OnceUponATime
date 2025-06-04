@@ -86,7 +86,7 @@ int main()
     }
 
 
-    Shader shader("provaLambert.vert", "provaLambert.frag");
+    Shader shader("provaVS.vert", "provaFS.frag");
 
 
     //PIRAMIDE
