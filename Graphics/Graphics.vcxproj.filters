@@ -141,9 +141,6 @@
     <Image Include="Pascal_diffuse.jpeg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
-    <Image Include="gutenberg.jpg">
-      <Filter>File di risorse\Textures</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="prova.xml">
