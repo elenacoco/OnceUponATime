@@ -177,6 +177,7 @@
   <ItemGroup>
     <Image Include="Lamp_diffuse.jpg" />
     <Image Include="Lamp_bump.jpg" />
+    <Image Include="pagina.jpg" />
     <Image Include="Pascal_diffuse.jpeg" />
     <Image Include="pavimento.jpg" />
   </ItemGroup>
