@@ -23,8 +23,21 @@ Texture::Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLe
 
 	if (data)
 	{
-		GLenum internalFormat = (numCh == 4) ? GL_RGBA : GL_RGB;
-		glTexImage2D(type, unit, internalFormat, width, height, 0, internalFormat, pixelType, data);
+		GLenum format;
+		if (numCh == 1) {
+			format = GL_RED; // OpenGL core profile usa GL_RED per grayscale
+		}
+		else if (numCh == 3) {
+			format = GL_RGB;
+		}
+		else if (numCh == 4) {
+			format = GL_RGBA;
+		}
+		else {
+			std::cerr << "Formato immagine non supportato: " << numCh << " canali.\n";
+			stbi_image_free(data);
+		}
+		glTexImage2D(type, unit, format, width, height, 0, format, pixelType, data);
 		glGenerateMipmap(type);
 		std::cout << "CLASSE TEXTURE::Texture caricata con successo. ID: " << id << std::endl;
 	}
