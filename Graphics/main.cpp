@@ -111,7 +111,7 @@ int main()
     };
 
 
-    Model prova = Model("GBman.obj");
+    Model prova = Model("piano.obj");
     //Model prova = Model("");
 
 	bool piramide = true;
@@ -225,7 +225,7 @@ int main()
 
         //matrici per il 3d
         Matrix4x4f model = Matrix4x4f();
-        model = model.model(Vector3f(0), Vector3f(scale), rotation, Vector3f(0.0f, 1.0f, 0.0f));
+        model = model.model(Vector3f(0), Vector3f(1), rotation, Vector3f(0.0f, 0.0f, 1.0f));
         Matrix4x4f view = Matrix4x4f();
         //view = view.view(Vector3f(0.0f, 0.5f, -5.0f), Vector3f(0), Vector3f(0.0f, 0.5f, 0.5f)); //non mi convince
         Vector3f vec = Vector3f(0.0f, -0.7f, -5.0f);

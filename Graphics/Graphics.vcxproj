@@ -175,6 +175,7 @@
     <None Include="provaVS.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="gutenberg.jpg" />
     <Image Include="Lamp_diffuse.jpg" />
     <Image Include="Lamp_bump.jpg" />
     <Image Include="Pascal_diffuse.jpeg" />
