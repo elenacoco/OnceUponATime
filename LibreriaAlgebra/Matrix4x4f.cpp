@@ -456,7 +456,7 @@ Matrix4x4f Matrix4x4f::model(Vector3f translation, Vector3f scale, float degrees
     model = model.rotation(degrees, axis);
     model = model.scale(scale);
 
-    return model;
+    return *this * model;
 }
 
 Matrix4x4f Matrix4x4f::view(Vector3f eye, Vector3f lookAt, Vector3f up) //capire se usare .dot()

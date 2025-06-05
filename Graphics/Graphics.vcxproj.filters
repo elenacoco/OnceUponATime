@@ -150,6 +150,9 @@
     <Image Include="pagina_diffuse.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
+    <Image Include="GBMan_diffuse.png">
+      <Filter>File di risorse\Textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="prova.xml">

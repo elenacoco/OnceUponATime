@@ -28,6 +28,7 @@ using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
+void updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const Matrix4x4f& view, const Matrix4x4f& proj);
 
 //lo facciamo direttamente nella classe shader che chiamiamo nel main
 //string vertexPath = Utils::readFile("provaVS.vert");
@@ -50,12 +51,12 @@ int main()
 
     root_node = doc.first_node("scene");
 
+    //Finestra
     int widthWindow = stoi(root_node->first_node("window")->first_node("width")->value());
     int heightWindow = stoi(root_node->first_node("window")->first_node("height")->value());
 
-    
     // glfw: initialize and configure
-    // ------------------------------
+// ------------------------------
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -85,6 +86,87 @@ int main()
         return -1;
     }
 
+    // Ambiente
+    xml_node<>* env = root_node->first_node("environment");
+    xml_node<>* bg = env->first_node("backgroundColor");
+    Vector3f bgColor = Vector3f( stof(bg->first_attribute("r")->value()), stof(bg->first_attribute("g")->value()), stof(bg->first_attribute("b")->value()) );
+	cout << "Colore di sfondo: " << bgColor << endl;
+
+    xml_node<>* ambient = env->first_node("ambientLight");
+    Vector3f ambientLight = Vector3f( stof(ambient->first_attribute("r")->value()), stof(ambient->first_attribute("g")->value()), stof(ambient->first_attribute("b")->value()) );
+	cout << "Colore della luce ambientale: " << ambientLight << endl;
+
+ //   //Luci
+	//xml_node<>* lightsNode = root_node->first_node("lights");
+	////vector<Light> lights; //serve la classe light?
+
+ //   for (xml_node<>* lightNode = lightsNode->first_node("light"); lightNode; lightNode = lightNode->next_sibling("light"))
+ //   {
+ //       string lightType = lightNode->first_attribute("type")->value();
+ //       Vector3f position = Vector3f(stof(lightNode->first_node("position")->first_attribute("x")->value()),
+ //           stof(lightNode->first_node("position")->first_attribute("y")->value()),
+ //           stof(lightNode->first_node("position")->first_attribute("z")->value()));
+ //       Vector3f color = Vector3f(stof(lightNode->first_node("color")->first_attribute("r")->value()),
+ //           stof(lightNode->first_node("color")->first_attribute("g")->value()),
+ //           stof(lightNode->first_node("color")->first_attribute("b")->value()));
+ //       float intensity = stof(lightNode->first_node("intensity")->value());
+ //   }
+
+    //Camera
+	xml_node<>* cameraNode = root_node->first_node("camera");
+
+	Vector3f cameraPos = Vector3f(stof(cameraNode->first_node("position")->first_attribute("x")->value()),
+		stof(cameraNode->first_node("position")->first_attribute("y")->value()),
+		stof(cameraNode->first_node("position")->first_attribute("z")->value()));
+	cout << "Camera position: " << cameraPos << endl;
+
+	Vector3f cameraTarget = Vector3f(stof(cameraNode->first_node("target")->first_attribute("x")->value()), 
+        stof(cameraNode->first_node("target")->first_attribute("y")->value()),
+		stof(cameraNode->first_node("target")->first_attribute("z")->value()));
+	cout << "Camera target: " << cameraTarget << endl;
+
+	Vector3f cameraUp = Vector3f(stof(cameraNode->first_node("up")->first_attribute("x")->value()),
+		stof(cameraNode->first_node("up")->first_attribute("y")->value()),
+		stof(cameraNode->first_node("up")->first_attribute("z")->value()));
+	cout << "Camera up: " << cameraUp << endl;
+
+	float fov = stof(cameraNode->first_node("fov")->value());
+	cout << "Camera FOV: " << fov << endl;
+
+
+    //Modelli
+	xml_node<>* modelsNode = root_node->first_node("models");
+	vector<Model> models;
+	for (xml_node<>* modelNode = modelsNode->first_node("model"); modelNode; modelNode = modelNode->next_sibling("model"))
+	{
+		//non legge il nome del modello, serve?
+		string modelPath = modelNode->first_node("path")->value();
+		cout << "Model path: " << modelPath << endl; // Stampa il percorso del modello
+		vector<string> texturePaths;
+		xml_node<>* texturesNode = modelNode->first_node("textures");
+		for (xml_node<>* textureNode = texturesNode->first_node("texture"); textureNode; textureNode = textureNode->next_sibling("texture"))
+		{
+			texturePaths.push_back(textureNode->value());
+			cout << "Texture path: " << textureNode->value() << endl; // Stampa il percorso della texture
+            //non legge il type della texture, serve?
+		}
+		Model model(modelPath, texturePaths); //DA PROBLEMI MA NON CAPISCO PERCHE', non entra nemmeno nell'if sotto, crasha prima
+		if (!model.meshes.empty())
+		{
+			cout << "Modello caricato con successo: " << modelPath << endl;
+			models.push_back(model);
+		}
+		else
+		{
+			cout << "Errore nel caricamento del modello: " << modelPath << endl;
+			//return -1; // Esci se un modello non viene caricato correttamente
+		}
+        //manca la lettura del transform
+	}
+
+
+
+
 
     Shader shader("provaVS.vert", "provaFS.frag");
 
@@ -111,9 +193,9 @@ int main()
     };
 
     vector<string> pathTexture1 = {"pagina_diffuse.jpg"};
-    vector<string> pathTexture2 = {"pavimento_diffuse.jpg"};
-    Model prova = Model("piano.obj", pathTexture1);
-    Model prova2 = Model("cubo.obj", pathTexture2);
+    vector<string> pathTexture2 = {"book_diffuse.png"};
+    Model prova = Model("page_plane.obj", pathTexture1);
+    Model prova2 = Model("book_on_xz.obj", pathTexture2);
     //Model prova = Model("");
 
 	bool piramide = true;
@@ -175,7 +257,7 @@ int main()
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     ////flitri
     //int width, height, numChannels;
-    //unsigned char* data = stbi_load("Lamp_bottom_Albedo.jpg", &width, &height, &numChannels, 0);
+    //unsigned char* data = stbi_load("pavimento_diffuse.jpg", &width, &height, &numChannels, 0);
     //if (data)
     //{
     //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data); //COLLEGA EFFETTIVAMENTE LA TEXTUREEEE, se no si vede nero
@@ -201,17 +283,15 @@ int main()
     // -----------
     while (!glfwWindowShouldClose(window))
     {
-        // input
-        // -----
+
         processInput(window);
 
-        // render
-        // ------
+
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f); //DA CAMBIARE
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-        glUseProgram(shader.shaderID);
+		shader.useProgram(); // usa lo shader
 
         //setta la rotazione del modello
 		double currentTime = glfwGetTime(); // tempo corrente
@@ -227,17 +307,15 @@ int main()
 
         //matrici per il 3d
         Matrix4x4f model = Matrix4x4f();
-        model = model.model(Vector3f(0), Vector3f(1), rotation, Vector3f(0.0f, 0.0f, 1.0f));
+        model = model.model(Vector3f(0), Vector3f(1), 0, Vector3f(0.0f, 0.0f, 1.0f));
         Matrix4x4f view = Matrix4x4f();
         //view = view.view(Vector3f(0.0f, 0.5f, -5.0f), Vector3f(0), Vector3f(0.0f, 0.5f, 0.5f)); //non mi convince
-        Vector3f vec = Vector3f(0.0f, -0.7f, -15.0f);
+        Vector3f vec = Vector3f(0.0f, -10.0f, -80.0f); //con il meno sulla y ci alziamo, sulla z ci allontaniamo
 		view = view.translate(vec); // sposto il mondo indietro di --- unità lungo l'asse z
         Matrix4x4f proj = Matrix4x4f();
         proj = proj.perspectiveSimplify(45.0f, (float)(widthWindow/heightWindow), 0.1f, 100.0f);
 
-        glUniformMatrix4fv(glGetUniformLocation(shader.shaderID, "model"), 1, GL_TRUE, &model.a11); //BISOGNA TRASPORRE LE MATRICI!!!!!!!!!
-        glUniformMatrix4fv(glGetUniformLocation(shader.shaderID, "view"), 1, GL_TRUE, &view.a11);
-        glUniformMatrix4fv(glGetUniformLocation(shader.shaderID, "proj"), 1, GL_TRUE, &proj.a11);
+		updateCommonMatrices(shader, model, view, proj); // aggiorna le matrici nel shader
 
 		//cout << "Model Matrix: " << model << endl;
 		//cout << "View Matrix: " << view << endl;
@@ -254,8 +332,13 @@ int main()
 
 
         Matrix4x4f model1 = Matrix4x4f();
-        model1 = model1.model(Vector3f(0.0f, 4.0f, 0.0f), Vector3f(1), rotation, Vector3f(0.0f, 1.0f, 0.0f));
-        glUniformMatrix4fv(glGetUniformLocation(shader.shaderID, "model"), 1, GL_TRUE, &model1.a11); //BISOGNA TRASPORRE LE MATRICI!!!!!!!!!
+		Vector3f x = Vector3f(1.0f, 0.0f, 0.0f);
+		Vector3f y = Vector3f(0.0f, 1.0f, 0.0f);
+		Vector3f z = Vector3f(0.0f, 0.0f, 1.0f);
+		//model1 = model1.rotation(-90, x); // ruota il modello di 90 gradi attorno all'asse x
+		model1 = model1.model(Vector3f(0.0f, 4.0f, 0.0f), Vector3f(1), -90, y); // ruota il modello di 90 gradi attorno all'asse z
+        
+		updateCommonMatrices(shader, model1, view, proj); // aggiorna le matrici nel shader per il secondo modello
 
         prova2.drawModel(shader); // Draw the model
 
@@ -297,6 +380,24 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+    {
+		//premuto 1 per disegnare la primo oggetto
+		std::cout << "Disegno il primo oggetto" << std::endl;
+		// Qui puoi aggiungere il codice per disegnare il primo oggetto
+	}
+	else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+	{
+		//premuto 2 per disegnare il secondo oggetto
+		std::cout << "Disegno il secondo oggetto" << std::endl;
+    }
+	else if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+	{
+		//premuto 3 per disegnare il terzo oggetto
+		std::cout << "Disegno il terzo oggetto" << std::endl;
+		// Qui puoi aggiungere il codice per disegnare il terzo oggetto
+	}
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -306,4 +407,11 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
+}
+
+void updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const Matrix4x4f& view, const Matrix4x4f& proj) 
+{
+    shader.setMat4("model", model);
+    shader.setMat4("view", view);
+    shader.setMat4("proj", proj);
 }

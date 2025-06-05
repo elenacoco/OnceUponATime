@@ -86,6 +86,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             v.texCoords = Vector2f(0.0f, 0.0f);
 
         vertices.push_back(v);
+		
     }
 
     //indici
@@ -117,7 +118,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     return Mesh(vertices, indices, textures);
 }
 
-//Funzione per caricare piu piu Texture su uno stesso modello(Diffuse, Normal, Specular, Roughness)
+//Funzione per caricare piu Texture su uno stesso modello(Diffuse, Normal, Specular, Roughness)
 vector<Textures> Model::loadTextures(vector<string> path)
 {
     vector<Textures> vect;
@@ -136,25 +137,25 @@ vector<Textures> Model::loadTextures(vector<string> path)
             tx.bind();
 
             //Controllo di che tipo è la texture
-            if (path[i].find("diffuse"))
+            if (path[i].find("diffuse") != std::string::npos)
             {
                 Textures tex = { tx.id , "texture_diffuse" };
                 vect.push_back(tex);
             }
 
-            if (path[i].find("normal"))
+            if (path[i].find("normal") != std::string::npos)
             {
                 Textures tex = { tx.id , "texture_normal" };           
                 vect.push_back(tex);
             }
 
-            if (path[i].find("specular"))
+            if (path[i].find("specular") != std::string::npos)
             {
                 Textures tex = { tx.id , "texture_specular" };
                 vect.push_back(tex);
             }
 
-            if (path[i].find("roughness"))
+            if (path[i].find("roughness") != std::string::npos)
             {
                 Textures tex = { tx.id , "texture_roughness" };
                 vect.push_back(tex);

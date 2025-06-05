@@ -60,7 +60,12 @@ void Shader::useProgram()
 	glUseProgram(shaderID);
 }
 
-void Shader::setInt(const char* uniform, int value)
+void Shader::setInt(const char* uniform, int value) //serve per le texture 
 {
 	glUniform1i(glGetUniformLocation(shaderID, uniform), value);
+}
+
+void Shader::setMat4(const char* uniform, Matrix4x4f value)
+{
+	glUniformMatrix4fv(glGetUniformLocation(shaderID, uniform), 1, GL_TRUE, &value.a11); //GL_TRUE per trasporre la matrice
 }

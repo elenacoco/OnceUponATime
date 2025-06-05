@@ -177,6 +177,7 @@
     <None Include="provaVS.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="GBMan_diffuse.png" />
     <Image Include="Lamp_diffuse.jpg" />
     <Image Include="Lamp_bump.jpg" />
     <Image Include="pagina_diffuse.jpg" />

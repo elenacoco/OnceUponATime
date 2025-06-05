@@ -39,8 +39,6 @@
 			<path>cubo.obj</path>
 			<textures>
 				<texture type="diffuse">pavimento_diffuse.jpg</texture>
-				<texture type="normal"></texture>
-				<texture type="specular"></texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>
@@ -68,8 +66,6 @@
 			<path>lamp.blend</path>
 			<textures>
 				<texture type="diffuse">Lamp_diffuse.jpg</texture>
-				<texture type="normal"></texture>
-				<texture type="specular"></texture>
 			</textures>
 			<transform>
 				<translate x="0" y="4" z="0"/>
