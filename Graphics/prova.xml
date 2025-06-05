@@ -27,7 +27,7 @@
 	</lights>
 
 	<camera>
-		<position x="0" y="-0.7" z="-15"/>
+		<position x="15" y="0" z="-30"/>
 		<target x="0" y="0" z="0"/>
 		<up x="0" y="1" z="0"/>
 		<fov>45</fov>
@@ -36,9 +36,9 @@
 	<models>
 		<model>
 			<name>Libro</name>
-			<path>cubo.obj</path>
+			<path>book_on_xz.obj</path>
 			<textures>
-				<texture type="diffuse">pavimento_diffuse.jpg</texture>
+				<texture type="diffuse">book_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>

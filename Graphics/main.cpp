@@ -27,7 +27,7 @@ using namespace rapidxml;
 using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window);
+void processInput(GLFWwindow* window, Shader shader, vector<Model> model);
 void updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const Matrix4x4f& view, const Matrix4x4f& proj);
 
 //lo facciamo direttamente nella classe shader che chiamiamo nel main
@@ -41,6 +41,11 @@ void updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const Matrix4
 
 int main()
 {
+    Vector3f x_axis = Vector3f(1.0f, 0.0f, 0.0f);
+    Vector3f y_axis = Vector3f(0.0f, 1.0f, 0.0f);
+    Vector3f z_axis = Vector3f(0.0f, 0.0f, 1.0f);
+
+
     //RapidXMl
     xml_document<> doc;
     xml_node<>* root_node;
@@ -278,22 +283,23 @@ int main()
 
 	glEnable(GL_DEPTH_TEST); // abilitare il test di profondità per evitare che i poligoni vengano disegnati sopra ad altri
 
+    
+
 
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
     {
-
-        processInput(window);
+        processInput(window, shader, models);
 
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f); //DA CAMBIARE
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-		shader.useProgram(); // usa lo shader
+        shader.useProgram(); // usa lo shader
 
-        //setta la rotazione del modello
+        //ROTAZIONE ASSE Y
 		double currentTime = glfwGetTime(); // tempo corrente
 		if (currentTime - lastTime >= 1.0 / 60.0) // aggiorna ogni 1/60 di secondo
 		{
@@ -301,21 +307,61 @@ int main()
 			lastTime = currentTime; // aggiorna il tempo dell'ultimo frame
 		}
 
-        //per scalare il modello in base al tempo (SI RIBALTA DOPO LA SCALA A ZERO!!!!)
-        float time = glfwGetTime();
-        float scale = abs(sin(time)); // funzione di scala nel tempo
+        //SCALA IL MODELLO
+        float scaleModel = abs(sin(currentTime));
+
 
         //matrici per il 3d
-        Matrix4x4f model = Matrix4x4f();
-        model = model.model(Vector3f(0), Vector3f(1), 0, Vector3f(0.0f, 0.0f, 1.0f));
-        Matrix4x4f view = Matrix4x4f();
-        //view = view.view(Vector3f(0.0f, 0.5f, -5.0f), Vector3f(0), Vector3f(0.0f, 0.5f, 0.5f)); //non mi convince
-        Vector3f vec = Vector3f(0.0f, -10.0f, -80.0f); //con il meno sulla y ci alziamo, sulla z ci allontaniamo
-		view = view.translate(vec); // sposto il mondo indietro di --- unità lungo l'asse z
-        Matrix4x4f proj = Matrix4x4f();
-        proj = proj.perspectiveSimplify(45.0f, (float)(widthWindow/heightWindow), 0.1f, 100.0f);
+        Matrix4x4f modelMatrix = Matrix4x4f();
+        Matrix4x4f viewMatrix = Matrix4x4f();
+        Matrix4x4f projMatrix = Matrix4x4f();
 
-		updateCommonMatrices(shader, model, view, proj); // aggiorna le matrici nel shader
+        
+        //LIBRO
+        Vector3f translate = Vector3f(0.0f);
+        Vector3f scale = Vector3f(1.0f);
+        float degrees = -90;
+        modelMatrix = modelMatrix.model(translate, scale, 0, y_axis);
+
+        Vector3f vec = Vector3f(0.0f, -10.0f, -80.0f); //con il meno sulla y ci alziamo, sulla z ci allontaniamo
+        viewMatrix = viewMatrix.translate(vec); // sposto il mondo indietro di --- unità lungo l'asse z
+		//viewMatrix = viewMatrix.view(cameraPos, cameraTarget, cameraUp); // aggiorna la matrice di vista con la posizione della camera
+        projMatrix = projMatrix.perspectiveSimplify(45.0f, (float)widthWindow / heightWindow, 0.1f, 100.0f);
+        //projMatrix = projMatrix.ortho(10, -10, 10, -10, 0.1f, 1000.0f);
+
+        updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+
+		models[0].drawModel(shader);
+        
+        //PASCAL
+        translate = Vector3f(0.0f, 0.0f, 7.0f); // posizione dell'oggetto
+        modelMatrix = Matrix4x4f(); //resettare la matrice
+        modelMatrix = modelMatrix.rotation(degrees, x_axis); // ruota il modello attorno all'asse x
+        modelMatrix = modelMatrix.model(translate, Vector3f(1), rotation, z_axis); // ruota il modello attorno all'asse y nel tempo
+
+        updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+
+        models[1].drawModel(shader);
+
+        //LAMPADA
+        translate = Vector3f(0.0f, 0.0f, 9.0f); // posizione dell'oggetto
+        modelMatrix = Matrix4x4f();
+        modelMatrix = modelMatrix.rotation(degrees, x_axis); // ruota il modello attorno all'asse x
+        modelMatrix = modelMatrix.model(translate, scale, rotation, z_axis); // ruota il modello attorno all'asse y nel tempo
+
+        updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+
+        //models[2].drawModel(shader);
+
+		//OMINO
+		translate = Vector3f(0.0f, 8.0f, 0.0f); // posizione dell'oggetto
+        modelMatrix = Matrix4x4f();
+		modelMatrix = modelMatrix.rotation(0, x_axis); // ruota il modello attorno all'asse x
+		modelMatrix = modelMatrix.model(translate, Vector3f(30), rotation, y_axis); // ruota il modello attorno all'asse y nel tempo
+
+        updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+
+        //models[3].drawModel(shader);
 
 		//cout << "Model Matrix: " << model << endl;
 		//cout << "View Matrix: " << view << endl;
@@ -328,19 +374,16 @@ int main()
 			glBindVertexArray(0); // no need to unbind it every time 
 		}
 
-		prova.drawModel(shader); // Draw the model
+		//prova.drawModel(shader); // Draw the model
 
 
-        Matrix4x4f model1 = Matrix4x4f();
-		Vector3f x = Vector3f(1.0f, 0.0f, 0.0f);
-		Vector3f y = Vector3f(0.0f, 1.0f, 0.0f);
-		Vector3f z = Vector3f(0.0f, 0.0f, 1.0f);
-		//model1 = model1.rotation(-90, x); // ruota il modello di 90 gradi attorno all'asse x
-		model1 = model1.model(Vector3f(0.0f, 4.0f, 0.0f), Vector3f(1), -90, y); // ruota il modello di 90 gradi attorno all'asse z
-        
-		updateCommonMatrices(shader, model1, view, proj); // aggiorna le matrici nel shader per il secondo modello
+  //      Matrix4x4f model1 = Matrix4x4f();
+		//model1 = model1.model(Vector3f(0.0f, 4.0f, 0.0f), Vector3f(1), -90, x_axis); // ruota il modello di 90 gradi attorno all'asse y
+  //      
+		//updateCommonMatrices(shader, model1, viewMatrix, projMatrix); // aggiorna le matrici nel shader per il secondo modello
 
-        prova2.drawModel(shader); // Draw the model
+  //      //prova2.drawModel(shader); // Draw the model
+		//models[2].drawModel(shader); // Draw the first model loaded from the XML file
 
 
 
@@ -376,7 +419,7 @@ int main()
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* window)
+void processInput(GLFWwindow* window, Shader shader, vector<Model> model)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -391,12 +434,14 @@ void processInput(GLFWwindow* window)
 	{
 		//premuto 2 per disegnare il secondo oggetto
 		std::cout << "Disegno il secondo oggetto" << std::endl;
+		//model[2].drawModel(shader); // Disegna il secondo modello caricato
     }
 	else if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
 	{
 		//premuto 3 per disegnare il terzo oggetto
 		std::cout << "Disegno il terzo oggetto" << std::endl;
 		// Qui puoi aggiungere il codice per disegnare il terzo oggetto
+		//model[3].drawModel(shader); // Disegna il terzo modello caricato
 	}
 }
 
