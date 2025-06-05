@@ -474,17 +474,17 @@ Matrix4x4f Matrix4x4f::view(Vector3f eye, Vector3f lookAt, Vector3f up) //capire
     mat.a11 = x_v.x;
     mat.a12 = y_v.x;
     mat.a13 = z_v.x;
-    mat.a14 = eye.x;
+    mat.a14 = -x_v.dotProd(eye);
 
     mat.a21 = x_v.y;
     mat.a22 = y_v.y;
     mat.a23 = z_v.y;
-    mat.a24 = eye.y;
+    mat.a24 = -y_v.dotProd(eye);
 
     mat.a31 = x_v.z;
     mat.a32 = y_v.z;
     mat.a33 = z_v.z;
-    mat.a34 = eye.z;
+    mat.a34 = -z_v.dotProd(eye);
 
     return mat;
 }

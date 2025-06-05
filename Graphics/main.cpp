@@ -197,17 +197,18 @@ int main()
         3, 0, 4
     };
 
-    vector<string> pathTexture1 = {"pagina_diffuse.jpg"};
-    vector<string> pathTexture2 = {"book_diffuse.png"};
-    Model prova = Model("page_plane.obj", pathTexture1);
-    Model prova2 = Model("book_on_xz.obj", pathTexture2);
+    //vector<string> pathTexture1 = {"pagina_diffuse.jpg"};
+    //vector<string> pathTexture2 = {"book_diffuse.png"};
+    //Model prova = Model("page_plane.obj", pathTexture1);
+    //Model prova2 = Model("book_on_xz.obj", pathTexture2);
     //Model prova = Model("");
+    Model provaTriangolo = Model("cubo.obj");
 
 	bool piramide = true;
     unsigned int VBO, VAO, EBO;
 
 
-	if (!prova.meshes.empty())
+	if (!provaTriangolo.meshes.empty())
 	{
 		std::cout << "Modello caricato con successo!" << std::endl;
 		piramide = false; // Se il modello viene caricato, non disegnare la piramide
@@ -316,50 +317,57 @@ int main()
         Matrix4x4f viewMatrix = Matrix4x4f();
         Matrix4x4f projMatrix = Matrix4x4f();
 
-        
-        //LIBRO
-        Vector3f translate = Vector3f(0.0f);
-        Vector3f scale = Vector3f(1.0f);
-        float degrees = -90;
-        modelMatrix = modelMatrix.model(translate, scale, 0, y_axis);
+		modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1), 0, y_axis); // ruota il modello attorno all'asse y nel tempo
+		viewMatrix = viewMatrix.view(cameraPos, cameraTarget, cameraUp); // aggiorna la matrice di vista con la posizione della camera
+		projMatrix = projMatrix.perspectiveSimplify(fov, (float)widthWindow / heightWindow, 0.1f, 100.0f);
 
-        Vector3f vec = Vector3f(0.0f, -10.0f, -80.0f); //con il meno sulla y ci alziamo, sulla z ci allontaniamo
-        viewMatrix = viewMatrix.translate(vec); // sposto il mondo indietro di --- unità lungo l'asse z
-		//viewMatrix = viewMatrix.view(cameraPos, cameraTarget, cameraUp); // aggiorna la matrice di vista con la posizione della camera
-        projMatrix = projMatrix.perspectiveSimplify(45.0f, (float)widthWindow / heightWindow, 0.1f, 100.0f);
-        //projMatrix = projMatrix.ortho(10, -10, 10, -10, 0.1f, 1000.0f);
+		updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
 
-        updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+		provaTriangolo.drawModel(shader); // Draw the model
 
-		models[0].drawModel(shader);
-        
-        //PASCAL
-        translate = Vector3f(0.0f, 0.0f, 7.0f); // posizione dell'oggetto
-        modelMatrix = Matrix4x4f(); //resettare la matrice
-        modelMatrix = modelMatrix.rotation(degrees, x_axis); // ruota il modello attorno all'asse x
-        modelMatrix = modelMatrix.model(translate, Vector3f(1), rotation, z_axis); // ruota il modello attorno all'asse y nel tempo
+  //      //LIBRO
+  //      Vector3f translate = Vector3f(0.0f);
+  //      Vector3f scale = Vector3f(1.0f);
+  //      float degrees = -90;
+  //      modelMatrix = modelMatrix.model(translate, scale, 0, y_axis);
 
-        updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+  //      Vector3f vec = Vector3f(0.0f, -10.0f, -80.0f); //con il meno sulla y ci alziamo, sulla z ci allontaniamo
+  //      viewMatrix = viewMatrix.translate(vec); // sposto il mondo indietro di --- unità lungo l'asse z
+		////viewMatrix = viewMatrix.view(cameraPos, cameraTarget, cameraUp); // aggiorna la matrice di vista con la posizione della camera
+  //      projMatrix = projMatrix.perspectiveSimplify(45.0f, (float)widthWindow / heightWindow, 0.1f, 100.0f);
+  //      //projMatrix = projMatrix.ortho(10, -10, 10, -10, 0.1f, 1000.0f);
 
-        models[1].drawModel(shader);
+  //      updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
 
-        //LAMPADA
-        translate = Vector3f(0.0f, 0.0f, 9.0f); // posizione dell'oggetto
-        modelMatrix = Matrix4x4f();
-        modelMatrix = modelMatrix.rotation(degrees, x_axis); // ruota il modello attorno all'asse x
-        modelMatrix = modelMatrix.model(translate, scale, rotation, z_axis); // ruota il modello attorno all'asse y nel tempo
+		//models[0].drawModel(shader);
+  //      
+  //      //PASCAL
+  //      translate = Vector3f(0.0f, 0.0f, 7.0f); // posizione dell'oggetto
+  //      modelMatrix = Matrix4x4f(); //resettare la matrice
+  //      modelMatrix = modelMatrix.rotation(degrees, x_axis); // ruota il modello attorno all'asse x
+  //      modelMatrix = modelMatrix.model(translate, Vector3f(1), rotation, z_axis); // ruota il modello attorno all'asse y nel tempo
 
-        updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+  //      updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
 
-        //models[2].drawModel(shader);
+  //      models[1].drawModel(shader);
 
-		//OMINO
-		translate = Vector3f(0.0f, 8.0f, 0.0f); // posizione dell'oggetto
-        modelMatrix = Matrix4x4f();
-		modelMatrix = modelMatrix.rotation(0, x_axis); // ruota il modello attorno all'asse x
-		modelMatrix = modelMatrix.model(translate, Vector3f(30), rotation, y_axis); // ruota il modello attorno all'asse y nel tempo
+  //      //LAMPADA
+  //      translate = Vector3f(0.0f, 0.0f, 9.0f); // posizione dell'oggetto
+  //      modelMatrix = Matrix4x4f();
+  //      modelMatrix = modelMatrix.rotation(degrees, x_axis); // ruota il modello attorno all'asse x
+  //      modelMatrix = modelMatrix.model(translate, scale, rotation, z_axis); // ruota il modello attorno all'asse y nel tempo
 
-        updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+  //      updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+
+  //      //models[2].drawModel(shader);
+
+		////OMINO
+		//translate = Vector3f(0.0f, 8.0f, 0.0f); // posizione dell'oggetto
+  //      modelMatrix = Matrix4x4f();
+		//modelMatrix = modelMatrix.rotation(0, x_axis); // ruota il modello attorno all'asse x
+		//modelMatrix = modelMatrix.model(translate, Vector3f(30), rotation, y_axis); // ruota il modello attorno all'asse y nel tempo
+
+  //      updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
 
         //models[3].drawModel(shader);
 
@@ -403,7 +411,7 @@ int main()
 	}
 	else
 	{
-		for (Mesh& mesh : prova.meshes)
+		for (Mesh& mesh : provaTriangolo.meshes)
 		{
 			mesh.VAO.unbind();
 		}
