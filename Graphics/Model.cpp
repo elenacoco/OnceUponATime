@@ -104,7 +104,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	//se non ci sono texture caricate, carica una texture di default
 	if (textures.empty())
 	{
-		Texture defaultTexture = Texture("pagina_diffuse.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
+		Texture defaultTexture = Texture("pavimento_diffuse.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
         std::cout << "CLASSE MODEL::Caricata Texture di Default, il suo ID: " << defaultTexture.id << std::endl;
         if (defaultTexture.id == 0) 
         {

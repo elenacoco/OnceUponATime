@@ -461,13 +461,19 @@ Matrix4x4f Matrix4x4f::model(Vector3f translation, Vector3f scale, float degrees
 
 Matrix4x4f Matrix4x4f::view(Vector3f eye, Vector3f lookAt, Vector3f up) //capire se usare .dot()
 {
-    Vector3f x_v;
+	// Passiamo da camera space a world space, quindi dobbiamo calcolare la matrice di vista
+    //maettiamo i vettori in colonna per fare da camera a wordl
+ 
+    /*Vector3f x_v;
     Vector3f y_v;
-    Vector3f z_v;
+    Vector3f z_v;*/
         
-    z_v = (eye - lookAt).normalize();
+    /*z_v = (eye - lookAt).normalize();
+	cout << "z_v: " << z_v << endl;
     x_v = (up.crossProd(z_v)).normalize();
+	cout << "x_v: " << x_v << endl;
     y_v = (z_v.crossProd(x_v)).normalize();
+	cout << "y_v: " << y_v << endl;
 
     Matrix4x4f mat = Matrix4x4f();
 
@@ -484,7 +490,29 @@ Matrix4x4f Matrix4x4f::view(Vector3f eye, Vector3f lookAt, Vector3f up) //capire
     mat.a31 = x_v.z;
     mat.a32 = y_v.z;
     mat.a33 = z_v.z;
-    mat.a34 = -z_v.dotProd(eye);
+    mat.a34 = -z_v.dotProd(eye);*/
+
+    //Per passare da word a camera metto i vettori per riga
+	Matrix4x4f mat = Matrix4x4f(); // matrice identità
+
+	Vector3f camera_dir = (eye - lookAt).normalize();
+	Vector3f camera_right = (up.crossProd(camera_dir)).normalize();
+	Vector3f camera_up = camera_dir.crossProd(camera_right);
+    
+    mat.a11 = camera_right.x;
+    mat.a12 = camera_right.y;
+    mat.a13 = camera_right.z;
+    mat.a14 = -camera_right.dotProd(eye);
+
+    mat.a21 = camera_up.x;
+    mat.a22 = camera_up.y;
+    mat.a23 = camera_up.z;
+    mat.a24 = -camera_up.dotProd(eye);
+
+    mat.a31 = camera_dir.x;
+    mat.a32 = camera_dir.y;
+    mat.a33 = camera_dir.z;
+    mat.a34 = -camera_dir.dotProd(eye);
 
     return mat;
 }

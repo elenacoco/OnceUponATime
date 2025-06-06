@@ -197,12 +197,12 @@ int main()
         3, 0, 4
     };
 
-    vector<string> pathTexture1 = {"bookprova_diffuse.png", "pageprova_diffuse.png"};
+    //vector<string> pathTexture1 = {"bookprova_diffuse.png", "pageprova_diffuse.png"};
     //vector<string> pathTexture2 = {"book_diffuse.png"};
-    Model prova = Model("Textured.obj", pathTexture1);
+    //Model prova = Model("Textured.obj", pathTexture1);
     //Model prova2 = Model("book_on_xz.obj", pathTexture2);
     //Model prova = Model("");
-    //Model prova = Model("cubo.obj");
+    Model prova = Model("lamp.blend");
 
 	bool piramide = true;
     unsigned int VBO, VAO, EBO;
