@@ -197,18 +197,18 @@ int main()
         3, 0, 4
     };
 
-    //vector<string> pathTexture1 = {"pagina_diffuse.jpg"};
+    vector<string> pathTexture1 = {"bookprova_diffuse.png", "pageprova_diffuse.png"};
     //vector<string> pathTexture2 = {"book_diffuse.png"};
-    //Model prova = Model("page_plane.obj", pathTexture1);
+    Model prova = Model("Textured.obj", pathTexture1);
     //Model prova2 = Model("book_on_xz.obj", pathTexture2);
     //Model prova = Model("");
-    Model provaTriangolo = Model("cubo.obj");
+    //Model prova = Model("cubo.obj");
 
 	bool piramide = true;
     unsigned int VBO, VAO, EBO;
 
 
-	if (!provaTriangolo.meshes.empty())
+	if (!prova.meshes.empty())
 	{
 		std::cout << "Modello caricato con successo!" << std::endl;
 		piramide = false; // Se il modello viene caricato, non disegnare la piramide
@@ -323,7 +323,7 @@ int main()
 
 		updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
 
-		provaTriangolo.drawModel(shader); // Draw the model
+		prova.drawModel(shader); // Draw the model
 
   //      //LIBRO
   //      Vector3f translate = Vector3f(0.0f);
@@ -411,7 +411,7 @@ int main()
 	}
 	else
 	{
-		for (Mesh& mesh : provaTriangolo.meshes)
+		for (Mesh& mesh : prova.meshes)
 		{
 			mesh.VAO.unbind();
 		}

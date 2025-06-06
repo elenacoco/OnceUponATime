@@ -27,9 +27,9 @@
 	</lights>
 
 	<camera>
-		<position x="0" y="-1" z="2"/>
+		<position x="0" y="-5" z="4"/> <!-- pollice verso destra = x, indice che esce da noi = y (y negativa verso di noi), medio verso l'alto = z-->
 		<target x="0" y="0" z="0"/>
-		<up x="0" y="0" z="1"/>
+		<up x="0" y="0" z="1"/> <!-- asse verticale = z	-->
 		<fov>45</fov>
 	</camera>
 

@@ -176,6 +176,8 @@
     <None Include="provaFS.frag" />
     <None Include="provaLambert.frag" />
     <None Include="provaLambert.vert" />
+    <None Include="provaPhong.frag" />
+    <None Include="provaPhong.vert" />
     <None Include="provaVS.vert" />
   </ItemGroup>
   <ItemGroup>
