@@ -15,6 +15,7 @@ public:
 
 	void useProgram();
 	
-	void setInt(const char* uniform, int value); //capire se è utile
-	void setMat4(const char* uniform, Matrix4x4f value); //capire se è utile
+	void setInt(const char* uniform, int value);
+	void setMat4(const char* uniform, Matrix4x4f value);
+	void setVec3(const char* uniform, Vector3f value);
 };

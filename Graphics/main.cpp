@@ -20,6 +20,7 @@
 
 #include <AlgebraLineare.h>
 #include "Model.h"
+#include"Light.h"
 
 //OCCHIO AI DISTRUTTORI!!!!!!
 
@@ -101,21 +102,25 @@ int main()
     Vector3f ambientLight = Vector3f( stof(ambient->first_attribute("r")->value()), stof(ambient->first_attribute("g")->value()), stof(ambient->first_attribute("b")->value()) );
 	cout << "Colore della luce ambientale: " << ambientLight << endl;
 
- //   //Luci
-	//xml_node<>* lightsNode = root_node->first_node("lights");
-	////vector<Light> lights; //serve la classe light?
+    //Luci
+	xml_node<>* lightsNode = root_node->first_node("lights");
+	vector<Light> lights; 
 
- //   for (xml_node<>* lightNode = lightsNode->first_node("light"); lightNode; lightNode = lightNode->next_sibling("light"))
- //   {
- //       string lightType = lightNode->first_attribute("type")->value();
- //       Vector3f position = Vector3f(stof(lightNode->first_node("position")->first_attribute("x")->value()),
- //           stof(lightNode->first_node("position")->first_attribute("y")->value()),
- //           stof(lightNode->first_node("position")->first_attribute("z")->value()));
- //       Vector3f color = Vector3f(stof(lightNode->first_node("color")->first_attribute("r")->value()),
- //           stof(lightNode->first_node("color")->first_attribute("g")->value()),
- //           stof(lightNode->first_node("color")->first_attribute("b")->value()));
- //       float intensity = stof(lightNode->first_node("intensity")->value());
- //   }
+    for (xml_node<>* lightNode = lightsNode->first_node("light"); lightNode; lightNode = lightNode->next_sibling("light"))
+    {
+        string lightType = lightNode->first_node("type")->value();
+        cout << "light type" << lightType << endl;
+        Vector3f position = Vector3f(stof(lightNode->first_node("position")->first_attribute("x")->value()),
+            stof(lightNode->first_node("position")->first_attribute("y")->value()),
+            stof(lightNode->first_node("position")->first_attribute("z")->value()));
+        Vector3f color = Vector3f(stof(lightNode->first_node("color")->first_attribute("r")->value()),
+            stof(lightNode->first_node("color")->first_attribute("g")->value()),
+            stof(lightNode->first_node("color")->first_attribute("b")->value()));
+        cout << "colore luce" << color << endl;
+        float intensity = stof(lightNode->first_node("intensity")->value());
+        Light light = Light(lightType, position, color, intensity);
+        lights.push_back(light);
+    }
 
     //Camera
 	xml_node<>* cameraNode = root_node->first_node("camera");
@@ -173,7 +178,7 @@ int main()
 
 
 
-    Shader shader("provaVS.vert", "provaFS.frag");
+    Shader shader("provaPhong.vert", "provaPhong.frag");
 
 
     //PIRAMIDE
@@ -202,7 +207,7 @@ int main()
     //Model prova = Model("Textured.obj", pathTexture1);
     //Model prova2 = Model("book_on_xz.obj", pathTexture2);
     //Model prova = Model("");
-    Model prova = Model("lamp.blend");
+    Model prova = Model("Pascal.fbx");
 
 	bool piramide = true;
     unsigned int VBO, VAO, EBO;
@@ -317,11 +322,14 @@ int main()
         Matrix4x4f viewMatrix = Matrix4x4f();
         Matrix4x4f projMatrix = Matrix4x4f();
 
-		modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1), 0, y_axis); // ruota il modello attorno all'asse y nel tempo
+		modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1), rotation, y_axis); // ruota il modello attorno all'asse y nel tempo
 		viewMatrix = viewMatrix.view(cameraPos, cameraTarget, cameraUp); // aggiorna la matrice di vista con la posizione della camera
 		projMatrix = projMatrix.perspectiveSimplify(fov, (float)widthWindow / heightWindow, 0.1f, 100.0f);
 
 		updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+        lights[0].SetUniform(shader);
+        shader.setVec3("viewPosition", cameraPos);
+        shader.setVec3("ambientLight", ambientLight);
 
 		prova.drawModel(shader); // Draw the model
 
@@ -467,4 +475,5 @@ void updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const Matrix4
     shader.setMat4("model", model);
     shader.setMat4("view", view);
     shader.setMat4("proj", proj);
+ 
 }

@@ -69,3 +69,8 @@ void Shader::setMat4(const char* uniform, Matrix4x4f value)
 {
 	glUniformMatrix4fv(glGetUniformLocation(shaderID, uniform), 1, GL_TRUE, &value.a11); //GL_TRUE per trasporre la matrice
 }
+
+void Shader::setVec3(const char* uniform, Vector3f value)
+{
+	glUniform3fv(glGetUniformLocation(shaderID, uniform), 1, &value.x);  // 1 è un vettore o un elemento di un vettore?
+}
