@@ -151,6 +151,10 @@
     <None Include="provaPhong.frag">
       <Filter>File di risorse\Shaders</Filter>
     </None>
+    <None Include="provaTextMulti.vert">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
+    <None Include="provaTextMulti.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="pavimento_diffuse.jpg">

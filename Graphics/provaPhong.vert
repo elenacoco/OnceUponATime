@@ -16,8 +16,10 @@ uniform mat4 proj;
 void main()
 {
 	fragPos = vec3(model * vec4(aPos, 1.0)); //calcola la posizione del vertice nel mondo
+	
 	normal = mat3(transpose(inverse(model))) * aNormal; //calcola le normali trasformate
-	gl_Position = proj * view * vec4(fragPos,1); 
+	
+	gl_Position = proj * view * vec4(fragPos, 1); 
 	coordTex = vec2(aTexCoord.x, aTexCoord.y);
 	//vertexColor = vec4(aColor, 1.0); //passa il colore del vertice al fragment shader
 }

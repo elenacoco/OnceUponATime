@@ -20,7 +20,7 @@ void Model::drawModel(Shader& shader)
 void Model::loadModel(string path)
 {
 	Assimp::Importer import;
-    const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);	
+    const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
 	
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) 
     {
@@ -82,6 +82,24 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
                 std::cout << "UV[" << i << "] = " << v.texCoords.x << ", " << v.texCoords.y << std::endl;
 
         }
+        //tangenti
+		if (mesh->mTangents) //controlla se ci sono tangenti
+		{
+			Vector3f vector;
+			vector.x = mesh->mTangents[i].x;
+			vector.y = mesh->mTangents[i].y;
+			vector.z = mesh->mTangents[i].z;
+			v.tangent = vector;
+		}
+		//bitangenti
+		if (mesh->mBitangents) //controlla se ci sono bitangenti
+		{
+			Vector3f vector;
+			vector.x = mesh->mBitangents[i].x;
+			vector.y = mesh->mBitangents[i].y;
+			vector.z = mesh->mBitangents[i].z;
+			v.bitangent = vector;
+		}
         else
             v.texCoords = Vector2f(0.0f, 0.0f);
 
@@ -104,7 +122,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	//se non ci sono texture caricate, carica una texture di default
 	if (textures.empty())
 	{
-		Texture defaultTexture = Texture("pavimento_diffuse.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
+		Texture defaultTexture = Texture("lamp_diffuse.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
         std::cout << "CLASSE MODEL::Caricata Texture di Default, il suo ID: " << defaultTexture.id << std::endl;
         if (defaultTexture.id == 0) 
         {

@@ -113,6 +113,7 @@ int main()
         Vector3f position = Vector3f(stof(lightNode->first_node("position")->first_attribute("x")->value()),
             stof(lightNode->first_node("position")->first_attribute("y")->value()),
             stof(lightNode->first_node("position")->first_attribute("z")->value()));
+		cout << "position luce" << position << endl;
         Vector3f color = Vector3f(stof(lightNode->first_node("color")->first_attribute("r")->value()),
             stof(lightNode->first_node("color")->first_attribute("g")->value()),
             stof(lightNode->first_node("color")->first_attribute("b")->value()));
@@ -178,7 +179,8 @@ int main()
 
 
 
-    Shader shader("provaPhong.vert", "provaPhong.frag");
+    Shader shader("provaTextMulti.vert", "provaTextMulti.frag");
+    //Shader shader("provaPhong.vert", "provaPhong.frag");
 
 
     //PIRAMIDE
@@ -202,12 +204,12 @@ int main()
         3, 0, 4
     };
 
-    //vector<string> pathTexture1 = {"bookprova_diffuse.png", "pageprova_diffuse.png"};
+    vector<string> pathTexture1 = {"book_diffuse.png", "book_normal.png", "book_specular.png"};
     //vector<string> pathTexture2 = {"book_diffuse.png"};
     //Model prova = Model("Textured.obj", pathTexture1);
     //Model prova2 = Model("book_on_xz.obj", pathTexture2);
     //Model prova = Model("");
-    Model prova = Model("Pascal.fbx");
+    Model prova = Model("book.obj", pathTexture1);
 
 	bool piramide = true;
     unsigned int VBO, VAO, EBO;
@@ -326,11 +328,11 @@ int main()
 		viewMatrix = viewMatrix.view(cameraPos, cameraTarget, cameraUp); // aggiorna la matrice di vista con la posizione della camera
 		projMatrix = projMatrix.perspectiveSimplify(fov, (float)widthWindow / heightWindow, 0.1f, 100.0f);
 
-		updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+		
         lights[0].SetUniform(shader);
         shader.setVec3("viewPosition", cameraPos);
         shader.setVec3("ambientLight", ambientLight);
-
+        updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
 		prova.drawModel(shader); // Draw the model
 
   //      //LIBRO
