@@ -324,7 +324,7 @@ int main()
         Matrix4x4f viewMatrix = Matrix4x4f();
         Matrix4x4f projMatrix = Matrix4x4f();
 
-		modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1), rotation, y_axis); // ruota il modello attorno all'asse y nel tempo
+		modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1), rotation, z_axis); // ruota il modello attorno all'asse y nel tempo
 		viewMatrix = viewMatrix.view(cameraPos, cameraTarget, cameraUp); // aggiorna la matrice di vista con la posizione della camera
 		projMatrix = projMatrix.perspectiveSimplify(fov, (float)widthWindow / heightWindow, 0.1f, 100.0f);
 

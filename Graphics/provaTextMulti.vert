@@ -18,13 +18,13 @@ void main()
 {
 	fragPos = vec3(model * vec4(aPos, 1.0)); //calcola la posizione del vertice nella camera
 
-	vec3 normal = mat3(transpose(inverse(model))) * aNormal; //calcola le normali trasformate
-	vec3 tangent = mat3(transpose(inverse(model))) * aTangent; //calcola la tangente trasformata
-	vec3 bitangent = mat3(transpose(inverse(model))) * aBitangent; //calcola la bitangente trasformata
+	//vec3 normal = mat3(transpose(inverse(model))) * aNormal; //calcola le normali trasformate
+	//vec3 tangent = mat3(transpose(inverse(model))) * aTangent; //calcola la tangente trasformata
+	//vec3 bitangent = mat3(transpose(inverse(model))) * aBitangent; //calcola la bitangente trasformata
 
-	//vec3 normal = mat3(model) * aNormal; //calcola le normali trasformate
-	//vec3 tangent = mat3(model) * aTangent; //calcola la tangente trasformata
-	//vec3 bitangent = mat3(model) * aBitangent; //calcola la bitangente trasformata
+	vec3 normal = mat3(model) * aNormal; //calcola le normali trasformate
+	vec3 tangent = mat3(model) * aTangent; //calcola la tangente trasformata
+	vec3 bitangent = mat3(model) * aBitangent; //calcola la bitangente trasformata
 
 	TBN = (mat3(normalize(tangent), normalize(bitangent), normalize(normal))); //calcola la matrice TBN
 
