@@ -154,7 +154,13 @@
     <None Include="provaTextMulti.vert">
       <Filter>File di risorse\Shaders</Filter>
     </None>
-    <None Include="provaTextMulti.frag" />
+    <None Include="provaTextMulti.frag">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
+    <None Include="provaPagina.frag" />
+    <None Include="provaPagina.vert">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="pavimento_diffuse.jpg">

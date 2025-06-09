@@ -178,6 +178,8 @@ vector<Textures> Model::loadTextures(vector<string> path)
                 Textures tex = { tx.id , "texture_roughness" };
                 vect.push_back(tex);
             }
+
+			cout << "CLASSE MODEL::Caricata Texture: " << path[i] << ", il suo ID: " << tx.id << endl;
         }
     }
     return vect;
