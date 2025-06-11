@@ -178,6 +178,8 @@
     <None Include="provaFS.frag" />
     <None Include="provaLambert.frag" />
     <None Include="provaLambert.vert" />
+    <None Include="provaPagina.frag" />
+    <None Include="provaPagina.vert" />
     <None Include="provaPhong.frag" />
     <None Include="provaPhong.vert" />
     <None Include="provaTextMulti.frag" />

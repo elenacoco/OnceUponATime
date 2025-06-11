@@ -1,8 +1,7 @@
 #version 330 core
 out vec4 FragColor;
 
-in vec2 coordTex; 
-//in vec3 normal; // Normale interpolata dal vertex shader
+in vec2 coordTex;
 in vec3 fragPos;
 in mat3 TBN; // Matrice Tangente-Bitangent-Normale
 

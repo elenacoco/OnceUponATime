@@ -6,7 +6,6 @@ layout (location = 4) in vec3 aTangent; //vettore 3 con coordinate delle tangent
 layout (location = 5) in vec3 aBitangent; //vettore 3 con coordinate delle bitangenti
 
 out vec2 coordTex;
-//out vec3 normal; //passa le normali al fragment shader
 out vec3 fragPos; //passa la posizione nel mondo del vertice al fragment shader
 out mat3 TBN; //matrice TBN (Tangent, Bitangent, Normal) per il calcolo delle normali
 
@@ -18,13 +17,9 @@ void main()
 {
 	fragPos = vec3(model * vec4(aPos, 1.0)); //calcola la posizione del vertice nella camera
 
-	vec3 normal = mat3(transpose(inverse(model))) * aNormal; //calcola le normali trasformate
-	vec3 tangent = mat3(transpose(inverse(model))) * aTangent; //calcola la tangente trasformata
-	vec3 bitangent = mat3(transpose(inverse(model))) * aBitangent; //calcola la bitangente trasformata
-
-	//vec3 normal = mat3(model) * aNormal; //calcola le normali trasformate
-	//vec3 tangent = mat3(model) * aTangent; //calcola la tangente trasformata
-	//vec3 bitangent = mat3(model) * aBitangent; //calcola la bitangente trasformata
+	vec3 normal = mat3(model) * aNormal; //calcola le normali trasformate
+	vec3 tangent = mat3(model) * aTangent; //calcola la tangente trasformata
+	vec3 bitangent = mat3(model) * aBitangent; //calcola la bitangente trasformata
 
 	TBN = (mat3(normalize(tangent), normalize(bitangent), normalize(normal))); //calcola la matrice TBN
 

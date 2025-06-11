@@ -179,7 +179,8 @@ int main()
 
 
 
-    Shader shader("provaTextMulti.vert", "provaTextMulti.frag");
+    Shader shader("provaPagina.vert", "provaPagina.frag");
+    //Shader shader("provaTextMulti.vert", "provaTextMulti.frag");
     //Shader shader("provaPhong.vert", "provaPhong.frag");
 
 
@@ -204,12 +205,12 @@ int main()
         3, 0, 4
     };
 
-    vector<string> pathTexture1 = {"book_diffuse.png", "book_normal.png", "book_specular.png"};
+    vector<string> pathTexture1 = {"pagina_diffuse.jpg"};
     //vector<string> pathTexture2 = {"book_diffuse.png"};
     //Model prova = Model("Textured.obj", pathTexture1);
     //Model prova2 = Model("book_on_xz.obj", pathTexture2);
     //Model prova = Model("");
-    Model prova = Model("book.obj", pathTexture1);
+    Model prova = Model("pageProva.obj", pathTexture1);
 
 	bool piramide = true;
     unsigned int VBO, VAO, EBO;
@@ -329,9 +330,17 @@ int main()
 		projMatrix = projMatrix.perspectiveSimplify(fov, (float)widthWindow / heightWindow, 0.1f, 100.0f);
 
 		
-        lights[0].SetUniform(shader);
-        shader.setVec3("viewPosition", cameraPos);
-        shader.setVec3("ambientLight", ambientLight);
+        //lights[0].SetUniform(shader);
+        //shader.setVec3("viewPosition", cameraPos);
+        //shader.setVec3("ambientLight", ambientLight);
+
+		glUniform1f(glGetUniformLocation(shader.shaderID, "time"), (float)currentTime); // Passa il tempo allo shader
+		glUniform1f(glGetUniformLocation(shader.shaderID, "flipDuration"), 2.0f); // Passa il tempo allo shader
+		glUniform1f(glGetUniformLocation(shader.shaderID, "bendAmount"), 0.5f); // Passa il tempo allo shader
+		glUniform1f(glGetUniformLocation(shader.shaderID, "pageWidth"), 3.0f); // Passa il tempo allo shader
+
+
+        
         updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
 		prova.drawModel(shader); // Draw the model
 
