@@ -486,6 +486,13 @@ void processInput(GLFWwindow* window)
 		scene->showObject(3); // Mostra il terzo oggetto nella scena
 		// Qui puoi aggiungere il codice per disegnare il terzo oggetto
 	}
+	else if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+	{
+		//premuto 4 per disegnare il quarto oggetto
+		std::cout << "Disegno il quarto oggetto" << std::endl;
+		scene->showObject(4); // Mostra il quarto oggetto nella scena
+		// Qui puoi aggiungere il codice per disegnare il quarto oggetto
+	}
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
