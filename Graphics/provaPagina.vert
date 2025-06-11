@@ -25,25 +25,31 @@ float smoothFlip(float t) {
 void main() {
     vec3 pos = aPosition;
 
-    // Normalizza posizione X ? [0, 1] (da destra a sinistra)
-    float xNorm = (pos.x + (pageWidth / 2.0)) / pageWidth;
+    float xNorm = pos.x / pageWidth; // da 0 (sx) a 1 (dx)
 
-    // Tempo relativo ? [0, 1]
-    float t = mod(time / flipDuration, 1.0);
-    float flip = smoothFlip(t); // ? [0, 1]
+    float t = mod(time / flipDuration, 1.0); // tempo normalizzato
+    float flip = smoothFlip(t);             // va da 0 a 1 (puoi usare smoothstep or sin(t * PI))
 
-    // Crea una piega lungo X, alzando lungo Z (verso l'alto) VOGLIAMO LA PIEGA LUNGO X
-    // La piega avanza da destra a sinistra (xNorm > (1 - flip))
-    float edge = 1.0 - flip;
-    if (xNorm > edge) {
-        float bend = (xNorm - edge) / (1.0 - edge); // da 0 a 1
-        float theta = bend * bendAmount * 3.14159;  // piega in rad
-        float x = cos(theta) * (pos.x - (pageWidth / 2.0)) + (pageWidth / 2.0);
-        float z = sin(theta) * (pos.x - (pageWidth / 2.0));
-        pos.x = x;
-        pos.z += z; // curvatura verso l’alto
+    float edge = 1.0 - flip;                // bordo che si sposta da dx a sx
+    float foldX = edge * pageWidth;         // posizione X della piega
+
+    if (pos.x > foldX) {
+        float bend = (pos.x - foldX) / (pageWidth - foldX); // da 0 a 1 solo oltre il bordo
+
+        float theta = bend * bendAmount * 3.14159;
+
+        // Ruota attorno a foldX, non al centro della pagina!
+        float localX = pos.x - foldX;
+
+        float rotatedX = cos(theta) * localX;
+        float liftedZ = sin(theta) * localX;
+
+        pos.x = rotatedX + foldX;
+        pos.z += liftedZ;
     }
 
     gl_Position = proj * view * model * vec4(pos, 1.0);
     TexCoord = aTexCoord;
 }
+
+

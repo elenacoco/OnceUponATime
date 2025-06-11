@@ -1,0 +1,250 @@
+#include "Scene.h"
+
+Scene::Scene(int width, int height)
+{
+	widthWindow = width;
+	heightWindow = height;
+	camera = Camera();
+	currentVisibileObjectIndex = 1; // Inizialmente nessun oggetto visibile
+	rotation = 0.01f; // Velocità di rotazione predefinita
+	backgroundColor = Vector3f(0.2f, 0.3f, 0.3f); // Colore di sfondo predefinito
+	ambientLight = Vector3f(1.0f, 1.0f, 1.0f); // Colore della luce ambientale predefinito
+}
+
+Scene::~Scene()
+{
+}
+
+void Scene::initialize(const string& nameXML)
+{
+    lastTime = glfwGetTime(); // Inizializza il tempo dell'ultimo frame per l'animazione
+
+    //RapidXMl
+    xml_document<> doc;
+    xml_node<>* root_node;
+    ifstream file(nameXML);
+    vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+    buffer.push_back('\0');
+    doc.parse<0>(&buffer[0]);
+
+    root_node = doc.first_node("scene");
+
+    //Finestra
+    widthWindow = stoi(root_node->first_node("window")->first_node("width")->value());
+    heightWindow = stoi(root_node->first_node("window")->first_node("height")->value());
+}
+
+void Scene::loadFromXML(const string& nameXML)
+{
+    //RapidXMl
+    xml_document<> doc;
+    xml_node<>* root_node;
+    ifstream file(nameXML);
+    vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+    buffer.push_back('\0');
+    doc.parse<0>(&buffer[0]);
+
+	root_node = doc.first_node("scene");
+
+    // Ambiente
+    xml_node<>* env = root_node->first_node("environment");
+    xml_node<>* bg = env->first_node("backgroundColor");
+    backgroundColor = Vector3f(stof(bg->first_attribute("r")->value()), stof(bg->first_attribute("g")->value()), stof(bg->first_attribute("b")->value()));
+    cout << "Colore di sfondo: " << backgroundColor << endl;
+
+    xml_node<>* ambient = env->first_node("ambientLight");
+    ambientLight = Vector3f(stof(ambient->first_attribute("r")->value()), stof(ambient->first_attribute("g")->value()), stof(ambient->first_attribute("b")->value()));
+    cout << "Colore della luce ambientale: " << ambientLight << endl;
+
+    //Luci
+    xml_node<>* lightsNode = root_node->first_node("lights");
+
+    for (xml_node<>* lightNode = lightsNode->first_node("light"); lightNode; lightNode = lightNode->next_sibling("light"))
+    {
+        string lightType = lightNode->first_node("type")->value();
+        cout << "light type" << lightType << endl;
+        Vector3f position = Vector3f(stof(lightNode->first_node("position")->first_attribute("x")->value()),
+            stof(lightNode->first_node("position")->first_attribute("y")->value()),
+            stof(lightNode->first_node("position")->first_attribute("z")->value()));
+        cout << "position luce" << position << endl;
+        Vector3f color = Vector3f(stof(lightNode->first_node("color")->first_attribute("r")->value()),
+            stof(lightNode->first_node("color")->first_attribute("g")->value()),
+            stof(lightNode->first_node("color")->first_attribute("b")->value()));
+        cout << "colore luce" << color << endl;
+        float intensity = stof(lightNode->first_node("intensity")->value());
+        Light light = Light(lightType, position, color, intensity);
+        lights.push_back(light);
+    }
+
+    //Camera
+    xml_node<>* cameraNode = root_node->first_node("camera");
+
+    Vector3f cameraPos = Vector3f(stof(cameraNode->first_node("position")->first_attribute("x")->value()),
+        stof(cameraNode->first_node("position")->first_attribute("y")->value()),
+        stof(cameraNode->first_node("position")->first_attribute("z")->value()));
+    cout << "Camera position: " << cameraPos << endl;
+
+    Vector3f cameraTarget = Vector3f(stof(cameraNode->first_node("target")->first_attribute("x")->value()),
+        stof(cameraNode->first_node("target")->first_attribute("y")->value()),
+        stof(cameraNode->first_node("target")->first_attribute("z")->value()));
+    cout << "Camera target: " << cameraTarget << endl;
+
+    Vector3f cameraUp = Vector3f(stof(cameraNode->first_node("up")->first_attribute("x")->value()),
+        stof(cameraNode->first_node("up")->first_attribute("y")->value()),
+        stof(cameraNode->first_node("up")->first_attribute("z")->value()));
+    cout << "Camera up: " << cameraUp << endl;
+
+    float fov = stof(cameraNode->first_node("fov")->value());
+    cout << "Camera FOV: " << fov << endl;
+    camera = Camera(cameraPos, cameraTarget, cameraUp, fov); // Imposta la camera con i valori letti dal file XML
+
+
+    //Modelli
+    xml_node<>* modelsNode = root_node->first_node("models");
+
+    for (xml_node<>* modelNode = modelsNode->first_node("model"); modelNode; modelNode = modelNode->next_sibling("model"))
+    {
+        //non legge il nome del modello, serve?
+        string modelPath = modelNode->first_node("path")->value();
+        cout << "Model path: " << modelPath << endl; // Stampa il percorso del modello
+        vector<string> texturePaths;
+        xml_node<>* texturesNode = modelNode->first_node("textures");
+        for (xml_node<>* textureNode = texturesNode->first_node("texture"); textureNode; textureNode = textureNode->next_sibling("texture"))
+        {
+            texturePaths.push_back(textureNode->value());
+            cout << "Texture path: " << textureNode->value() << endl; // Stampa il percorso della texture
+            //non legge il type della texture, serve?
+        }
+        Model model(modelPath, texturePaths); //DA PROBLEMI MA NON CAPISCO PERCHE', non entra nemmeno nell'if sotto, crasha prima
+        if (!model.meshes.empty())
+        {
+            cout << "Modello caricato con successo: " << modelPath << endl;
+            models.push_back(model);
+        }
+        else
+        {
+            cout << "Errore nel caricamento del modello: " << modelPath << endl;
+            return; // Esci se un modello non viene caricato correttamente
+        }
+        //manca la lettura del transform
+    }
+}
+
+void Scene::addModel(const Model& model)
+{
+	models.push_back(model); // Aggiunge un modello alla scena
+}
+
+void Scene::addModel(const string& modelPath, const vector<string> texturePath)
+{
+    Model model(modelPath, texturePath); // Crea un modello con il percorso specificato e la texture
+	if (!model.meshes.empty())
+	{
+		models.push_back(model); // Aggiunge il modello alla scena se è stato caricato correttamente
+	}
+	else
+	{
+		std::cout << "Errore nel caricamento del modello: " << modelPath << std::endl;
+	}
+}
+
+void Scene::addLight(const Light& light)
+{
+	lights.push_back(light); // Aggiunge una luce alla scena
+}
+
+void Scene::setCamera(const Vector3f& position, const Vector3f& target, const Vector3f& up, float fov)
+{
+	camera = Camera(position, target, up, fov); // Imposta la camera con i valori specificati
+}
+
+void Scene::setBackgroundColor(const Vector3f& color)
+{
+	backgroundColor = color; // Imposta il colore di sfondo della scena
+}
+
+void Scene::setAmbientLight(const Vector3f& color)
+{
+	ambientLight = color; // Imposta il colore della luce ambientale della scena
+}
+
+void Scene::render(Shader& shader)
+{
+    //imposta il colore di sfondo
+    glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1.0f);
+    //DA CAPIRE
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    shader.useProgram(); // usa lo shader
+
+    //Modifica di matrici e uniform
+
+	Matrix4x4f modelMatrix = Matrix4x4f();
+	Matrix4x4f viewMatrix = Matrix4x4f();
+	Matrix4x4f projMatrix = Matrix4x4f();
+
+    //Disegna il libro sempre
+    Vector3f x_axis = Vector3f(1.0f, 0.0f, 0.0f);
+    Vector3f y_axis = Vector3f(0.0f, 1.0f, 0.0f);
+    Vector3f z_axis = Vector3f(0.0f, 0.0f, 1.0f);
+
+	modelMatrix = modelMatrix.rotation(90, x_axis); // ruota il modello attorno all'asse x
+	modelMatrix = modelMatrix.rotation(90, y_axis); // ruota il modello attorno all'asse x
+
+	viewMatrix = viewMatrix.view(camera.position, camera.target, camera.up); // aggiorna la matrice di vista con la posizione della camera
+	projMatrix = projMatrix.perspectiveSimplify(camera.fov, (float)widthWindow / heightWindow, 0.1f, 100.0f); // aggiorna la matrice di proiezione
+	updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+    models[0].drawModel(shader); // Disegna il primo modello sempre perchè è il libro
+    
+	// Rotazione del modello attualmente visibile intorno all'asse z
+	modelMatrix = Matrix4x4f();
+	Vector3f translate = Vector3f(0.0f, 0.0f, 10.0f); // posizione dell'oggetto
+	modelMatrix = modelMatrix.model(translate, Vector3f(1), rotation, Vector3f(0.0f, 0.0f, 1.0f)); // ruota il modello attorno all'asse y nel tempo
+	shader.setMat4("model", modelMatrix); // Imposta la matrice del modello nello shader
+    models[currentVisibileObjectIndex].drawModel(shader); // Disegna il modello attualmente visibile
+
+    //setta le uniform per gli shader che hanno una luce
+    lights[0].SetUniform(shader);
+    shader.setVec3("viewPosition", camera.position);
+    shader.setVec3("ambientLight", ambientLight);
+
+    //uniform per la pagina
+	double currentTime = glfwGetTime(); // tempo corrente
+    glUniform1f(glGetUniformLocation(shader.shaderID, "time"), (float)currentTime); // Passa il tempo allo shader
+    glUniform1f(glGetUniformLocation(shader.shaderID, "flipDuration"), 4.0f);
+    glUniform1f(glGetUniformLocation(shader.shaderID, "bendAmount"), 0.5f);
+    glUniform1f(glGetUniformLocation(shader.shaderID, "pageWidth"), 3.0f);
+}
+
+void Scene::update(float currentTime)
+{
+    //ROTAZIONE
+    if (currentTime - lastTime >= 1.0 / 60.0) // aggiorna ogni 1/60 di secondo
+    {
+        rotation += 1.0f; // incrementa l'angolo di rotazione
+        lastTime = currentTime; // aggiorna il tempo dell'ultimo frame
+    }
+
+    //SCALA IL MODELLO
+    float scaleModel = abs(sin(currentTime));
+}
+
+void Scene::showObject(int index)
+{
+    //scala e traslazione
+	if (index >= 0 && index < models.size())
+	{
+		currentVisibileObjectIndex = index; // Aggiorna l'indice dell'oggetto visibile
+	}
+	else
+	{
+		std::cout << "Indice oggetto non valido: " << index << std::endl;
+	}
+}
+
+void Scene::updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const Matrix4x4f& view, const Matrix4x4f& proj)
+{
+    shader.setMat4("model", model);
+    shader.setMat4("view", view);
+    shader.setMat4("proj", proj);
+}

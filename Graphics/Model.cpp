@@ -81,7 +81,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             if (i < 5) // per non stampare tutto
                 std::cout << "UV[" << i << "] = " << v.texCoords.x << ", " << v.texCoords.y << std::endl;
 
-        }
+        }else
+            v.texCoords = Vector2f(0.0f, 0.0f);
         //tangenti
 		if (mesh->mTangents) //controlla se ci sono tangenti
 		{
@@ -100,8 +101,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vector.z = mesh->mBitangents[i].z;
 			v.bitangent = vector;
 		}
-        else
-            v.texCoords = Vector2f(0.0f, 0.0f);
+        
 
         vertices.push_back(v);
 		
