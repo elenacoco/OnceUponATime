@@ -30,9 +30,22 @@
 	<models>
 		<model>
 			<name>Libro</name>
-			<path>book_on_xz.obj</path>
+			<path>libroProva1.obj</path>
 			<textures>
 				<texture type="diffuse">book_diffuse.png</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="0" z="0"/>
+				<rotate axis="y" angle="0"/>
+				<scale x="0" y="0" z="0"/>
+			</transform>
+		</model>
+
+		<model>
+			<name>Pagina</name>
+			<path>pagina3.obj</path>
+			<textures>
+				<texture type="diffuse">pagina_diffuse.jpg</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>

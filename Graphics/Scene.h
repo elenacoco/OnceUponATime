@@ -35,13 +35,23 @@ private:
 
 	//controllo visualizzazione
 	int currentVisibileObjectIndex; //indice dell'oggetto attualmente visibile
+	int indexSelected;
 
 	//parametri di animazione
 	float rotation; // velocità di rotazione degli oggetti
+	float scaleModel; // scala del modello
 	double lastTime; // tempo dell'ultimo frame per l'animazione
 	//qualcosa per la pagina
+	float rotationPage;
 
 public:
+
+	bool isAnimationCompleted = false; // Indica se l'animazione totale è completata
+	bool isAnimationStarted = false; // Indica se è stata premuta un qualsiasi tasto della tastiera
+	bool isCurrentObjectVisible = true; // Indica se l'oggetto attualmente visibile è visibile
+	bool isPreviousObjectVisible = true; // Indica se l'oggetto attualmente visibile è visibile
+	bool isPageAnimationStarted = false; // Indica se la pagina è stata girata
+	bool isPageAnimationEnded = false; // Indica se la pagina è stata girata
 
 	//costruttore
 	Scene(int width, int height);
@@ -74,6 +84,7 @@ public:
 
 	//controllo visualizzazione oggetti
 	void showObject(int index); // mostra l'oggetto con l'indice specificato //DA FINIRE
+	void changeObject(int index); // cambia l'oggetto attualmente visibile con quello con l'indice specificato
 	void hideObject(int index); // nasconde l'oggetto con l'indice specificato
 
 	//input

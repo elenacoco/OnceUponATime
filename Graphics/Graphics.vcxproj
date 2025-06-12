@@ -182,6 +182,7 @@
     <None Include="provaLambert.vert" />
     <None Include="provaPagina.frag" />
     <None Include="provaPagina.vert" />
+    <None Include="provaPagina2.vert" />
     <None Include="provaPhong.frag" />
     <None Include="provaPhong.vert" />
     <None Include="provaTextMulti.frag" />

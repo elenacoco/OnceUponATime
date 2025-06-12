@@ -5,7 +5,7 @@ Scene::Scene(int width, int height)
 	widthWindow = width;
 	heightWindow = height;
 	camera = Camera();
-	currentVisibileObjectIndex = 1; // Inizialmente nessun oggetto visibile
+	currentVisibileObjectIndex = 2; // Inizialmente nessun oggetto visibile
 	rotation = 0.01f; // Velocità di rotazione predefinita
 	backgroundColor = Vector3f(0.2f, 0.3f, 0.3f); // Colore di sfondo predefinito
 	ambientLight = Vector3f(1.0f, 1.0f, 1.0f); // Colore della luce ambientale predefinito
@@ -18,6 +18,7 @@ Scene::~Scene()
 void Scene::initialize(const string& nameXML)
 {
     lastTime = glfwGetTime(); // Inizializza il tempo dell'ultimo frame per l'animazione
+	scaleModel = 1.0f; // Inizializza la scala del modello a 1.0f
 
     //RapidXMl
     xml_document<> doc;
@@ -183,23 +184,30 @@ void Scene::render(Shader& shader)
 	Matrix4x4f viewMatrix = Matrix4x4f();
 	Matrix4x4f projMatrix = Matrix4x4f();
 
-    //Disegna il libro sempre
+    //LIBRO
     Vector3f x_axis = Vector3f(1.0f, 0.0f, 0.0f);
     Vector3f y_axis = Vector3f(0.0f, 1.0f, 0.0f);
     Vector3f z_axis = Vector3f(0.0f, 0.0f, 1.0f);
 
-	modelMatrix = modelMatrix.rotation(90, x_axis); // ruota il modello attorno all'asse x
-	modelMatrix = modelMatrix.rotation(90, y_axis); // ruota il modello attorno all'asse x
+	//modelMatrix = modelMatrix.rotation(90, x_axis); // ruota il modello attorno all'asse x
+	//modelMatrix = modelMatrix.rotation(90, y_axis); // ruota il modello attorno all'asse x
 
 	viewMatrix = viewMatrix.view(camera.position, camera.target, camera.up); // aggiorna la matrice di vista con la posizione della camera
 	projMatrix = projMatrix.perspectiveSimplify(camera.fov, (float)widthWindow / heightWindow, 0.1f, 100.0f); // aggiorna la matrice di proiezione
 	updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
     models[0].drawModel(shader); // Disegna il primo modello sempre perchè è il libro
     
-	// Rotazione del modello attualmente visibile intorno all'asse z
+    //PAGINA
+    modelMatrix = Matrix4x4f();
+	modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1.0f), -rotationPage, y_axis); // ruota il modello attorno all'asse y nel tempo
+	updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+	models[1].drawModel(shader); // Disegna il modello della pagina
+
+	//OGGETTO
 	modelMatrix = Matrix4x4f();
 	Vector3f translate = Vector3f(0.0f, 0.0f, 10.0f); // posizione dell'oggetto
-	modelMatrix = modelMatrix.model(translate, Vector3f(1), rotation, Vector3f(0.0f, 0.0f, 1.0f)); // ruota il modello attorno all'asse y nel tempo
+	Vector3f scale = Vector3f(scaleModel); // scala dell'oggetto
+	modelMatrix = modelMatrix.model(translate, scale, rotation, z_axis); // ruota il modello attorno all'asse z nel tempo
 	shader.setMat4("model", modelMatrix); // Imposta la matrice del modello nello shader
     models[currentVisibileObjectIndex].drawModel(shader); // Disegna il modello attualmente visibile
 
@@ -208,25 +216,76 @@ void Scene::render(Shader& shader)
     shader.setVec3("viewPosition", camera.position);
     shader.setVec3("ambientLight", ambientLight);
 
-    //uniform per la pagina
-	double currentTime = glfwGetTime(); // tempo corrente
-    glUniform1f(glGetUniformLocation(shader.shaderID, "time"), (float)currentTime); // Passa il tempo allo shader
-    glUniform1f(glGetUniformLocation(shader.shaderID, "flipDuration"), 4.0f);
-    glUniform1f(glGetUniformLocation(shader.shaderID, "bendAmount"), 0.5f);
-    glUniform1f(glGetUniformLocation(shader.shaderID, "pageWidth"), 3.0f);
+    ////uniform per la pagina
+	//double currentTime = glfwGetTime(); // tempo corrente
+    //glUniform1f(glGetUniformLocation(shader.shaderID, "time"), (float)currentTime); // Passa il tempo allo shader
+    //glUniform1f(glGetUniformLocation(shader.shaderID, "flipDuration"), 4.0f);
+    //glUniform1f(glGetUniformLocation(shader.shaderID, "bendAmount"), 0.5f);
+    //glUniform1f(glGetUniformLocation(shader.shaderID, "pageWidth"), 3.0f);
 }
 
 void Scene::update(float currentTime)
 {
-    //ROTAZIONE
-    if (currentTime - lastTime >= 1.0 / 60.0) // aggiorna ogni 1/60 di secondo
+    if (isAnimationStarted)
     {
-        rotation += 1.0f; // incrementa l'angolo di rotazione
-        lastTime = currentTime; // aggiorna il tempo dell'ultimo frame
-    }
+        if (isPreviousObjectVisible)
+        {
+			scaleModel -= 0.001f; // Decrementa la scala del modello precedente
+            
+            if (scaleModel <= 0)
+            {
+				scaleModel = 0.0f; // Assicurati che la scala non scenda sotto 0
+                isPreviousObjectVisible = false;
+                currentVisibileObjectIndex = indexSelected;
+			    isPageAnimationStarted = true; // Inizia l'animazione della pagina
+            }
+        }
 
-    //SCALA IL MODELLO
-    float scaleModel = abs(sin(currentTime));
+        //ROTAZIONE
+        if (currentTime - lastTime >= 1.0 / 60.0) // aggiorna ogni 1/60 di secondo
+        {
+            rotation += 1.0f; // incrementa l'angolo di rotazione
+            lastTime = currentTime; // aggiorna il tempo dell'ultimo frame
+
+            if (isPageAnimationStarted)
+            {
+                rotationPage += 1.0f; // incrementa l'angolo di rotazione della pagina
+
+                if (rotationPage >= 180.0f) // resetta la rotazione dopo un giro completo
+	            {
+	            	rotationPage = 0.0f;
+		        	isPageAnimationEnded = true; // L'animazione della pagina è completata
+		        	isPageAnimationStarted = false; // Ferma l'animazione della pagina
+	            }
+            }
+        }
+
+	    
+
+		if (isPageAnimationEnded && !isCurrentObjectVisible)
+		{
+			scaleModel += 0.001f; // Incrementa la scala del modello attuale
+
+            if (scaleModel >= 1)
+            {
+				scaleModel = 1.0f; // Assicurati che la scala non superi 1
+				isCurrentObjectVisible = true; // L'oggetto attualmente visibile è visibile
+				isAnimationCompleted = true; // L'animazione totale è completata
+				isAnimationStarted = false; // Ferma l'animazione
+				isPageAnimationEnded = false; // Resetta l'animazione della pagina
+            }
+		}
+
+    }
+    else
+    {
+        if (currentTime - lastTime >= 1.0 / 60.0) // aggiorna ogni 1/60 di secondo
+        {
+            rotation += 1.0f; // incrementa l'angolo di rotazione
+            lastTime = currentTime; // aggiorna il tempo dell'ultimo frame
+        }
+    }
+    
 }
 
 void Scene::showObject(int index)
@@ -234,12 +293,17 @@ void Scene::showObject(int index)
     //scala e traslazione
 	if (index >= 0 && index < models.size())
 	{
-		currentVisibileObjectIndex = index; // Aggiorna l'indice dell'oggetto visibile
+		indexSelected = index; // Aggiorna l'indice dell'oggetto visibile
 	}
 	else
 	{
 		std::cout << "Indice oggetto non valido: " << index << std::endl;
 	}
+}
+
+void Scene::changeObject(int index)
+{
+    
 }
 
 void Scene::updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const Matrix4x4f& view, const Matrix4x4f& proj)

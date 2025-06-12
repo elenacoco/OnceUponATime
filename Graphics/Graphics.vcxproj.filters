@@ -167,6 +167,7 @@
     <None Include="provaPagina.vert">
       <Filter>File di risorse\Shaders</Filter>
     </None>
+    <None Include="provaPagina2.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="pavimento_diffuse.jpg">
