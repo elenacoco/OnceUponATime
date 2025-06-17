@@ -190,11 +190,11 @@
     <None Include="provaVS.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="GBMan_diffuse.png" />
-    <Image Include="Lamp_diffuse.jpg" />
+    <Image Include="Models\GBMan_diffuse.png" />
+    <Image Include="Models\Lamp_diffuse.jpg" />
     <Image Include="Lamp_bump.jpg" />
     <Image Include="pagina_diffuse.jpg" />
-    <Image Include="Pascal_diffuse.jpeg" />
+    <Image Include="Models\Pascal_diffuse.jpeg" />
     <Image Include="pavimento_diffuse.jpg" />
   </ItemGroup>
   <ItemGroup>

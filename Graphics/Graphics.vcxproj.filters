@@ -173,19 +173,19 @@
     <Image Include="pavimento_diffuse.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
-    <Image Include="Lamp_diffuse.jpg">
+    <Image Include="Models\Lamp_diffuse.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
     <Image Include="Lamp_bump.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
-    <Image Include="Pascal_diffuse.jpeg">
+    <Image Include="Models\Pascal_diffuse.jpeg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
     <Image Include="pagina_diffuse.jpg">
       <Filter>File di risorse\Textures</Filter>
     </Image>
-    <Image Include="GBMan_diffuse.png">
+    <Image Include="Models\GBMan_diffuse.png">
       <Filter>File di risorse\Textures</Filter>
     </Image>
   </ItemGroup>

@@ -2,8 +2,8 @@
 
 <scene>
 	<window>
-		<width>1920</width>
-		<height>1080</height>
+		<width>1080</width>
+		<height>720</height>
 	</window>
 
 	<environment>
@@ -56,9 +56,9 @@
 		
 		<model>
 			<name>Pascal</name>
-			<path>Pascal.fbx</path>
+			<path>Models/Pascal.fbx</path>
 			<textures>
-				<texture type="diffuse">Pascal_diffuse.jpeg</texture>
+				<texture type="diffuse">Models/Pascal_diffuse.jpeg</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="4" z="0"/>
@@ -69,27 +69,15 @@
 		</model>
 		
 		<model>
-			<name>Lampada</name>
-			<path>lamp.obj</path>
+			<name>Gusgus</name>
+			<path>Models/Gusgus1.obj</path>
 			<textures>
-				<texture type="diffuse">Lamp_diffuse.jpg</texture>
+				<texture type="diffuse">Models/gus_diffuse.png</texture>
+				<texture type="specular">Models/gus_specular.png</texture>
+				<texture type="specular">Models/gus_normal.png</texture>
 			</textures>
 			<transform>
-				<translate x="0" y="4" z="0"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="0.2" y="0.2" z="0.2"/>
-			</transform>
-		</model>
-
-		<model>
-			<name>Merlino</name>
-			<path>merlin_vacation_walking.fbx</path>
-			<textures>
-				<texture type="diffuse">MerlinVacation_diffuse.png</texture>
-			</textures>
-			<transform>
-				<translate x="0" y="4" z="0"/>
+				<translate x="0" y="4" z="20"/>
 				<rotate axis="y" angle="0"/>
 				<scaleIni x="0" y="0" z="0"/>
 				<scaleFin x="0.2" y="0.2" z="0.2"/>
@@ -97,10 +85,54 @@
 		</model>
 		
 		<model>
-			<name>GingerbreadMan</name>
-			<path>GBman.obj</path>
+			<name>Lampada</name>
+			<path>Models/lamp1.obj</path>
 			<textures>
-				<texture type="diffuse">GBMan_diffuse.png</texture>
+				<texture type="diffuse">Models/Lamp_diffuse.jpg</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="0"/>
+				<rotate axis="y" angle="0"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="0.5" y="0.5" z="0.5"/>
+			</transform>
+		</model>
+
+		<model>
+			<name>Merlino</name>
+			<path>Models/MERLINWIZARD.obj</path>
+			<textures>
+				<texture type="diffuse">Models/Merlin_diffuse.png</texture>
+				<texture type="specular">Models/Merlin_nm.png</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="20"/>
+				<rotate axis="y" angle="0"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="0.2" y="0.2" z="0.2"/>
+			</transform>
+		</model>
+		<model>
+			<name>Merlino</name>
+			<path>Models/MERLINWIZARDVACATION.obj</path>
+			<textures>
+				<texture type="diffuse">Models/MerlinVacation_diffuse.png</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="20"/>
+				<rotate axis="y" angle="0"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="0.2" y="0.2" z="0.2"/>
+			</transform>
+		</model>
+
+		
+		
+		<model>
+			<name>GingerbreadMan</name>
+			<path>Models/GBman.obj</path>
+			<textures>
+				<texture type="diffuse">Models/GBMan_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="4" z="0"/>
