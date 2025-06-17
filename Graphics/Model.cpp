@@ -91,6 +91,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vector.y = mesh->mTangents[i].y;
 			vector.z = mesh->mTangents[i].z;
 			v.tangent = vector;
+            if (i < 5) // per non stampare tutto
+                std::cout << "tangenti: \n" << v.tangent << endl;
 		}
 		//bitangenti
 		if (mesh->mBitangents) //controlla se ci sono bitangenti
@@ -100,6 +102,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vector.y = mesh->mBitangents[i].y;
 			vector.z = mesh->mBitangents[i].z;
 			v.bitangent = vector;
+            if (i < 5) // per non stampare tutto
+                std::cout << "bitangenti: \n" << v.bitangent << endl;
 		}
         
 

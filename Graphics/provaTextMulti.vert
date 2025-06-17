@@ -17,11 +17,16 @@ void main()
 {
 	fragPos = vec3(model * vec4(aPos, 1.0)); //calcola la posizione del vertice nella camera
 
-	vec3 normal = mat3(model) * aNormal; //calcola le normali trasformate
-	vec3 tangent = mat3(model) * aTangent; //calcola la tangente trasformata
-	vec3 bitangent = mat3(model) * aBitangent; //calcola la bitangente trasformata
+	//vec3 normal = mat3(model) * aNormal; //calcola le normali trasformate
+	//vec3 tangent = mat3(model) * aTangent; //calcola la tangente trasformata
+	//vec3 bitangent = mat3(model) * aBitangent; //calcola la bitangente trasformata
 
-	TBN = (mat3(normalize(tangent), normalize(bitangent), normalize(normal))); //calcola la matrice TBN
+	vec3 T = normalize(vec3(model * vec4(aTangent,   0.0)));
+	vec3 B = normalize(vec3(model * vec4(aBitangent, 0.0)));
+	vec3 N = normalize(vec3(model * vec4(aNormal,    0.0)));
+	TBN = mat3(T, B, N);
+
+	//TBN = (mat3(normalize(tangent), normalize(bitangent), normalize(normal))); //calcola la matrice TBN
 
 	gl_Position = proj * view * vec4(fragPos, 1); 
 	coordTex = vec2(aTexCoord.x, aTexCoord.y);

@@ -34,7 +34,7 @@ Camera& Camera::operator=(const Camera& other)
 	return *this; // Return the current object to allow chained assignments
 }
 
-Matrix4x4f Camera::updateViewMatrix(Matrix4x4f& viewMatrix)
+void Camera::updateViewMatrix(Shader& shader, Matrix4x4f& viewMatrix)
 {
-	return viewMatrix.view(position, target, up);
+	shader.setMat4("view", viewMatrix);
 }

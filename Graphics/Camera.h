@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AlgebraLineare.h"
+#include "Shader.h"
 
 class Camera
 {
@@ -16,6 +17,6 @@ public:
 
 	Camera& operator=(const Camera& other); // Copy assignment operator
 
-	Matrix4x4f updateViewMatrix(Matrix4x4f& viewMatrix);
+	void updateViewMatrix(Shader& shader, Matrix4x4f& viewMatrix);
 	
 };

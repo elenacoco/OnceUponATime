@@ -33,6 +33,7 @@ void processInput(GLFWwindow* window);
 
 //mettere riferimento a oggetto di classe scene per controllare la scena da lì e fare le cose in modo più ordinato
 Scene* scene = nullptr;
+bool isBeenPressed = false; // Indica se è stato premuto un tasto della tastiera
 
 
 int main()
@@ -86,6 +87,7 @@ int main()
 
     Shader shaderPagina("provaPagina2.vert", "provaPagina.frag");
     //Shader shader("provaTextMulti.vert", "provaTextMulti.frag");
+    //Shader shader("provaTexMultiGL.vert", "provaTexMultiGL.frag");
     Shader shader("provaPhong.vert", "provaPhong.frag");
     //Shader shader("provaVS.vert", "provaFS.frag");
 
@@ -178,6 +180,10 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
+		if (scene->isAnimationCompleted)
+		{
+			isBeenPressed = false; // Resetta il flag quando l'animazione è completata
+		}
 
 		double currentTime = glfwGetTime(); // tempo corrente
 		scene->update(currentTime);
@@ -271,72 +277,128 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-	if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
-	{
-		//Gira la pagina
-
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+	//CAMBIO OGGETTI
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && !isBeenPressed)
     {
 		//premuto 1 per disegnare la primo oggetto
 		std::cout << "Disegno il primo oggetto" << std::endl;
-
 		scene->showObject(2); // Mostra il primo oggetto nella scena
-
 		scene->isAnimationStarted = true;
-
+		scene->isAnimationCompleted = false;
 		scene->isPreviousObjectVisible = true;
 		scene->isCurrentObjectVisible = false;
+
+		isBeenPressed = true; // Imposta il flag per indicare che un tasto è stato premuto
 	}
-	else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+	else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 2 per disegnare il secondo oggetto
 		std::cout << "Disegno il secondo oggetto" << std::endl;
 		scene->showObject(3); // Mostra il secondo oggetto nella scena
 		scene->isAnimationStarted = true;
+		scene->isAnimationCompleted = false;
 		scene->isPreviousObjectVisible = true;
 		scene->isCurrentObjectVisible = false;
+
+		isBeenPressed = true;
     }
-	else if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+	else if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 3 per disegnare il terzo oggetto
 		std::cout << "Disegno il terzo oggetto" << std::endl;
 		scene->showObject(4); // Mostra il terzo oggetto nella scena
 		scene->isAnimationStarted = true;
+		scene->isAnimationCompleted = false;
 		scene->isPreviousObjectVisible = true;
 		scene->isCurrentObjectVisible = false;
-		// Qui puoi aggiungere il codice per disegnare il terzo oggetto
+
+		isBeenPressed = true;
 	}
-	else if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+	else if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 4 per disegnare il quarto oggetto
 		std::cout << "Disegno il quarto oggetto" << std::endl;
 		scene->showObject(5); // Mostra il quarto oggetto nella scena
 		scene->isAnimationStarted = true;
+		scene->isAnimationCompleted = false;
 		scene->isPreviousObjectVisible = true;
 		scene->isCurrentObjectVisible = false;
-		// Qui puoi aggiungere il codice per disegnare il quarto oggetto
+
+		isBeenPressed = true;
 	}
-	else if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
+	else if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 5 per disegnare il quinto oggetto
 		std::cout << "Disegno il quinto oggetto" << std::endl;
 		scene->showObject(6); // Mostra il quinto oggetto nella scena
 		scene->isAnimationStarted = true;
+		scene->isAnimationCompleted = false;
 		scene->isPreviousObjectVisible = true;
 		scene->isCurrentObjectVisible = false;
-		// Qui puoi aggiungere il codice per disegnare il quinto oggetto
+
+		isBeenPressed = true;
 	}
-	else if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
+	else if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 6 per disegnare il sesto oggetto
 		std::cout << "Disegno il sesto oggetto" << std::endl;
 		scene->showObject(7); // Mostra il sesto oggetto nella scena
 		scene->isAnimationStarted = true;
+		scene->isAnimationCompleted = false;
 		scene->isPreviousObjectVisible = true;
 		scene->isCurrentObjectVisible = false;
-		// Qui puoi aggiungere il codice per disegnare il sesto oggetto
+
+		isBeenPressed = true;
+	}
+
+	//POSIZIONI CAMERA
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		//Posizione camera davanti
+		cout << "Posizione camera davanti" << endl;
+		scene->updateViewMatrix(scene->getCamera().position, scene->getCamera().target, scene->getCamera().up);
+	}
+	else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		//Posizione camera dietro
+		cout << "Posizione camera dietro" << endl;
+		Vector3f newPosition = scene->getCamera().position; // Sposta la camera avanti lungo l'asse Z
+		newPosition.y -= scene->getCamera().position.y * 2; // Aumenta la coordinata Z per spostare la camera avanti
+		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		//Posizione camera a sinistra
+		cout << "Posizione camera a sinistra" << endl;
+		Vector3f newPosition = scene->getCamera().position; // Sposta la camera a sinistra lungo l'asse X
+		newPosition.y -= scene->getCamera().position.y;
+		newPosition.x -= 50; // Aumenta la coordinata X per spostare la camera a sinistra
+		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
+	}
+	else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		//Posizione camera a destra
+		cout << "Posizione camera a destra" << endl;
+		Vector3f newPosition = scene->getCamera().position; // Sposta la camera a destra lungo l'asse X
+		newPosition.y -= scene->getCamera().position.y;
+		newPosition.x += 50; // Aumenta la coordinata X per spostare la camera a destra
+		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
+	}
+	else if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
+	{
+		//Posizione camera in alto
+		cout << "Posizione camera in alto" << endl;
+		Vector3f newPosition = Vector3f(0, -0.1, 0);
+		newPosition.z += scene->getCamera().position.z;
+		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
+	}
+	else if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS)
+	{
+		//Posizione camera in basso
+		cout << "Posizione camera in basso" << endl;
+		Vector3f newPosition = Vector3f(0, -0.1, 0);
+		newPosition.z -= scene->getCamera().position.z;
+		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
 	}
 
 }

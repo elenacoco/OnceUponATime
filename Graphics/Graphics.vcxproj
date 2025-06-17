@@ -185,6 +185,8 @@
     <None Include="provaPagina2.vert" />
     <None Include="provaPhong.frag" />
     <None Include="provaPhong.vert" />
+    <None Include="provaTexMultiGL.frag" />
+    <None Include="provaTexMultiGL.vert" />
     <None Include="provaTextMulti.frag" />
     <None Include="provaTextMulti.vert" />
     <None Include="provaVS.vert" />

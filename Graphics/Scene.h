@@ -25,6 +25,11 @@ private:
 	vector<Light> lights;
 	Camera camera;
 
+	//matrici
+	Matrix4x4f modelMatrix;
+	Matrix4x4f viewMatrix;
+	Matrix4x4f projMatrix;
+
 	//parametri della finestra
 	int widthWindow;
 	int heightWindow;
@@ -94,6 +99,10 @@ public:
 	int getModelCount() const { return models.size(); }
 	bool isObjectVisible(int index) const;
 	void updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const Matrix4x4f& view, const Matrix4x4f& proj);
+	void updateViewMatrix(Vector3f position, Vector3f target, Vector3f up);
+	Matrix4x4f getModelMatrix() const { return modelMatrix; }
+	Matrix4x4f getViewMatrix() const { return viewMatrix; }
+	Matrix4x4f getProjMatrix() const { return projMatrix; }
 
 	// Getters
 	Vector3f getBackgroundColor() const { return backgroundColor; }

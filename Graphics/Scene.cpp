@@ -9,6 +9,10 @@ Scene::Scene(int width, int height)
 	rotation = 0.01f; // Velocità di rotazione predefinita
 	backgroundColor = Vector3f(0.2f, 0.3f, 0.3f); // Colore di sfondo predefinito
 	ambientLight = Vector3f(1.0f, 1.0f, 1.0f); // Colore della luce ambientale predefinito
+
+    modelMatrix = Matrix4x4f();
+    viewMatrix = Matrix4x4f();
+    projMatrix = Matrix4x4f();
 }
 
 Scene::~Scene()
@@ -129,6 +133,9 @@ void Scene::loadFromXML(const string& nameXML)
         }
         //manca la lettura del transform
     }
+
+    updateViewMatrix(camera.position, camera.target, camera.up);
+    projMatrix = projMatrix.perspectiveSimplify(camera.fov, (float)widthWindow / heightWindow, 0.1f, 100.0f);
 }
 
 void Scene::addModel(const Model& model)
@@ -178,12 +185,6 @@ void Scene::render(Shader& shader)
 
     shader.useProgram(); // usa lo shader
 
-    //Modifica di matrici e uniform
-
-	Matrix4x4f modelMatrix = Matrix4x4f();
-	Matrix4x4f viewMatrix = Matrix4x4f();
-	Matrix4x4f projMatrix = Matrix4x4f();
-
     //LIBRO
     Vector3f x_axis = Vector3f(1.0f, 0.0f, 0.0f);
     Vector3f y_axis = Vector3f(0.0f, 1.0f, 0.0f);
@@ -192,8 +193,9 @@ void Scene::render(Shader& shader)
 	//modelMatrix = modelMatrix.rotation(90, x_axis); // ruota il modello attorno all'asse x
 	//modelMatrix = modelMatrix.rotation(90, y_axis); // ruota il modello attorno all'asse x
 
-	viewMatrix = viewMatrix.view(camera.position, camera.target, camera.up); // aggiorna la matrice di vista con la posizione della camera
-	projMatrix = projMatrix.perspectiveSimplify(camera.fov, (float)widthWindow / heightWindow, 0.1f, 100.0f); // aggiorna la matrice di proiezione
+	//viewMatrix = viewMatrix.view(camera.position, camera.target, camera.up); // aggiorna la matrice di vista con la posizione della camera
+	//projMatrix = projMatrix.perspectiveSimplify(camera.fov, (float)widthWindow / heightWindow, 0.1f, 100.0f); // aggiorna la matrice di proiezione
+	modelMatrix = Matrix4x4f();
 	updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
     models[0].drawModel(shader); // Disegna il primo modello sempre perchè è il libro
     
@@ -211,10 +213,14 @@ void Scene::render(Shader& shader)
 	shader.setMat4("model", modelMatrix); // Imposta la matrice del modello nello shader
     models[currentVisibileObjectIndex].drawModel(shader); // Disegna il modello attualmente visibile
 
-    //setta le uniform per gli shader che hanno una luce
+    //setta le uniform per gli shader che hanno una luce (PHONG)
     lights[0].SetUniform(shader);
     shader.setVec3("viewPosition", camera.position);
     shader.setVec3("ambientLight", ambientLight);
+
+    //shader Piu' Texture
+	shader.setVec3("lightPosition", lights[0].position); // Imposta la posizione della vista nello shader
+	shader.setVec3("lightColor", lights[0].color); // Imposta il colore della luce nello shader
 
     ////uniform per la pagina
 	//double currentTime = glfwGetTime(); // tempo corrente
@@ -311,4 +317,9 @@ void Scene::updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const 
     shader.setMat4("model", model);
     shader.setMat4("view", view);
     shader.setMat4("proj", proj);
+}
+
+void Scene::updateViewMatrix(Vector3f position, Vector3f target, Vector3f up)
+{
+	viewMatrix = viewMatrix.view(position, target, up); // Crea la matrice di vista
 }
