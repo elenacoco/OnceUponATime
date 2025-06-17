@@ -47,7 +47,7 @@
 			<name>Pagina</name>
 			<path>pagina3.obj</path>
 			<textures>
-				<texture type="diffuse">pagina_diffuse.jpg</texture>
+				<texture type="diffuse">page_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>
