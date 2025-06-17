@@ -45,7 +45,7 @@
 
 		<model>
 			<name>Pagina</name>
-			<path>pagina3.obj</path>
+			<path>pagina3_uv.obj</path>
 			<textures>
 				<texture type="diffuse">page_diffuse.png</texture>
 			</textures>
