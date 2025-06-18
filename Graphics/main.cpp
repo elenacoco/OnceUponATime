@@ -173,6 +173,7 @@ int main()
 
 	glEnable(GL_DEPTH_TEST); // abilitare il test di profondità per evitare che i poligoni vengano disegnati sopra ad altri
 	glEnable(GL_CULL_FACE); // abilitare il culling per evitare di disegnare le facce interne degli oggetti
+	//funziona anche per la pagina perchè ha le facce e le normali duplicate sulla parte posteriore
     
 
 
