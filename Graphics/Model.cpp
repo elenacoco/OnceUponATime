@@ -78,8 +78,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             vec.x = mesh->mTextureCoords[0][i].x;
             vec.y = mesh->mTextureCoords[0][i].y;
             v.texCoords = vec;
-            if (i < 5) // per non stampare tutto
-                std::cout << "UV[" << i << "] = " << v.texCoords.x << ", " << v.texCoords.y << std::endl;
+            //if (i < 5) // per non stampare tutto
+            //    std::cout << "UV[" << i << "] = " << v.texCoords.x << ", " << v.texCoords.y << std::endl;
 
         }else
             v.texCoords = Vector2f(0.0f, 0.0f);
@@ -91,8 +91,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vector.y = mesh->mTangents[i].y;
 			vector.z = mesh->mTangents[i].z;
 			v.tangent = vector;
-            if (i < 5) // per non stampare tutto
-                std::cout << "tangenti: \n" << v.tangent << endl;
+            //if (i < 5) // per non stampare tutto
+            //    std::cout << "tangenti: \n" << v.tangent << endl;
 		}
 		//bitangenti
 		if (mesh->mBitangents) //controlla se ci sono bitangenti
@@ -102,8 +102,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vector.y = mesh->mBitangents[i].y;
 			vector.z = mesh->mBitangents[i].z;
 			v.bitangent = vector;
-            if (i < 5) // per non stampare tutto
-                std::cout << "bitangenti: \n" << v.bitangent << endl;
+            //if (i < 5) // per non stampare tutto
+            //    std::cout << "bitangenti: \n" << v.bitangent << endl;
 		}
         
 

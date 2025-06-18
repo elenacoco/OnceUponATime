@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "rapidxml/rapidxml.hpp"
 #include "rapidxml/rapidxml_print.hpp"
+#include "Skybox.h"
 
 using namespace std;
 using namespace rapidxml;
@@ -24,6 +25,7 @@ private:
 	vector<Model> models;
 	vector<Light> lights;
 	Camera camera;
+	Skybox skybox;
 
 	//matrici
 	Matrix4x4f modelMatrix;
@@ -84,7 +86,7 @@ public:
 	void setAmbientLight(const Vector3f& color);
 
 	//rendering
-	void render(Shader& shader);
+	void render(Shader& shader, Shader& skyboxShader, Shader& pageShader);
 	void update(float currentTime);
 
 	//controllo visualizzazione oggetti

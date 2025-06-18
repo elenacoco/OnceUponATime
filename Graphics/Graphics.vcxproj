@@ -148,6 +148,7 @@
     <ClCompile Include="ReadXML.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="VAO.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="ReadXML.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="utils.h" />
@@ -190,6 +192,8 @@
     <None Include="provaTextMulti.frag" />
     <None Include="provaTextMulti.vert" />
     <None Include="provaVS.vert" />
+    <None Include="skybox.frag" />
+    <None Include="skybox.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Models\GBMan_diffuse.png" />

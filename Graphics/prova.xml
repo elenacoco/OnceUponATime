@@ -10,6 +10,15 @@
 		<backgroundColor r="0.1" g="0.1" b="0.2"/>
 		<ambientLight r="0.2" g="0.2" b="0.2"/>
 	</environment>
+
+	<skybox>
+		<face>Textures/skyboxGL/right.jpg</face>
+		<face>Textures/skyboxGL/left.jpg</face>
+		<face>Textures/skyboxGL/top.jpg</face>
+		<face>Textures/skyboxGL/bottom.jpg</face>
+		<face>Textures/skyboxGL/front.jpg</face>
+		<face>Textures/skyboxGL/back.jpg</face>
+	</skybox>
 	
 	<lights>
 		<light>
@@ -25,6 +34,8 @@
 		<target x="0" y="0" z="0"/>
 		<up x="0" y="0" z="1"/> <!-- asse verticale = z	-->
 		<fov>45</fov>
+		<nearPlane>0.1</nearPlane>
+		<farPlane>1000</farPlane>
 	</camera>
 
 	<models>

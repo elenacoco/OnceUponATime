@@ -75,6 +75,9 @@
     <ClCompile Include="Scene.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h">
@@ -137,6 +140,9 @@
     <ClInclude Include="Scene.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="provaFS.frag">
@@ -172,8 +178,18 @@
     <None Include="provaPagina2.vert">
       <Filter>File di risorse\Shaders</Filter>
     </None>
-    <None Include="provaTexMultiGL.vert" />
-    <None Include="provaTexMultiGL.frag" />
+    <None Include="provaTexMultiGL.frag">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
+    <None Include="provaTexMultiGL.vert">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
+    <None Include="skybox.vert">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
+    <None Include="skybox.frag">
+      <Filter>File di risorse\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="pavimento_diffuse.jpg">

@@ -21,6 +21,8 @@ Texture::Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLe
 
 	unsigned char* data = stbi_load(image, &width, &height, &numCh, 0);
 
+	std::cout << "Texture, image:  " << ": " << image << " size: " << width << "x" << height << " channels: " << numCh << std::endl;
+
 	if (data)
 	{
 		GLenum format;

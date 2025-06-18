@@ -85,11 +85,12 @@ int main()
 	scene->loadFromXML("prova.xml"); // Carica la scena da un file XML
 
 
-    Shader shaderPagina("provaPagina2.vert", "provaPagina.frag");
+    Shader pageShader("provaPagina2.vert", "provaPagina.frag");
     //Shader shader("provaTextMulti.vert", "provaTextMulti.frag");
     //Shader shader("provaTexMultiGL.vert", "provaTexMultiGL.frag");
     Shader shader("provaPhong.vert", "provaPhong.frag");
     //Shader shader("provaVS.vert", "provaFS.frag");
+	Shader skyboxShader("skybox.vert", "skybox.frag");
 
 
     //PIRAMIDE
@@ -188,7 +189,7 @@ int main()
 		double currentTime = glfwGetTime(); // tempo corrente
 		scene->update(currentTime);
 
-		scene->render(shader);
+		scene->render(shader, skyboxShader, pageShader);
 
 
         //shader.useProgram(); // usa lo shader

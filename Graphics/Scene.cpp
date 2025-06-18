@@ -5,6 +5,8 @@ Scene::Scene(int width, int height)
 	widthWindow = width;
 	heightWindow = height;
 	camera = Camera();
+	skybox = Skybox(); // Inizializza lo skybox
+
 	currentVisibileObjectIndex = 2; // Inizialmente nessun oggetto visibile
 	rotation = 0.01f; // Velocità di rotazione predefinita
 	backgroundColor = Vector3f(0.2f, 0.3f, 0.3f); // Colore di sfondo predefinito
@@ -61,6 +63,19 @@ void Scene::loadFromXML(const string& nameXML)
     ambientLight = Vector3f(stof(ambient->first_attribute("r")->value()), stof(ambient->first_attribute("g")->value()), stof(ambient->first_attribute("b")->value()));
     cout << "Colore della luce ambientale: " << ambientLight << endl;
 
+
+    //Skybox
+	xml_node<>* skyboxNode = root_node->first_node("skybox");
+	vector<string> skyboxFaces;
+	for (xml_node<>* faceNode = skyboxNode->first_node("face"); faceNode; faceNode = faceNode->next_sibling("face"))
+	{
+		string facePath = faceNode->value();
+		cout << "Skybox face path: " << facePath << endl;
+		skyboxFaces.push_back(facePath);
+	}
+	skybox = Skybox(skyboxFaces); // Crea lo skybox con i percorsi delle facce
+
+
     //Luci
     xml_node<>* lightsNode = root_node->first_node("lights");
 
@@ -103,6 +118,9 @@ void Scene::loadFromXML(const string& nameXML)
     cout << "Camera FOV: " << fov << endl;
     camera = Camera(cameraPos, cameraTarget, cameraUp, fov); // Imposta la camera con i valori letti dal file XML
 
+	float nearPlane = stof(cameraNode->first_node("nearPlane")->value());
+	float farPlane = stof(cameraNode->first_node("farPlane")->value());
+
 
     //Modelli
     xml_node<>* modelsNode = root_node->first_node("models");
@@ -135,7 +153,7 @@ void Scene::loadFromXML(const string& nameXML)
     }
 
     updateViewMatrix(camera.position, camera.target, camera.up);
-    projMatrix = projMatrix.perspectiveSimplify(camera.fov, (float)widthWindow / heightWindow, 0.1f, 100.0f);
+    projMatrix = projMatrix.perspectiveSimplify(camera.fov, (float)widthWindow / heightWindow, nearPlane, farPlane);
 }
 
 void Scene::addModel(const Model& model)
@@ -176,7 +194,7 @@ void Scene::setAmbientLight(const Vector3f& color)
 	ambientLight = color; // Imposta il colore della luce ambientale della scena
 }
 
-void Scene::render(Shader& shader)
+void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 {
     //imposta il colore di sfondo
     glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1.0f);
@@ -184,17 +202,12 @@ void Scene::render(Shader& shader)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader.useProgram(); // usa lo shader
-
-    //LIBRO
+    
     Vector3f x_axis = Vector3f(1.0f, 0.0f, 0.0f);
     Vector3f y_axis = Vector3f(0.0f, 1.0f, 0.0f);
     Vector3f z_axis = Vector3f(0.0f, 0.0f, 1.0f);
-
-	//modelMatrix = modelMatrix.rotation(90, x_axis); // ruota il modello attorno all'asse x
-	//modelMatrix = modelMatrix.rotation(90, y_axis); // ruota il modello attorno all'asse x
-
-	//viewMatrix = viewMatrix.view(camera.position, camera.target, camera.up); // aggiorna la matrice di vista con la posizione della camera
-	//projMatrix = projMatrix.perspectiveSimplify(camera.fov, (float)widthWindow / heightWindow, 0.1f, 100.0f); // aggiorna la matrice di proiezione
+    
+	//LIBRO
 	modelMatrix = Matrix4x4f();
 	updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
     models[0].drawModel(shader); // Disegna il primo modello sempre perchè è il libro
@@ -204,7 +217,7 @@ void Scene::render(Shader& shader)
 	modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1.0f), -rotationPage, y_axis); // ruota il modello attorno all'asse y nel tempo
 	updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
 	models[1].drawModel(shader); // Disegna il modello della pagina
-
+    
 	//OGGETTO
 	modelMatrix = Matrix4x4f();
 	Vector3f translate = Vector3f(0.0f, 0.0f, 10.0f); // posizione dell'oggetto
@@ -212,12 +225,12 @@ void Scene::render(Shader& shader)
 	modelMatrix = modelMatrix.model(translate, scale, rotation, z_axis); // ruota il modello attorno all'asse z nel tempo
 	shader.setMat4("model", modelMatrix); // Imposta la matrice del modello nello shader
     models[currentVisibileObjectIndex].drawModel(shader); // Disegna il modello attualmente visibile
-
+    
     //setta le uniform per gli shader che hanno una luce (PHONG)
     lights[0].SetUniform(shader);
     shader.setVec3("viewPosition", camera.position);
     shader.setVec3("ambientLight", ambientLight);
-
+    
     //shader Piu' Texture
 	shader.setVec3("lightPosition", lights[0].position); // Imposta la posizione della vista nello shader
 	shader.setVec3("lightColor", lights[0].color); // Imposta il colore della luce nello shader
@@ -228,6 +241,9 @@ void Scene::render(Shader& shader)
     //glUniform1f(glGetUniformLocation(shader.shaderID, "flipDuration"), 4.0f);
     //glUniform1f(glGetUniformLocation(shader.shaderID, "bendAmount"), 0.5f);
     //glUniform1f(glGetUniformLocation(shader.shaderID, "pageWidth"), 3.0f);
+
+	// Disegna lo skybox
+	skybox.draw(skyboxShader, viewMatrix, projMatrix);
 }
 
 void Scene::update(float currentTime)
