@@ -235,6 +235,8 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 
     if (isPageAnimationStarted)
     {
+		glEnable(GL_CULL_FACE); //mi mostra entrambe le facce della pagina in luce perchè ho duplicato le facce e le normali della parte posteriore
+
         //PAGINA
         pageShader.useProgram(); // usa lo shader della pagina
 
