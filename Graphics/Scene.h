@@ -51,6 +51,8 @@ private:
 	double lastTime; // tempo dell'ultimo frame per l'animazione
 	//qualcosa per la pagina
 	float rotationPage;
+	float currentTimePage; // tempo corrente per l'animazione della pagina
+	float previousTimePage; // tempo precedente per l'animazione della pagina
 
 public:
 

@@ -15,6 +15,9 @@ Scene::Scene(int width, int height)
     modelMatrix = Matrix4x4f();
     viewMatrix = Matrix4x4f();
     projMatrix = Matrix4x4f();
+
+	currentTimePage = 0.0f; // Inizializza il tempo corrente della pagina
+	previousTimePage = 0.0f; // Inizializza il tempo precedente della pagina
 }
 
 Scene::~Scene()
@@ -229,6 +232,8 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 	shader.setVec3("lightPosition", lights[0].position); // Imposta la posizione della vista nello shader
 	shader.setVec3("lightColor", lights[0].color); // Imposta il colore della luce nello shader
 
+
+
     if (isPageAnimationStarted)
     {
         //PAGINA
@@ -237,12 +242,19 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
         modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1.0f), -rotationPage, y_axis); // ruota il modello attorno all'asse y nel tempo
         updateCommonMatrices(pageShader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
         double currentTime = glfwGetTime(); // tempo corrente
-        glUniform1f(glGetUniformLocation(pageShader.shaderID, "time"), (float)currentTime);
-        glUniform1f(glGetUniformLocation(pageShader.shaderID, "curlAmplitude"), 2.0f);
+		currentTimePage += currentTime - previousTimePage; // Aggiorna il tempo corrente della pagina
+        glUniform1f(glGetUniformLocation(pageShader.shaderID, "time"), currentTimePage);
+        glUniform1f(glGetUniformLocation(pageShader.shaderID, "curlAmplitude"), 3.0f);
         glUniform1f(glGetUniformLocation(pageShader.shaderID, "curlAmount"), 0.2f);
         glUniform1f(glGetUniformLocation(pageShader.shaderID, "animationSpeed"), 1.5f);
         models[1].drawModel(pageShader); // Disegna il modello della pagina
     }
+    else
+    {
+		currentTimePage = 0.0f; // Resetta il tempo corrente della pagina se l'animazione non è iniziata
+    }
+
+	previousTimePage = glfwGetTime(); // Aggiorna il tempo precedente della pagina
 
 	// Disegna lo skybox
 	skybox.draw(skyboxShader, viewMatrix, projMatrix);
