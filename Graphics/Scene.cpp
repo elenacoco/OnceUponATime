@@ -212,12 +212,6 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 	updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
     models[0].drawModel(shader); // Disegna il primo modello sempre perchè è il libro
     
-    //PAGINA
-    modelMatrix = Matrix4x4f();
-	modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1.0f), -rotationPage, y_axis); // ruota il modello attorno all'asse y nel tempo
-	updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
-	models[1].drawModel(shader); // Disegna il modello della pagina
-    
 	//OGGETTO
 	modelMatrix = Matrix4x4f();
 	Vector3f translate = Vector3f(0.0f, 0.0f, 10.0f); // posizione dell'oggetto
@@ -235,12 +229,20 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 	shader.setVec3("lightPosition", lights[0].position); // Imposta la posizione della vista nello shader
 	shader.setVec3("lightColor", lights[0].color); // Imposta il colore della luce nello shader
 
-    ////uniform per la pagina
-	//double currentTime = glfwGetTime(); // tempo corrente
-    //glUniform1f(glGetUniformLocation(shader.shaderID, "time"), (float)currentTime); // Passa il tempo allo shader
-    //glUniform1f(glGetUniformLocation(shader.shaderID, "flipDuration"), 4.0f);
-    //glUniform1f(glGetUniformLocation(shader.shaderID, "bendAmount"), 0.5f);
-    //glUniform1f(glGetUniformLocation(shader.shaderID, "pageWidth"), 3.0f);
+    if (isPageAnimationStarted)
+    {
+        //PAGINA
+        pageShader.useProgram(); // usa lo shader della pagina
+        modelMatrix = Matrix4x4f();
+        modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1.0f), -rotationPage, y_axis); // ruota il modello attorno all'asse y nel tempo
+        updateCommonMatrices(pageShader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+        double currentTime = glfwGetTime(); // tempo corrente
+        glUniform1f(glGetUniformLocation(pageShader.shaderID, "time"), (float)currentTime);
+        glUniform1f(glGetUniformLocation(pageShader.shaderID, "curlAmplitude"), 2.0f);
+        glUniform1f(glGetUniformLocation(pageShader.shaderID, "curlAmount"), 0.2f);
+        glUniform1f(glGetUniformLocation(pageShader.shaderID, "animationSpeed"), 1.5f);
+        models[1].drawModel(pageShader); // Disegna il modello della pagina
+    }
 
 	// Disegna lo skybox
 	skybox.draw(skyboxShader, viewMatrix, projMatrix);

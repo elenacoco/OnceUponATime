@@ -12,6 +12,7 @@
 #include "rapidxml/rapidxml.hpp"
 #include "rapidxml/rapidxml_print.hpp"
 #include "Skybox.h"
+#include "utils.h"
 
 using namespace std;
 using namespace rapidxml;
