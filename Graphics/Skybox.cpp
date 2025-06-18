@@ -74,7 +74,7 @@ Skybox::~Skybox()
 {
 }
 
-void Skybox::draw(Shader& shader, Matrix4x4f view, Matrix4x4f proj)
+void Skybox::draw(Shader& shader, Matrix4x4f view, Matrix4x4f proj, Matrix4x4f model)
 {
 	glDepthFunc(GL_LEQUAL); // Imposta il test di profondità per lo skybox
 	//glDisable(GL_CULL_FACE); // Disabilita il culling per lo skybox, così tutte le facce sono visibili
@@ -87,6 +87,7 @@ void Skybox::draw(Shader& shader, Matrix4x4f view, Matrix4x4f proj)
 	viewNoTranslation.a43 = 0;
 	shader.setMat4("view", viewNoTranslation); // Imposta la matrice di vista senza traslazione nello shader
 	shader.setMat4("proj", proj); // Imposta la matrice di proiezione nello shader
+	shader.setMat4("model", model); // Imposta la matrice del modello nello shader
 
 	if (cubemapTexture == 0) {
 		std::cout << "ERRORE: Texture della cubemap non valida!" << std::endl;

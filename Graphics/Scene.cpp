@@ -263,7 +263,9 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 	previousTimePage = glfwGetTime(); // Aggiorna il tempo precedente della pagina
 
 	// Disegna lo skybox
-	skybox.draw(skyboxShader, viewMatrix, projMatrix);
+	modelMatrix = Matrix4x4f();
+	modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1.0f), 90.0f, x_axis); // Ruota lo skybox se necessario
+	skybox.draw(skyboxShader, viewMatrix, projMatrix, modelMatrix);
 }
 
 void Scene::update(float currentTime)
