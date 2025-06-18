@@ -2,6 +2,7 @@
 
 layout (location = 0) in vec3 aPos;
 layout (location = 2) in vec2 aTexCoord;
+layout (location = 3) in vec3 aNormal; //vettore 3 con coordinate delle normnali
 
 uniform mat4 model;
 uniform mat4 view;
@@ -13,6 +14,8 @@ uniform float curlAmount; //più è grande più il seno oscilla, più ci sono curve 
 uniform float animationSpeed; //velocità dell'animazione
 
 out vec2 TexCoord;
+out vec3 normal; //passa le normali al fragment shader
+out vec3 fragPos; //passa la posizione nel mondo del vertice al fragment shader
 
 void main()
 {
@@ -26,5 +29,10 @@ void main()
     }
     
     gl_Position = proj * view * model * vec4(pos, 1.0);
+
     TexCoord = aTexCoord;
+
+    fragPos = vec3(model * vec4(aPos, 1.0)); //calcola la posizione del vertice nel mondo
+	
+	normal = mat3(transpose(inverse(model))) * aNormal; //calcola le normali trasformate
 }

@@ -233,20 +233,26 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 	shader.setVec3("lightColor", lights[0].color); // Imposta il colore della luce nello shader
 
 
-
     if (isPageAnimationStarted)
     {
         //PAGINA
         pageShader.useProgram(); // usa lo shader della pagina
+
         modelMatrix = Matrix4x4f();
         modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1.0f), -rotationPage, y_axis); // ruota il modello attorno all'asse y nel tempo
         updateCommonMatrices(pageShader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
+
         double currentTime = glfwGetTime(); // tempo corrente
 		currentTimePage += currentTime - previousTimePage; // Aggiorna il tempo corrente della pagina
         glUniform1f(glGetUniformLocation(pageShader.shaderID, "time"), currentTimePage);
         glUniform1f(glGetUniformLocation(pageShader.shaderID, "curlAmplitude"), 3.0f);
         glUniform1f(glGetUniformLocation(pageShader.shaderID, "curlAmount"), 0.2f);
         glUniform1f(glGetUniformLocation(pageShader.shaderID, "animationSpeed"), 1.5f);
+
+        lights[0].SetUniform(pageShader);
+        pageShader.setVec3("viewPosition", camera.position);
+        pageShader.setVec3("ambientLight", ambientLight);
+
         models[1].drawModel(pageShader); // Disegna il modello della pagina
     }
     else

@@ -1,7 +1,6 @@
 #version 330 core
 out vec4 FragColor;
 
-//in vec4 vertexColor; //è esattamente la variabile di uscita del vertex shader
 in vec2 coordTex; 
 in vec3 normal; // Normale interpolata dal vertex shader
 in vec3 fragPos;
