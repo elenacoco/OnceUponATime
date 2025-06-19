@@ -17,6 +17,8 @@ uniform vec3 ambientLight; // Luce ambientale
 
 void main()
 {
+	bool blinn = false;
+
 	vec3 textureColor = texture(texture_diffuse1, coordTex).rgb; // Colore della texture
 
 
@@ -28,7 +30,7 @@ void main()
 	vec3 diffuse = diff * lightColor * textureColor; // Colore diffuso
 
 
-	// PHONG
+	// PHONG o BLINN
 
 	vec3 viewDir = normalize(viewPosition - fragPos); // Direzione della vista
 	vec3 reflectDir = reflect(-lightDir, normalNorm); // Direzione di riflessione
@@ -37,6 +39,17 @@ void main()
 
 	if(diff > 0.0) // Solo se la superficie è illuminata
 	{
+		if(blinn)
+		{
+		    vec3 halfwayDir = normalize(lightDir + viewDir);  
+		    spec = pow(max(dot(normalNorm, halfwayDir), 0.0), 32.0);
+		}
+		else
+		{
+		    vec3 reflectDir = reflect(-lightDir, normalNorm);
+		    spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+		}
+
 		float specStrength = 0.5;
 		specular = spec * specStrength * lightColor; // Colore speculare
 	}

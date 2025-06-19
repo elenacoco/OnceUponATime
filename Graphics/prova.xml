@@ -103,7 +103,7 @@
 			<path>Models/Objects/lamp.obj</path>
 			<textures>
 				<texture type="diffuse">Models/Objects/Lamp_diffuse.jpg</texture>
-				<texture type="specular">Models/Objects/lamp_specular.jpg</texture>
+				<texture type="specular">Models/Objects/lamp_specular2.jpg</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="4" z="0"/>
