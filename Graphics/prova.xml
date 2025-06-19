@@ -12,12 +12,12 @@
 	</environment>
 
 	<skybox>
-		<face>Textures/skyboxGL/right.jpg</face>
-		<face>Textures/skyboxGL/left.jpg</face>
-		<face>Textures/skyboxGL/top.jpg</face>
-		<face>Textures/skyboxGL/bottom.jpg</face>
-		<face>Textures/skyboxGL/front.jpg</face>
-		<face>Textures/skyboxGL/back.jpg</face>
+		<face>Textures/skybox1/right.png</face>
+		<face>Textures/skybox1/left.png</face>
+		<face>Textures/skybox1/top.png</face>
+		<face>Textures/skybox1/bottom.png</face>
+		<face>Textures/skybox1/front.png</face>
+		<face>Textures/skybox1/back.png</face>
 	</skybox>
 	
 	<lights>
@@ -30,7 +30,7 @@
 	</lights>
 
 	<camera>
-		<position x="0" y="-70" z="50"/> <!-- pollice verso destra = x, indice che esce da noi = y (y negativa verso di noi), medio verso l'alto = z-->
+		<position x="0" y="-100" z="30"/> <!-- pollice verso destra = x, indice che esce da noi = y (y negativa verso di noi), medio verso l'alto = z-->
 		<target x="0" y="0" z="0"/>
 		<up x="0" y="0" z="1"/> <!-- asse verticale = z	-->
 		<fov>45</fov>

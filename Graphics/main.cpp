@@ -374,7 +374,7 @@ void processInput(GLFWwindow* window)
 		cout << "Posizione camera a sinistra" << endl;
 		Vector3f newPosition = scene->getCamera().position; // Sposta la camera a sinistra lungo l'asse X
 		newPosition.y -= scene->getCamera().position.y;
-		newPosition.x -= 50; // Aumenta la coordinata X per spostare la camera a sinistra
+		newPosition.x -= -(scene->getCamera().position.y); // Aumenta la coordinata X per spostare la camera a sinistra
 		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
@@ -383,7 +383,7 @@ void processInput(GLFWwindow* window)
 		cout << "Posizione camera a destra" << endl;
 		Vector3f newPosition = scene->getCamera().position; // Sposta la camera a destra lungo l'asse X
 		newPosition.y -= scene->getCamera().position.y;
-		newPosition.x += 50; // Aumenta la coordinata X per spostare la camera a destra
+		newPosition.x += -(scene->getCamera().position.y); // Aumenta la coordinata X per spostare la camera a destra
 		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
@@ -391,7 +391,7 @@ void processInput(GLFWwindow* window)
 		//Posizione camera in alto
 		cout << "Posizione camera in alto" << endl;
 		Vector3f newPosition = Vector3f(0, -0.1, 0);
-		newPosition.z += scene->getCamera().position.z;
+		newPosition.z += scene->getCamera().position.z * 2;
 		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS)
@@ -399,7 +399,7 @@ void processInput(GLFWwindow* window)
 		//Posizione camera in basso
 		cout << "Posizione camera in basso" << endl;
 		Vector3f newPosition = Vector3f(0, -0.1, 0);
-		newPosition.z -= scene->getCamera().position.z;
+		newPosition.z -= scene->getCamera().position.z * 2;
 		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
 	}
 
