@@ -43,7 +43,7 @@
 			<name>Libro</name>
 			<path>Models/Book/libroProva1.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Book/book_diffuse.png</texture>
+				<texture type="diffuse">Models/Book/book2_diffuse.png</texture>
 				<texture type="specular">Models/Book/book_specular.png</texture>
 				<texture type="normal">Models/Book/book_normal.png</texture>
 			</textures>
@@ -58,7 +58,7 @@
 			<name>Pagina</name>
 			<path>Models/Page/pagina3_uv_double_sided.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Page/page2_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page3_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>
