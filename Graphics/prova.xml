@@ -58,7 +58,7 @@
 			<name>Pagina</name>
 			<path>Models/Page/pagina3_uv_double_sided.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Page/page_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page2_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>
