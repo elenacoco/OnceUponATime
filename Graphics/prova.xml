@@ -12,12 +12,12 @@
 	</environment>
 
 	<skybox>
-		<face>Textures/skybox1/right.png</face>
-		<face>Textures/skybox1/left.png</face>
-		<face>Textures/skybox1/top.png</face>
-		<face>Textures/skybox1/bottom.png</face>
-		<face>Textures/skybox1/front.png</face>
-		<face>Textures/skybox1/back.png</face>
+		<face>Textures/skybox7/right.png</face>
+		<face>Textures/skybox7/left.png</face>
+		<face>Textures/skybox7/top.png</face>
+		<face>Textures/skybox7/bottom.png</face>
+		<face>Textures/skybox7/front.png</face>
+		<face>Textures/skybox7/back.png</face>
 	</skybox>
 	
 	<lights>
