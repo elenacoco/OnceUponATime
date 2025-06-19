@@ -23,17 +23,22 @@ void main()
 	vec3 normalNorm = normalize(normal);
 	vec3 lightDir = normalize(lightPosition - fragPos); // Direzione della luce
 	float diff = max(dot(normalNorm, lightDir), 0.0); // Illuminazione diffusa
-	vec3 diffuse = diff * lightColor; // Colore diffuso
+	vec3 diffuse = diff * lightColor * textureColor; // Colore diffuso
 
 	// PHONG
-	vec3 viewDir = normalize(viewPosition - fragPos); // Direzione della vista
-	vec3 reflectDir = reflect(-lightDir, normalNorm); // Direzione di riflessione
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32); // Illuminazione speculare
-	vec3 specular = spec * lightColor; // Colore speculare
+	vec3 specular = vec3(0.0, 0.0, 0.0);
+	if(diff > 0.0) // Solo se la superficie è illuminata
+	{
+		vec3 viewDir = normalize(viewPosition - fragPos); // Direzione della vista
+		vec3 reflectDir = reflect(-lightDir, normalNorm); // Direzione di riflessione
+		float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32); // Illuminazione speculare
+		float specStrength = 0.5;
+		specular = spec * specStrength * lightColor; // Colore speculare
+	}
 
 	// Combinazione dei contributi di luce
-	vec3 ambient = ambientLight; // Luce ambientale
-	vec3 finalColor = (ambient + diffuse + specular) * textureColor; // (ambient + diffuse + specular) * ObjectColor
+	vec3 ambient = ambientLight * textureColor; // Luce ambientale
+	vec3 finalColor = (ambient + diffuse + specular); // (ambient + diffuse + specular) * ObjectColor
 
 	FragColor = vec4(finalColor, 1);
 }

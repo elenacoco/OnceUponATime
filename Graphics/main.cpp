@@ -379,6 +379,7 @@ void processInput(GLFWwindow* window)
 		cout << "Posizione camera dietro" << endl;
 		Vector3f newPosition = scene->getCamera().position; // Sposta la camera avanti lungo l'asse Z
 		newPosition.y -= scene->getCamera().position.y * 2; // Aumenta la coordinata Z per spostare la camera avanti
+		//newPosition = Vector3f(0, 40, 30);
 		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
