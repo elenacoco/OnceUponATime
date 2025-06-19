@@ -332,7 +332,7 @@ void processInput(GLFWwindow* window)
 	else if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 9 per disegnare il nono oggetto
-		std::cout << "Disegno il non oggetto" << std::endl;
+		std::cout << "Disegno il nono oggetto" << std::endl;
 		showObject(10);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS && !isBeenPressed)
