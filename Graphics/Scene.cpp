@@ -7,7 +7,7 @@ Scene::Scene(int width, int height)
 	camera = Camera();
 	skybox = Skybox(); // Inizializza lo skybox
 
-	currentVisibileObjectIndex = 8; // Inizialmente è visibile la scritta disney
+	currentVisibileObjectIndex = 11; // Inizialmente è visibile la scritta disney
 	rotation = 0.01f; // Velocità di rotazione predefinita
 	backgroundColor = Vector3f(0.2f, 0.3f, 0.3f); // Colore di sfondo predefinito
 	ambientLight = Vector3f(1.0f, 1.0f, 1.0f); // Colore della luce ambientale predefinito

@@ -68,20 +68,6 @@
 		</model>
 		
 		<model>
-			<name>Pascal</name>
-			<path>Models/Objects/Pascal.fbx</path>
-			<textures>
-				<texture type="diffuse">Models/Objects/Pascal_diffuse.jpeg</texture>
-			</textures>
-			<transform>
-				<translate x="0" y="4" z="0"/>
-				<rotate axis="x" angle="90"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="0.5" y="0.5" z="0.5"/>
-			</transform>
-		</model>
-		
-		<model>
 			<name>Gusgus</name>
 			<path>Models/Objects/Gusgus1.obj</path>
 			<textures>
@@ -94,21 +80,6 @@
 				<rotate axis="y" angle="0"/>
 				<scaleIni x="0" y="0" z="0"/>
 				<scaleFin x="0.2" y="0.2" z="0.2"/>
-			</transform>
-		</model>
-		
-		<model>
-			<name>Lampada</name>
-			<path>Models/Objects/lamp1.obj</path>
-			<textures>
-				<texture type="diffuse">Models/Objects/Lamp_diffuse.jpg</texture>
-				<texture type="specular">Models/Objects/lamp_specular.jpg</texture>
-			</textures>
-			<transform>
-				<translate x="0" y="4" z="0"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="0.5" y="0.5" z="0.5"/>
 			</transform>
 		</model>
 
@@ -126,11 +97,27 @@
 				<scaleFin x="0.2" y="0.2" z="0.2"/>
 			</transform>
 		</model>
+
 		<model>
-			<name>Merlino</name>
-			<path>Models/Objects/MERLINWIZARDVACATION.obj</path>
+			<name>Lampada</name>
+			<path>Models/Objects/lamp.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/MerlinVacation_diffuse.png</texture>
+				<texture type="diffuse">Models/Objects/Lamp_diffuse.jpg</texture>
+				<texture type="specular">Models/Objects/lamp_specular.jpg</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="0"/>
+				<rotate axis="y" angle="0"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="0.5" y="0.5" z="0.5"/>
+			</transform>
+		</model>
+		
+		<model>
+			<name>Nala</name>
+			<path>Models/Objects/nala.obj</path>
+			<textures>
+				<texture type="diffuse">Models/Objects/nala_diffuse.jpeg</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="4" z="20"/>
@@ -140,19 +127,73 @@
 			</transform>
 		</model>
 
-		
-		
 		<model>
-			<name>GingerbreadMan</name>
-			<path>Models/Objects/GBman.obj</path>
+			<name>MaialinoSalvadanaio</name>
+			<path>Models/Objects/hamm.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/GBMan_diffuse.png</texture>
+				<texture type="diffuse">Models/Objects/hamm_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="4" z="0"/>
 				<rotate axis="y" angle="0"/>
 				<scaleIni x="0" y="0" z="0"/>
 				<scaleFin x="1" y="1" z="1"/>
+			</transform>
+		</model>
+
+		<model>
+			<name>FantasiaBroom</name>
+			<path>Models/Objects/Fantasia_broom.obj</path>
+			<textures>
+				<texture type="diffuse">Models/Objects/FantasiaBroom_diffuse.png</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="0"/>
+				<rotate axis="y" angle="0"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="1" y="1" z="1"/>
+			</transform>
+		</model>
+
+		<model>
+			<name>MikeWazowski</name>
+			<path>Models/Objects/mike.obj</path>
+			<textures>
+				<texture type="diffuse">Models/Objects/Mike_diffuse.png</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="0"/>
+				<rotate axis="y" angle="0"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="1" y="1" z="1"/>
+			</transform>
+		</model>
+
+		<model>
+			<name>Stitch</name>
+			<path>Models/Objects/stitch.obj</path>
+			<textures>
+				<texture type="diffuse">Models/Objects/Stitch_diffuse.png</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="0"/>
+				<rotate axis="y" angle="0"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="1" y="1" z="1"/>
+			</transform>
+		</model>
+
+		<model>
+			<name>Pascal</name>
+			<path>Models/Objects/Pascal.fbx</path>
+			<textures>
+				<texture type="diffuse">Models/Objects/Pascal_diffuse.jpeg</texture>
+			</textures>
+			<transform>
+				<translate x="0" y="4" z="0"/>
+				<rotate axis="x" angle="90"/>
+				<scaleIni x="0" y="0" z="0"/>
+				<scaleFin x="0.5" y="0.5" z="0.5"/>
 			</transform>
 		</model>
 

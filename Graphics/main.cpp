@@ -30,6 +30,7 @@ using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
+void showObject(int objectIndex);
 
 //mettere riferimento a oggetto di classe scene per controllare la scena da lì e fare le cose in modo più ordinato
 Scene* scene = nullptr;
@@ -284,85 +285,61 @@ void processInput(GLFWwindow* window)
     {
 		//premuto 1 per disegnare la primo oggetto
 		std::cout << "Disegno il primo oggetto" << std::endl;
-		scene->showObject(2); // Mostra il primo oggetto nella scena
-		scene->isAnimationStarted = true;
-		scene->isAnimationCompleted = false;
-		scene->isPreviousObjectVisible = true;
-		scene->isCurrentObjectVisible = false;
-
-		isBeenPressed = true; // Imposta il flag per indicare che un tasto è stato premuto
+		showObject(2);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 2 per disegnare il secondo oggetto
 		std::cout << "Disegno il secondo oggetto" << std::endl;
-		scene->showObject(3); // Mostra il secondo oggetto nella scena
-		scene->isAnimationStarted = true;
-		scene->isAnimationCompleted = false;
-		scene->isPreviousObjectVisible = true;
-		scene->isCurrentObjectVisible = false;
-
-		isBeenPressed = true;
+		showObject(3);
     }
 	else if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 3 per disegnare il terzo oggetto
 		std::cout << "Disegno il terzo oggetto" << std::endl;
-		scene->showObject(4); // Mostra il terzo oggetto nella scena
-		scene->isAnimationStarted = true;
-		scene->isAnimationCompleted = false;
-		scene->isPreviousObjectVisible = true;
-		scene->isCurrentObjectVisible = false;
-
-		isBeenPressed = true;
+		showObject(4);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 4 per disegnare il quarto oggetto
 		std::cout << "Disegno il quarto oggetto" << std::endl;
-		scene->showObject(5); // Mostra il quarto oggetto nella scena
-		scene->isAnimationStarted = true;
-		scene->isAnimationCompleted = false;
-		scene->isPreviousObjectVisible = true;
-		scene->isCurrentObjectVisible = false;
-
-		isBeenPressed = true;
+		showObject(5);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 5 per disegnare il quinto oggetto
 		std::cout << "Disegno il quinto oggetto" << std::endl;
-		scene->showObject(6); // Mostra il quinto oggetto nella scena
-		scene->isAnimationStarted = true;
-		scene->isAnimationCompleted = false;
-		scene->isPreviousObjectVisible = true;
-		scene->isCurrentObjectVisible = false;
-
-		isBeenPressed = true;
+		showObject(6);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 6 per disegnare il sesto oggetto
 		std::cout << "Disegno il sesto oggetto" << std::endl;
-		scene->showObject(7); // Mostra il sesto oggetto nella scena
-		scene->isAnimationStarted = true;
-		scene->isAnimationCompleted = false;
-		scene->isPreviousObjectVisible = true;
-		scene->isCurrentObjectVisible = false;
-
-		isBeenPressed = true;
+		showObject(7);
+	}
+	else if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS && !isBeenPressed)
+	{
+		//premuto 7 per disegnare il settimo oggetto
+		std::cout << "Disegno il settimo oggetto" << std::endl;
+		showObject(8);
+	}
+	else if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS && !isBeenPressed)
+	{
+		//premuto 8 per disegnare il ottavo oggetto
+		std::cout << "Disegno il ottavo oggetto" << std::endl;
+		showObject(9);
+	}
+	else if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS && !isBeenPressed)
+	{
+		//premuto 9 per disegnare il nono oggetto
+		std::cout << "Disegno il non oggetto" << std::endl;
+		showObject(10);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 0 per disegnare la scritta
 		std::cout << "Disegno la scritta" << std::endl;
-		scene->showObject(8); // Mostra il sesto oggetto nella scena
-		scene->isAnimationStarted = true;
-		scene->isAnimationCompleted = false;
-		scene->isPreviousObjectVisible = true;
-		scene->isCurrentObjectVisible = false;
-
-		isBeenPressed = true;
+		showObject(11);
 	}
 
 
@@ -423,6 +400,17 @@ void processInput(GLFWwindow* window)
 		scene->setViewPosition(newPosition);
 	}
 
+}
+
+void showObject(int objectIndex)
+{
+	scene->showObject(objectIndex);
+	scene->isAnimationStarted = true;
+	scene->isAnimationCompleted = false;
+	scene->isPreviousObjectVisible = true;
+	scene->isCurrentObjectVisible = false;
+
+	isBeenPressed = true;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
