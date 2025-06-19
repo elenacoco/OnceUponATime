@@ -27,6 +27,7 @@ private:
 	vector<Light> lights;
 	Camera camera;
 	Skybox skybox;
+	Vector3f viewPosition;
 
 	//matrici
 	Matrix4x4f modelMatrix;
@@ -49,6 +50,7 @@ private:
 	float rotation; // velocità di rotazione degli oggetti
 	float scaleModel; // scala del modello
 	double lastTime; // tempo dell'ultimo frame per l'animazione
+
 	//qualcosa per la pagina
 	float rotationPage;
 	float currentTimePage; // tempo corrente per l'animazione della pagina
@@ -108,6 +110,8 @@ public:
 	Matrix4x4f getModelMatrix() const { return modelMatrix; }
 	Matrix4x4f getViewMatrix() const { return viewMatrix; }
 	Matrix4x4f getProjMatrix() const { return projMatrix; }
+	Vector3f getViewPosition() const { return viewPosition; }
+	void setViewPosition(Vector3f view) { viewPosition = view; }
 
 	// Getters
 	Vector3f getBackgroundColor() const { return backgroundColor; }

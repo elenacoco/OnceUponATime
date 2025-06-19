@@ -372,6 +372,7 @@ void processInput(GLFWwindow* window)
 		//Posizione camera davanti
 		cout << "Posizione camera davanti" << endl;
 		scene->updateViewMatrix(scene->getCamera().position, scene->getCamera().target, scene->getCamera().up);
+		scene->setViewPosition(scene->getCamera().position);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
@@ -381,6 +382,7 @@ void processInput(GLFWwindow* window)
 		newPosition.y -= scene->getCamera().position.y * 2; // Aumenta la coordinata Z per spostare la camera avanti
 		//newPosition = Vector3f(0, 40, 30);
 		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
+		scene->setViewPosition(newPosition);
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
@@ -390,6 +392,7 @@ void processInput(GLFWwindow* window)
 		newPosition.y -= scene->getCamera().position.y;
 		newPosition.x -= -(scene->getCamera().position.y); // Aumenta la coordinata X per spostare la camera a sinistra
 		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
+		scene->setViewPosition(newPosition);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
@@ -399,6 +402,7 @@ void processInput(GLFWwindow* window)
 		newPosition.y -= scene->getCamera().position.y;
 		newPosition.x += -(scene->getCamera().position.y); // Aumenta la coordinata X per spostare la camera a destra
 		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
+		scene->setViewPosition(newPosition);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
 	{
@@ -407,6 +411,7 @@ void processInput(GLFWwindow* window)
 		Vector3f newPosition = Vector3f(0, -0.1, 0);
 		newPosition.z += scene->getCamera().position.z * 2;
 		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
+		scene->setViewPosition(newPosition);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS)
 	{
@@ -415,6 +420,7 @@ void processInput(GLFWwindow* window)
 		Vector3f newPosition = Vector3f(0, -0.1, 0);
 		newPosition.z -= scene->getCamera().position.z * 2;
 		scene->updateViewMatrix(newPosition, scene->getCamera().target, scene->getCamera().up);
+		scene->setViewPosition(newPosition);
 	}
 
 }

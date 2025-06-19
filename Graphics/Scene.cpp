@@ -18,6 +18,8 @@ Scene::Scene(int width, int height)
 
 	currentTimePage = 0.0f; // Inizializza il tempo corrente della pagina
 	previousTimePage = 0.0f; // Inizializza il tempo precedente della pagina
+
+    viewPosition = Vector3f(0.0f);
 }
 
 Scene::~Scene()
@@ -120,6 +122,7 @@ void Scene::loadFromXML(const string& nameXML)
     float fov = stof(cameraNode->first_node("fov")->value());
     cout << "Camera FOV: " << fov << endl;
     camera = Camera(cameraPos, cameraTarget, cameraUp, fov); // Imposta la camera con i valori letti dal file XML
+    viewPosition = camera.position;
 
 	float nearPlane = stof(cameraNode->first_node("nearPlane")->value());
 	float farPlane = stof(cameraNode->first_node("farPlane")->value());
@@ -225,7 +228,7 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
     
     //setta le uniform per gli shader che hanno una luce (PHONG)
     lights[0].SetUniform(shader);
-    shader.setVec3("viewPosition", camera.position);
+    shader.setVec3("viewPosition", viewPosition);
     shader.setVec3("ambientLight", ambientLight);
     
     //shader Piu' Texture
@@ -250,7 +253,7 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
         glUniform1f(glGetUniformLocation(pageShader.shaderID, "animationSpeed"), 1.5f);
 
         lights[0].SetUniform(pageShader);
-        pageShader.setVec3("viewPosition", camera.position);
+        pageShader.setVec3("viewPosition", viewPosition);
         pageShader.setVec3("ambientLight", ambientLight);
 
         models[1].drawModel(pageShader); // Disegna il modello della pagina
