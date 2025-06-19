@@ -352,6 +352,19 @@ void processInput(GLFWwindow* window)
 
 		isBeenPressed = true;
 	}
+	else if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS && !isBeenPressed)
+	{
+		//premuto 0 per disegnare la scritta
+		std::cout << "Disegno la scritta" << std::endl;
+		scene->showObject(8); // Mostra il sesto oggetto nella scena
+		scene->isAnimationStarted = true;
+		scene->isAnimationCompleted = false;
+		scene->isPreviousObjectVisible = true;
+		scene->isCurrentObjectVisible = false;
+
+		isBeenPressed = true;
+	}
+
 
 	//POSIZIONI CAMERA
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
