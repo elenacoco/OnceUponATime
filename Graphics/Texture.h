@@ -13,7 +13,7 @@ public:
 	GLenum type;
 	GLuint unit;
 
-	Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLenum pixelType);
+	Texture(const char* image, GLenum type, GLuint unit, GLenum pixelType);
 	~Texture();
 
 	void bind();

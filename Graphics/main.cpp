@@ -1,29 +1,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-
-#include <iostream>
-#include<string>
 #include<fstream>
-#include<vector>
-
-#include "Shader.h"
 #include <assimp/Importer.hpp>
 
-#include "rapidxml/rapidxml.hpp"
-#include "rapidxml/rapidxml_print.hpp"
-//#include "rapidxml/rapidxml_iterators.hpp"
-//#include "rapidxml/rapidxml_utils.hpp"
-
-#include <AlgebraLineare.h>
-#include "Model.h"
-#include"Light.h"
 #include "Scene.h"
-
-//OCCHIO AI DISTRUTTORI!!!!!!
 
 using namespace rapidxml;
 using namespace std;
@@ -32,19 +13,14 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 void showObject(int objectIndex);
 
-//mettere riferimento a oggetto di classe scene per controllare la scena da lì e fare le cose in modo più ordinato
 Scene* scene = nullptr; //puntatore alla scena
-bool isBeenPressed = false; // Indica se è stato premuto un tasto della tastiera
+bool isBeenPressed = false; // Indica se è stato premuto un tasto della tastiera per l'animazione della pagina
 
 
 int main()
 {
-    Vector3f x_axis = Vector3f(1.0f, 0.0f, 0.0f);
-    Vector3f y_axis = Vector3f(0.0f, 1.0f, 0.0f);
-    Vector3f z_axis = Vector3f(0.0f, 0.0f, 1.0f);
 
-	// glfw: initialize and configure
-// ------------------------------
+	//Inizializziamo glfw
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -62,8 +38,7 @@ int main()
 		return -1;
 	}
 
-	// glfw window creation
-	// --------------------
+	//creazione dela finestra glfw
 	GLFWwindow* window = glfwCreateWindow(scene->getWindowWidth(), scene->getWindowHeight(), "OnceUponATime", NULL, NULL);
 	if (window == NULL)
 	{
@@ -74,9 +49,8 @@ int main()
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	// glad: load all OpenGL function pointers
-	// ---------------------------------------
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) //dopo aver costruito il contesto OPenGL
+	//Carichiamo glad e tutte le funzioni OpenGL
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) //dopo aver costruito il contesto OpenGL
 	{
 		std::cout << "Non sono riuscito a inizalizzare GLAD" << std::endl;
 		return -1;
@@ -86,91 +60,9 @@ int main()
 	scene->loadFromXML("prova.xml"); // Carica la scena da un file XML
 
 
-    Shader pageShader("provaPagina.vert", "provaPagina.frag");
-    //Shader shader("provaTextMulti.vert", "provaTextMulti.frag");
-    //Shader shader("PhongSpecular.vert", "PhongSpecular.frag");
-    //Shader shader("provaTexMultiGL.vert", "provaTexMultiGL.frag");
-    Shader shader("provaPhong.vert", "provaPhong.frag");
-    //Shader shader("provaVS.vert", "provaFS.frag");
-	Shader skyboxShader("skybox.vert", "skybox.frag");
-
-
-    //PIRAMIDE
-    float vertices[] =
-    { //     COORDINATES     /        COLORS      /   TexCoord  //
-        -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
-        -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
-         0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
-         0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
-         0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	2.5f, 5.0f
-    };
-
-    // Indices for vertices order
-    unsigned int indices[] =
-    {
-        0, 1, 2,
-        0, 2, 3,
-        0, 1, 4,
-        1, 2, 4,
-        2, 3, 4,
-        3, 0, 4
-    };
-
-    vector<string> pathTexture1 = {"Models/Page/pagina_diffuse.png"};
-    //vector<string> pathTexture2 = {"book_diffuse.png"};
-    //Model prova = Model("Textured.obj", pathTexture1);
-    //Model prova2 = Model("book_on_xz.obj", pathTexture2);
-    //Model prova = Model("");
-    Model prova = Model("Models/Page/pagina3.obj", pathTexture1);
-
-	bool piramide = true;
-    unsigned int VBO, VAO, EBO;
-
-
-	if (!prova.meshes.empty())
-	{
-		std::cout << "Modello caricato con successo!" << std::endl;
-		piramide = false; // Se il modello viene caricato, non disegnare la piramide
-	}
-	if (piramide)
-	{
-		std::cout << "main::Errore nel caricamento del modello." << std::endl;
-		
-		glGenVertexArrays(1, &VAO);
-		glGenBuffers(1, &VBO);
-		glGenBuffers(1, &EBO);
-		// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-		glBindVertexArray(VAO);
-
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-		//attributi di posizione
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-		//attributi del colore
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
-		//attributi della texture
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-		glEnableVertexAttribArray(2);
-
-		// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-		// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-		// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-		glBindVertexArray(0);
-	}
-
-	float rotation = 0.0f; // angolo di rotazione iniziale
-	double lastTime = glfwGetTime(); // tempo dell'ultimo frame
+    Shader pageShader("provaPagina.vert", "provaPagina.frag"); //shader per la pagina
+    Shader shader("provaPhong.vert", "provaPhong.frag"); //shader per tutti i modelli
+	Shader skyboxShader("skybox.vert", "skybox.frag"); //shader per lo skybox
 
 
 	glEnable(GL_DEPTH_TEST); // abilitare il test di profondità per evitare che i poligoni vengano disegnati sopra ad altri
@@ -180,10 +72,10 @@ int main()
 
 
     // render loop
-    // -----------
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
+
 		if (scene->isAnimationCompleted)
 		{
 			isBeenPressed = false; // Resetta il flag quando l'animazione è completata
@@ -194,88 +86,20 @@ int main()
 
 		scene->render(shader, skyboxShader, pageShader);
 
-
-        //shader.useProgram(); // usa lo shader
-		//
-		////ROTAZIONE
-		//if (currentTime - lastTime >= 1.0 / 60.0) // aggiorna ogni 1/60 di secondo
-		//{
-		//	rotation += 1.0f; // incrementa l'angolo di rotazione
-		//	lastTime = currentTime; // aggiorna il tempo dell'ultimo frame
-		//}
-		//
-		////PAGINA
-        ////matrici per il 3d
-        //Matrix4x4f modelMatrix = Matrix4x4f();
-        //Matrix4x4f viewMatrix = Matrix4x4f();
-        //Matrix4x4f projMatrix = Matrix4x4f();
-		//
-		//if (rotation >= 180.0f) // resetta la rotazione dopo un giro completo
-		//{
-		//	rotation = 0.0f;
-		//}
-		//
-		//modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1), -rotation, y_axis); // ruota il modello attorno all'asse y nel tempo
-		//viewMatrix = viewMatrix.view(scene->getCamera().position, scene->getCamera().target, scene->getCamera().up); // aggiorna la matrice di vista con la posizione della camera
-		//projMatrix = projMatrix.perspectiveSimplify(scene->getCamera().fov, (float)scene->getWindowWidth() / scene->getWindowHeight(), 0.1f, 100.0f);
-		//
-		//scene->updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
-
-
-
-
-		//glUniform1f(glGetUniformLocation(shaderPagina.shaderID, "time"), (float)currentTime); // Passa il tempo allo shader
-		
-		//glUniform1f(glGetUniformLocation(shaderPagina.shaderID, "curlRadius"), 1.0f); 
-		//glUniform1f(glGetUniformLocation(shaderPagina.shaderID, "curlAmount"), 0.5f); 
-
-		//glUniform1f(glGetUniformLocation(shaderPagina.shaderID, "flipDuration"), 2.0f);
-		//glUniform1f(glGetUniformLocation(shaderPagina.shaderID, "bendAmount"), 0.5f);
-		//glUniform1f(glGetUniformLocation(shaderPagina.shaderID, "pageWidth"), 16.87f); //DA CAPIRE
-
-		if (piramide)
-		{
-			glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-			glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
-			glBindVertexArray(0); // no need to unbind it every time 
-		}
-
-		//prova.drawModel(shader); // Draw the model
-
-
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
+        // Swap buffer e reagisce agli eventi (tipo tasti tastiera premuti)
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
-    // optional: de-allocate all resources once they've outlived their purpose:
-    // ------------------------------------------------------------------------
-	if (piramide)
-	{
-		glDeleteVertexArrays(1, &VAO);
-		glDeleteBuffers(1, &VBO);
-		glDeleteBuffers(1, &EBO);
-	}
-	else
-	{
-		for (Mesh& mesh : prova.meshes)
-		{
-			mesh.VAO.unbind();
-		}
-	}
-
 	delete scene; // Dealloca la scena
     glDeleteProgram(shader.shaderID);
 
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    // ------------------------------------------------------------------
+    // termina e ripulisce tutte le risorse allocate da glfw
     glfwTerminate();
     return 0;
 }
 
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
+
 void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -287,9 +111,9 @@ void processInput(GLFWwindow* window)
 		//premuto 1 per disegnare la primo oggetto
 		std::cout << "Disegno il primo oggetto" << std::endl;
 		scene->bookTextureIndexToSet = 1;
-		scene->pageFrontTextureIndex = 2;
-		scene->pageBackTextureIndex = 3;
-		showObject(2);
+		scene->pageFrontTextureIndex = 2; //pari per tutti i pageFront...
+		scene->pageBackTextureIndex = 3; //dispari per tutti i pageBack...
+		showObject(2); //il primo oggetto è 2 perchè il modello 0 è il libro e il modello 1 la pagina
 	}
 	else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS && !isBeenPressed)
 	{
@@ -385,8 +209,8 @@ void processInput(GLFWwindow* window)
 	{
 		//Posizione camera dietro
 		cout << "Posizione camera dietro" << endl;
-		Vector3f newPosition = scene->getCamera().position; // Sposta la camera avanti lungo l'asse Z
-		newPosition.y -= scene->getCamera().position.y * 2; // Aumenta la coordinata Z per spostare la camera avanti
+		Vector3f newPosition = scene->getCamera().position; // Sposta la camera avanti lungo l'asse Y
+		newPosition.y -= scene->getCamera().position.y * 2; // Aumenta la coordinata Y per spostare la camera avanti
 		scene->startCameraMove(newPosition);
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && !scene->isCameraMoving)
@@ -411,7 +235,7 @@ void processInput(GLFWwindow* window)
 	{
 		//Posizione camera in alto
 		cout << "Posizione camera in alto" << endl;
-		Vector3f newPosition = Vector3f(0, -0.1, 0);
+		Vector3f newPosition = Vector3f(0, -0.1, 0); //y non è 0 perchè se no la norma è zero
 		newPosition.z += scene->getCamera().position.z * 2;
 		scene->startCameraMove(newPosition);
 	}
@@ -437,11 +261,8 @@ void showObject(int objectIndex)
 	isBeenPressed = true;
 }
 
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
+// Quando la finestra viene ridimensionata viene chiamata questa funzione
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and 
-    // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
 }

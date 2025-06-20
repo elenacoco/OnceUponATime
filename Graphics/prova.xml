@@ -2,8 +2,8 @@
 
 <scene>
 	<window>
-		<width>1080</width>
-		<height>720</height>
+		<width>1920</width>
+		<height>1080</height>
 	</window>
 
 	<environment>
@@ -22,15 +22,13 @@
 	
 	<lights>
 		<light>
-			<type>point</type>
 			<position x="10" y="30" z="30"/>
 			<color r="1.0" g="1.0" b="0.8"/>
-			<intensity>1</intensity>
 		</light>
 	</lights>
 
 	<camera>
-		<position x="0" y="-100" z="30"/> <!-- pollice verso destra = x, indice che esce da noi = y (y negativa verso di noi), medio verso l'alto = z-->
+		<position x="0" y="-100" z="40"/> <!-- pollice verso destra = x, indice che esce da noi = y (y negativa verso di noi), medio verso l'alto = z-->
 		<target x="0" y="0" z="10"/>
 		<up x="0" y="0" z="1"/> <!-- asse verticale = z	-->
 		<fov>45</fov>

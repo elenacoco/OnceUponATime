@@ -141,7 +141,7 @@ vector<Textures> Model::loadTextures(vector<string> path)
     {
         for (int i = 0; i < path.size(); i++) 
         {
-            Texture tx = Texture(path[i].c_str(), GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE); //lo 0 indica la unit (ci serve solo quella)
+            Texture tx = Texture(path[i].c_str(), GL_TEXTURE_2D, 0, GL_UNSIGNED_BYTE); //lo 0 indica la unit (ci serve solo quella)
             tx.bind();
 
             //Controllo di che tipo è la texture

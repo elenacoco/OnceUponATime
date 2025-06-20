@@ -142,43 +142,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="provaFS.frag">
-      <Filter>File di risorse\Shaders</Filter>
-    </None>
-    <None Include="provaVS.vert">
-      <Filter>File di risorse\Shaders</Filter>
-    </None>
-    <None Include="provaLambert.frag">
-      <Filter>File di risorse\Shaders</Filter>
-    </None>
-    <None Include="provaLambert.vert">
-      <Filter>File di risorse\Shaders</Filter>
-    </None>
     <None Include="provaPhong.vert">
       <Filter>File di risorse\Shaders</Filter>
     </None>
     <None Include="provaPhong.frag">
       <Filter>File di risorse\Shaders</Filter>
     </None>
-    <None Include="provaTextMulti.vert">
-      <Filter>File di risorse\Shaders</Filter>
-    </None>
-    <None Include="provaTextMulti.frag">
-      <Filter>File di risorse\Shaders</Filter>
-    </None>
     <None Include="provaPagina.vert">
       <Filter>File di risorse\Shaders</Filter>
     </None>
     <None Include="provaPagina.frag">
-      <Filter>File di risorse\Shaders</Filter>
-    </None>
-    <None Include="provaPagina2.vert">
-      <Filter>File di risorse\Shaders</Filter>
-    </None>
-    <None Include="provaTexMultiGL.frag">
-      <Filter>File di risorse\Shaders</Filter>
-    </None>
-    <None Include="provaTexMultiGL.vert">
       <Filter>File di risorse\Shaders</Filter>
     </None>
     <None Include="skybox.vert">

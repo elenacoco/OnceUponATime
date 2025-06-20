@@ -85,7 +85,7 @@ void Scene::loadFromXML(const string& nameXML)
 	for (xml_node<>* faceNode = skyboxNode->first_node("face"); faceNode; faceNode = faceNode->next_sibling("face"))
 	{
 		string facePath = faceNode->value();
-		cout << "Skybox face path: " << facePath << endl;
+		//cout << "Skybox face path: " << facePath << endl;
 		skyboxFaces.push_back(facePath); //path delle 6 immagini dello skybox
 	}
 	skybox = Skybox(skyboxFaces); // Crea lo skybox con i percorsi delle facce
@@ -96,8 +96,6 @@ void Scene::loadFromXML(const string& nameXML)
 
     for (xml_node<>* lightNode = lightsNode->first_node("light"); lightNode; lightNode = lightNode->next_sibling("light"))
     {
-        string lightType = lightNode->first_node("type")->value();
-        //cout << "light type" << lightType << endl;
         Vector3f position = Vector3f(stof(lightNode->first_node("position")->first_attribute("x")->value()),
             stof(lightNode->first_node("position")->first_attribute("y")->value()),
             stof(lightNode->first_node("position")->first_attribute("z")->value()));
@@ -106,8 +104,7 @@ void Scene::loadFromXML(const string& nameXML)
             stof(lightNode->first_node("color")->first_attribute("g")->value()),
             stof(lightNode->first_node("color")->first_attribute("b")->value()));
         //cout << "colore luce" << color << endl;
-        float intensity = stof(lightNode->first_node("intensity")->value());
-        Light light = Light(lightType, position, color, intensity);
+        Light light = Light(position, color);
         lights.push_back(light);
     }
 
@@ -213,8 +210,8 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 {
     //imposta il colore di sfondo
     glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1.0f);
-    //DA CAPIRE
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //serve a resettare il frame precedente
+                                                        //se non viene chiamato i disegni del frame precedente rimangono sullo schermo
 
     shader.useProgram(); // usa lo shader (attiviamo lo shader generico)
     

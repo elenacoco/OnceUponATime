@@ -62,8 +62,6 @@ void Mesh::drawMesh(Shader& shader, int textureIndex)
 		shader.setInt("texture_diffuse1", 0);
 	}
 
-	glActiveTexture(GL_TEXTURE0);
-
 	VAO.bind();
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	VAO.unbind();

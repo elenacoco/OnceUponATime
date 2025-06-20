@@ -1,11 +1,9 @@
 #include "Light.h"
 
-Light::Light(string type, Vector3f direction, Vector3f color, float intensity)
+Light::Light(Vector3f direction, Vector3f color)
 {
-	this->type = type;
 	this->position = direction;
 	this->color = color;
-	this->intensity = intensity;
 }
 
 void Light::SetUniform(Shader& shader)

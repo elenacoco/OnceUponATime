@@ -70,9 +70,10 @@ Skybox::~Skybox()
 {
 }
 
+//viene richiamata per ultima la draw dello skybox (rispetto agli altri oggeti)
 void Skybox::draw(Shader& shader, Matrix4x4f view, Matrix4x4f proj, Matrix4x4f model)
 {
-	glDepthFunc(GL_LEQUAL); // Imposta il test di profondità per lo skybox
+	glDepthFunc(GL_LEQUAL); // Imposta il test di profondità per lo skybox, evita che non venga disegnato e lo disegna dietro a tutti gli altri oggetti
 
 	shader.useProgram(); //attiva lo shader per lo skybox
 	
@@ -103,6 +104,6 @@ void Skybox::draw(Shader& shader, Matrix4x4f view, Matrix4x4f proj, Matrix4x4f m
 
 	glBindVertexArray(0); // Unbind VAO
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0); // Unbind texture
-	glDepthFunc(GL_LESS); // Reset depth function to default //CAPIRE
+	glDepthFunc(GL_LESS); //GL_LESS è il confronto di default, il pixel viene disegnato se è più vicino alla camera
 }
 

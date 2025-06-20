@@ -7,13 +7,11 @@
 class Light
 {
 public :
-	string type;
 	Vector3f position;
 	Vector3f color;
-	float intensity;
 
 	//costruttore
-	Light(string type, Vector3f direction, Vector3f color, float intensity);
+	Light(Vector3f direction, Vector3f color);
 
 
 	void SetUniform(Shader &shader);
