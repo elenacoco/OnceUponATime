@@ -1,5 +1,4 @@
 #include "Texture.h"
-//#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 Texture::Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLenum pixelType) // Controllare format(va tolta?)
@@ -39,7 +38,7 @@ Texture::Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLe
 			std::cerr << "Formato immagine non supportato: " << numCh << " canali.\n";
 			stbi_image_free(data);
 		}
-		glTexImage2D(type, unit, format, width, height, 0, format, pixelType, data);
+		glTexImage2D(type, 0, format, width, height, 0, format, pixelType, data);  //ho messo 0 al posto di unit
 		glGenerateMipmap(type);
 		std::cout << "CLASSE TEXTURE::Texture caricata con successo. ID: " << id << std::endl;
 	}
@@ -48,14 +47,11 @@ Texture::Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLe
 		std::cout << "Errore nel caricamento della texture" << std::endl;
 	}
 
-	//glBindTexture(type, 0);
-
 	stbi_image_free(data);
 }
 
 Texture::~Texture()
 {
-	//glDeleteTextures(1, &id);
 }
 
 void Texture::bind()

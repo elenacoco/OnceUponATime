@@ -26,6 +26,7 @@ public:
 
 	//disegno le mesh
 	void drawMesh(Shader &shader);
+	void drawMesh(Shader &shader, int textureIndex);
 
 private:
 

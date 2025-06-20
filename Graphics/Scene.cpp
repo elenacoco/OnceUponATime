@@ -20,6 +20,12 @@ Scene::Scene(int width, int height)
 	previousTimePage = 0.0f; // Inizializza il tempo precedente della pagina
 
     viewPosition = Vector3f(0.0f);
+
+    bookTextureIndex = 0;
+    pageTextureIndex = 0;
+    pageFrontTextureIndex = 0;
+    bookTextureIndexToSet = 0;
+    pageBackTextureIndex = 0;
 }
 
 Scene::~Scene()
@@ -216,7 +222,7 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 	//LIBRO
 	modelMatrix = Matrix4x4f();
 	updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
-    models[0].drawModel(shader); // Disegna il primo modello sempre perchè è il libro
+    models[0].drawModel(shader, bookTextureIndex); // Disegna il primo modello sempre perchè è il libro
     
 	//OGGETTO
 	modelMatrix = Matrix4x4f();
@@ -224,7 +230,7 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 	Vector3f scale = Vector3f(scaleModel); // scala dell'oggetto
 	modelMatrix = modelMatrix.model(translate, scale, rotation, z_axis); // ruota il modello attorno all'asse z nel tempo
 	shader.setMat4("model", modelMatrix); // Imposta la matrice del modello nello shader
-    models[currentVisibileObjectIndex].drawModel(shader); // Disegna il modello attualmente visibile
+    models[currentVisibileObjectIndex].drawModel(shader, 0); // Disegna il modello attualmente visibile
     
     //setta le uniform per gli shader che hanno una luce (PHONG)
     lights[0].SetUniform(shader);
@@ -256,7 +262,7 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
         pageShader.setVec3("viewPosition", viewPosition);
         pageShader.setVec3("ambientLight", ambientLight);
 
-        models[1].drawModel(pageShader); // Disegna il modello della pagina
+        models[1].drawModel(pageShader, pageTextureIndex); // Disegna il modello della pagina
     }
     else
     {
@@ -298,11 +304,22 @@ void Scene::update(float currentTime)
             {
                 rotationPage += 1.0f; // incrementa l'angolo di rotazione della pagina
 
+                if (rotationPage == 90.0f)
+                {
+                    pageTextureIndex = pageBackTextureIndex; //cambia texture a metà pagina
+                }
+
+                if (rotationPage >= 170.0f)
+                {
+                    bookTextureIndex = bookTextureIndexToSet;
+                }
+
                 if (rotationPage >= 180.0f) // resetta la rotazione dopo un giro completo
 	            {
 	            	rotationPage = 0.0f;
 		        	isPageAnimationEnded = true; // L'animazione della pagina è completata
 		        	isPageAnimationStarted = false; // Ferma l'animazione della pagina
+                    pageTextureIndex = pageFrontTextureIndex;
 	            }
             }
         }

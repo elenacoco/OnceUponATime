@@ -11,10 +11,10 @@ Model::Model(string path, vector<string> pathText)
 	loadModel(path);
 }
 
-void Model::drawModel(Shader& shader)
+void Model::drawModel(Shader& shader, int textureIndex)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
-		meshes[i].drawMesh(shader);
+		meshes[i].drawMesh(shader, textureIndex);
 }
 
 void Model::loadModel(string path)

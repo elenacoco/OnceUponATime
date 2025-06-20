@@ -65,6 +65,12 @@ public:
 	bool isPageAnimationStarted = false; // Indica se la pagina è stata girata
 	bool isPageAnimationEnded = false; // Indica se la pagina è stata girata
 
+	int bookTextureIndex;
+	int bookTextureIndexToSet;
+	int pageTextureIndex;
+	int pageFrontTextureIndex;
+	int pageBackTextureIndex;
+
 	//costruttore
 	Scene(int width, int height);
 	//distruttore

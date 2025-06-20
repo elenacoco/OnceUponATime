@@ -23,7 +23,7 @@
 	<lights>
 		<light>
 			<type>point</type>
-			<position x="10" y="20" z="30"/>
+			<position x="10" y="30" z="30"/>
 			<color r="1.0" g="1.0" b="0.8"/>
 			<intensity>1</intensity>
 		</light>
@@ -43,9 +43,16 @@
 			<name>Libro</name>
 			<path>Models/Book/libroProva1.obj</path>
 			<textures>
+				<texture type="diffuse">Models/Book/book0_diffuse.png</texture>
+				<texture type="diffuse">Models/Book/book1_diffuse.png</texture>
 				<texture type="diffuse">Models/Book/book2_diffuse.png</texture>
-				<texture type="specular">Models/Book/book_specular.png</texture>
-				<texture type="normal">Models/Book/book_normal.png</texture>
+				<texture type="diffuse">Models/Book/book3_diffuse.png</texture>
+				<texture type="diffuse">Models/Book/book4_diffuse.png</texture>
+				<texture type="diffuse">Models/Book/book5_diffuse.png</texture>
+				<texture type="diffuse">Models/Book/book6_diffuse.png</texture>
+				<texture type="diffuse">Models/Book/book7_diffuse.png</texture>
+				<texture type="diffuse">Models/Book/book8_diffuse.png</texture>
+				<texture type="diffuse">Models/Book/book9_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>
@@ -58,7 +65,26 @@
 			<name>Pagina</name>
 			<path>Models/Page/pagina3_uv_double_sided.obj</path>
 			<textures>
+				<texture type="diffuse">Models/Page/page0_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page1_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page2_diffuse.png</texture>
 				<texture type="diffuse">Models/Page/page3_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page4_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page5_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page6_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page7_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page8_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page9_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page10_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page11_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page12_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page13_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page14_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page15_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page16_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page17_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page18_diffuse.png</texture>
+				<texture type="diffuse">Models/Page/page19_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>

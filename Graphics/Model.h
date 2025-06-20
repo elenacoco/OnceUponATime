@@ -20,7 +20,7 @@ public:
     Model(string path, vector<string> pathTex);
     Model(string path);
 
-    void drawModel(Shader& shader);
+    void drawModel(Shader& shader, int textureIndex);
 
 private:
 

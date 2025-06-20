@@ -116,7 +116,7 @@ int main()
         3, 0, 4
     };
 
-    vector<string> pathTexture1 = {"Models/Page/pagina_diffuse.jpg"};
+    vector<string> pathTexture1 = {"Models/Page/pagina_diffuse.png"};
     //vector<string> pathTexture2 = {"book_diffuse.png"};
     //Model prova = Model("Textured.obj", pathTexture1);
     //Model prova2 = Model("book_on_xz.obj", pathTexture2);
@@ -286,60 +286,90 @@ void processInput(GLFWwindow* window)
     {
 		//premuto 1 per disegnare la primo oggetto
 		std::cout << "Disegno il primo oggetto" << std::endl;
+		scene->bookTextureIndexToSet = 1;
+		scene->pageFrontTextureIndex = 2;
+		scene->pageBackTextureIndex = 3;
 		showObject(2);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 2 per disegnare il secondo oggetto
 		std::cout << "Disegno il secondo oggetto" << std::endl;
+		scene->bookTextureIndexToSet = 2;
+		scene->pageFrontTextureIndex = 4;
+		scene->pageBackTextureIndex = 5;
 		showObject(3);
     }
 	else if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 3 per disegnare il terzo oggetto
 		std::cout << "Disegno il terzo oggetto" << std::endl;
+		scene->bookTextureIndexToSet = 3;
+		scene->pageFrontTextureIndex = 6;
+		scene->pageBackTextureIndex = 7;
 		showObject(4);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 4 per disegnare il quarto oggetto
 		std::cout << "Disegno il quarto oggetto" << std::endl;
+		scene->bookTextureIndexToSet = 4;
+		scene->pageFrontTextureIndex = 8;
+		scene->pageBackTextureIndex = 9;
 		showObject(5);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 5 per disegnare il quinto oggetto
 		std::cout << "Disegno il quinto oggetto" << std::endl;
+		scene->bookTextureIndexToSet = 5;
+		scene->pageFrontTextureIndex = 10;
+		scene->pageBackTextureIndex = 11;
 		showObject(6);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 6 per disegnare il sesto oggetto
 		std::cout << "Disegno il sesto oggetto" << std::endl;
+		scene->bookTextureIndexToSet = 6;
+		scene->pageFrontTextureIndex = 12;
+		scene->pageBackTextureIndex = 13;
 		showObject(7);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 7 per disegnare il settimo oggetto
 		std::cout << "Disegno il settimo oggetto" << std::endl;
+		scene->bookTextureIndexToSet = 7;
+		scene->pageFrontTextureIndex = 14;
+		scene->pageBackTextureIndex = 15;
 		showObject(8);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 8 per disegnare il ottavo oggetto
 		std::cout << "Disegno il ottavo oggetto" << std::endl;
+		scene->bookTextureIndexToSet = 8;
+		scene->pageFrontTextureIndex = 16;
+		scene->pageBackTextureIndex = 17;
 		showObject(9);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 9 per disegnare il nono oggetto
 		std::cout << "Disegno il nono oggetto" << std::endl;
+		scene->bookTextureIndexToSet = 9;
+		scene->pageFrontTextureIndex = 18;
+		scene->pageBackTextureIndex = 19;
 		showObject(10);
 	}
 	else if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS && !isBeenPressed)
 	{
 		//premuto 0 per disegnare la scritta
 		std::cout << "Disegno la scritta" << std::endl;
+		scene->bookTextureIndexToSet = 0;
+		scene->pageFrontTextureIndex = 0;
+		scene->pageBackTextureIndex = 1;
 		showObject(11);
 	}
 

@@ -9,10 +9,8 @@ Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture
 	setMesh();
 }
 
-//DA CAPIRE BENE!!!!!!!!
 void Mesh::drawMesh(Shader& shader)
 {
-
 	unsigned int diffuseNum = 1;
 	unsigned int specularNum = 1;
 	unsigned int normalNum = 1;
@@ -39,6 +37,29 @@ void Mesh::drawMesh(Shader& shader)
 
 		shader.setInt((name + number).c_str(), i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
+	}
+
+	glActiveTexture(GL_TEXTURE0);
+
+	VAO.bind();
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	VAO.unbind();
+}
+
+//DA CAPIRE BENE!!!!!!!!
+void Mesh::drawMesh(Shader& shader, int textureIndex)
+{
+	if (textureIndex < textures.size())
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textures[textureIndex].id);
+		shader.setInt("texture_diffuse1", 0);
+	}
+	else
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textures[0].id);
+		shader.setInt("texture_diffuse1", 0);
 	}
 
 	glActiveTexture(GL_TEXTURE0);
