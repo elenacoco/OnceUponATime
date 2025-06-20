@@ -20,9 +20,9 @@ Texture::Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLe
 
 	unsigned char* data = stbi_load(image, &width, &height, &numCh, 0);
 
-	std::cout << "Texture, image:  " << ": " << image << " size: " << width << "x" << height << " channels: " << numCh << std::endl;
+	//std::cout << "Texture, image:  " << ": " << image << " size: " << width << "x" << height << " channels: " << numCh << std::endl;
 
-	if (data)
+	if (data) //sceglie il formato in base all'immagine che ha 
 	{
 		GLenum format;
 		if (numCh == 1) {
@@ -38,9 +38,9 @@ Texture::Texture(const char* image, GLenum type, GLuint unit, GLenum format, GLe
 			std::cerr << "Formato immagine non supportato: " << numCh << " canali.\n";
 			stbi_image_free(data);
 		}
-		glTexImage2D(type, 0, format, width, height, 0, format, pixelType, data);  //ho messo 0 al posto di unit
-		glGenerateMipmap(type);
-		std::cout << "CLASSE TEXTURE::Texture caricata con successo. ID: " << id << std::endl;
+		glTexImage2D(type, unit, format, width, height, 0, format, pixelType, data);
+		glGenerateMipmap(type); //genera tante sotto immagini a seconda delle diverse distanze a cui ci troviamo
+		//std::cout << "CLASSE TEXTURE::Texture caricata con successo. ID: " << id << std::endl;
 	}
 	else
 	{

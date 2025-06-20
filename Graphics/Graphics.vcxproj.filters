@@ -116,9 +116,6 @@
     <ClInclude Include="rapidxml\rapidxml_utils.hpp">
       <Filter>File di intestazione\XML</Filter>
     </ClInclude>
-    <ClInclude Include="ReadXML.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>

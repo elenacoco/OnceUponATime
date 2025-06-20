@@ -17,6 +17,7 @@ public:
     string directory;
     vector<string> pathTexture;
 
+    //2 costruttori
     Model(string path, vector<string> pathTex);
     Model(string path);
 

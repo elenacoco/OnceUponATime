@@ -107,19 +107,13 @@ public:
 
 	//rendering
 	void render(Shader& shader, Shader& skyboxShader, Shader& pageShader);
-	void update(float currentTime);
+	void update(float currentTime); //prima si fa questo poi il render
 
 	//controllo visualizzazione oggetti
-	void showObject(int index); // mostra l'oggetto con l'indice specificato //DA FINIRE
-	void changeObject(int index); // cambia l'oggetto attualmente visibile con quello con l'indice specificato
-	void hideObject(int index); // nasconde l'oggetto con l'indice specificato
-
-	//input
-	void processInput(GLFWwindow* window);
+	void showObject(int index); // mostra l'oggetto con l'indice specificato
 
 	//utility
 	int getModelCount() const { return models.size(); }
-	bool isObjectVisible(int index) const;
 	void updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const Matrix4x4f& view, const Matrix4x4f& proj);
 	void updateViewMatrix(Vector3f position, Vector3f target, Vector3f up);
 	Matrix4x4f getModelMatrix() const { return modelMatrix; }

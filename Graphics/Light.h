@@ -12,6 +12,7 @@ public :
 	Vector3f color;
 	float intensity;
 
+	//costruttore
 	Light(string type, Vector3f direction, Vector3f color, float intensity);
 
 

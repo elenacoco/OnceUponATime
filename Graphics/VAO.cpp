@@ -1,15 +1,11 @@
 #include "VAO.h"
 
 VAO::VAO() {
-    glGenVertexArrays(1, &id);
+    glGenVertexArrays(1, &id); //"a questo id ci sarà un vertex array"
 }
 
-VAO::~VAO() {
-    //glDeleteVertexArrays(1, &id);
-}
-
-void VAO::bind() const {
-    glBindVertexArray(id);
+VAO::~VAO() 
+{
 }
 
 void VAO::unbind() const {

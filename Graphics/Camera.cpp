@@ -31,7 +31,7 @@ Camera& Camera::operator=(const Camera& other)
 	up = other.up;
 	fov = other.fov;
 
-	return *this; // Return the current object to allow chained assignments
+	return *this; // Restituisce l'oggetto corrente per permettere assegnazioni concatenate
 }
 
 void Camera::updateViewMatrix(Shader& shader, Matrix4x4f& viewMatrix)

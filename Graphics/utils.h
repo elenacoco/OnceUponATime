@@ -12,9 +12,9 @@ class Utils
 public:
 	static string readFile(const string& filePath);
 
-	static void debugError(const string& message)
+	static void debugError(const string& message) //prende un messaggio di errore e lo stampa se c'è un errore OpenGL
 	{
-		GLenum error = glGetError();
+		GLenum error = glGetError(); //prende l'errore OpenGL
 		if (error != GL_NO_ERROR)
 		{
 			cout << message << ", OpenGL Error: " << error << endl;

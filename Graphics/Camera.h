@@ -9,9 +9,9 @@ public:
 	Vector3f position;
 	Vector3f target;
 	Vector3f up;
-	float fov;
+	float fov; //in gradi
 
-	Camera(); // Default constructor
+	Camera(); // Default constructor (mette tutto a 0)
 	Camera(const Vector3f& pos, const Vector3f& tar, const Vector3f& upVec, float fieldOfView);
 	Camera(const Camera& other); // Copy constructor
 

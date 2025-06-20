@@ -9,7 +9,7 @@ Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture
 	setMesh();
 }
 
-void Mesh::drawMesh(Shader& shader)
+void Mesh::drawMesh(Shader& shader) //non più usato 
 {
 	unsigned int diffuseNum = 1;
 	unsigned int specularNum = 1;
@@ -35,18 +35,18 @@ void Mesh::drawMesh(Shader& shader)
 			number = to_string(normalNum++);
 		}
 
-		shader.setInt((name + number).c_str(), i);
-		glBindTexture(GL_TEXTURE_2D, textures[i].id);
+		shader.setInt((name + number).c_str(), i); //passa il nome della uniform e il valore da assegnare
+		glBindTexture(GL_TEXTURE_2D, textures[i].id); //bind della texture all'id giusto
 	}
 
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0); 
 
 	VAO.bind();
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0); //disegna ciò che vediamo (0 location)
 	VAO.unbind();
 }
 
-//DA CAPIRE BENE!!!!!!!!
+
 void Mesh::drawMesh(Shader& shader, int textureIndex)
 {
 	if (textureIndex < textures.size())
@@ -73,8 +73,8 @@ void Mesh::setMesh()
 {
 	VAO.bind();
 
-	VBO VBO(vertices);
-	EBO EBO(indices);
+	VBO VBO(vertices); //VBO con i vertici
+	EBO EBO(indices); //EBO con gli indici
 
 	//setto e attivo tutti gli attributi dei vertici
 	VAO.setEnableAttribute(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
@@ -86,6 +86,5 @@ void Mesh::setMesh()
 
 	//scollego per evitare di modificarli involontariamente
 	VBO.unbind();
-	//EBO.unbind();
 	VAO.unbind();
 }

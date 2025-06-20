@@ -4,7 +4,7 @@ Scene::Scene(int width, int height)
 {
 	widthWindow = width;
 	heightWindow = height;
-	camera = Camera();
+	camera = Camera(); //dal costruttore vuoto
 	skybox = Skybox(); // Inizializza lo skybox
 
 	currentVisibileObjectIndex = 11; // Inizialmente è visibile la scritta disney
@@ -36,7 +36,7 @@ Scene::~Scene()
 {
 }
 
-void Scene::initialize(const string& nameXML)
+void Scene::initialize(const string& nameXML) //legge l'xml per la larghezza e l'altezza della finestra per passarli a GLFW
 {
     lastTime = glfwGetTime(); // Inizializza il tempo dell'ultimo frame per l'animazione
 	scaleModel = 1.0f; // Inizializza la scala del modello a 1.0f
@@ -72,11 +72,11 @@ void Scene::loadFromXML(const string& nameXML)
     xml_node<>* env = root_node->first_node("environment");
     xml_node<>* bg = env->first_node("backgroundColor");
     backgroundColor = Vector3f(stof(bg->first_attribute("r")->value()), stof(bg->first_attribute("g")->value()), stof(bg->first_attribute("b")->value()));
-    cout << "Colore di sfondo: " << backgroundColor << endl;
+    //cout << "Colore di sfondo: " << backgroundColor << endl;
 
     xml_node<>* ambient = env->first_node("ambientLight");
     ambientLight = Vector3f(stof(ambient->first_attribute("r")->value()), stof(ambient->first_attribute("g")->value()), stof(ambient->first_attribute("b")->value()));
-    cout << "Colore della luce ambientale: " << ambientLight << endl;
+    //cout << "Colore della luce ambientale: " << ambientLight << endl;
 
 
     //Skybox
@@ -86,7 +86,7 @@ void Scene::loadFromXML(const string& nameXML)
 	{
 		string facePath = faceNode->value();
 		cout << "Skybox face path: " << facePath << endl;
-		skyboxFaces.push_back(facePath);
+		skyboxFaces.push_back(facePath); //path delle 6 immagini dello skybox
 	}
 	skybox = Skybox(skyboxFaces); // Crea lo skybox con i percorsi delle facce
 
@@ -97,15 +97,15 @@ void Scene::loadFromXML(const string& nameXML)
     for (xml_node<>* lightNode = lightsNode->first_node("light"); lightNode; lightNode = lightNode->next_sibling("light"))
     {
         string lightType = lightNode->first_node("type")->value();
-        cout << "light type" << lightType << endl;
+        //cout << "light type" << lightType << endl;
         Vector3f position = Vector3f(stof(lightNode->first_node("position")->first_attribute("x")->value()),
             stof(lightNode->first_node("position")->first_attribute("y")->value()),
             stof(lightNode->first_node("position")->first_attribute("z")->value()));
-        cout << "position luce" << position << endl;
+        //cout << "position luce" << position << endl;
         Vector3f color = Vector3f(stof(lightNode->first_node("color")->first_attribute("r")->value()),
             stof(lightNode->first_node("color")->first_attribute("g")->value()),
             stof(lightNode->first_node("color")->first_attribute("b")->value()));
-        cout << "colore luce" << color << endl;
+        //cout << "colore luce" << color << endl;
         float intensity = stof(lightNode->first_node("intensity")->value());
         Light light = Light(lightType, position, color, intensity);
         lights.push_back(light);
@@ -117,25 +117,25 @@ void Scene::loadFromXML(const string& nameXML)
     Vector3f cameraPos = Vector3f(stof(cameraNode->first_node("position")->first_attribute("x")->value()),
         stof(cameraNode->first_node("position")->first_attribute("y")->value()),
         stof(cameraNode->first_node("position")->first_attribute("z")->value()));
-    cout << "Camera position: " << cameraPos << endl;
+    //cout << "Camera position: " << cameraPos << endl;
 
     Vector3f cameraTarget = Vector3f(stof(cameraNode->first_node("target")->first_attribute("x")->value()),
         stof(cameraNode->first_node("target")->first_attribute("y")->value()),
         stof(cameraNode->first_node("target")->first_attribute("z")->value()));
-    cout << "Camera target: " << cameraTarget << endl;
+    //cout << "Camera target: " << cameraTarget << endl;
 
     Vector3f cameraUp = Vector3f(stof(cameraNode->first_node("up")->first_attribute("x")->value()),
         stof(cameraNode->first_node("up")->first_attribute("y")->value()),
         stof(cameraNode->first_node("up")->first_attribute("z")->value()));
-    cout << "Camera up: " << cameraUp << endl;
+    //cout << "Camera up: " << cameraUp << endl;
 
     float fov = stof(cameraNode->first_node("fov")->value());
-    cout << "Camera FOV: " << fov << endl;
+    //cout << "Camera FOV: " << fov << endl;
     camera = Camera(cameraPos, cameraTarget, cameraUp, fov); // Imposta la camera con i valori letti dal file XML
     viewPosition = camera.position;
     cameraStartPos = camera.position;
 
-	float nearPlane = stof(cameraNode->first_node("nearPlane")->value());
+	float nearPlane = stof(cameraNode->first_node("nearPlane")->value()); //letti dall'xml
 	float farPlane = stof(cameraNode->first_node("farPlane")->value());
 
 
@@ -144,21 +144,19 @@ void Scene::loadFromXML(const string& nameXML)
 
     for (xml_node<>* modelNode = modelsNode->first_node("model"); modelNode; modelNode = modelNode->next_sibling("model"))
     {
-        //non legge il nome del modello, serve?
         string modelPath = modelNode->first_node("path")->value();
-        cout << "Model path: " << modelPath << endl; // Stampa il percorso del modello
+        //cout << "Model path: " << modelPath << endl; // Stampa il percorso del modello
         vector<string> texturePaths;
         xml_node<>* texturesNode = modelNode->first_node("textures");
         for (xml_node<>* textureNode = texturesNode->first_node("texture"); textureNode; textureNode = textureNode->next_sibling("texture"))
         {
             texturePaths.push_back(textureNode->value());
-            cout << "Texture path: " << textureNode->value() << endl; // Stampa il percorso della texture
-            //non legge il type della texture, serve?
+            //cout << "Texture path: " << textureNode->value() << endl; // Stampa il percorso della texture
         }
-        Model model(modelPath, texturePaths); //DA PROBLEMI MA NON CAPISCO PERCHE', non entra nemmeno nell'if sotto, crasha prima
-        if (!model.meshes.empty())
+		Model model(modelPath, texturePaths); //crea il modello con il percorso e le texture lette dall'xml
+        if (!model.meshes.empty()) 
         {
-            cout << "Modello caricato con successo: " << modelPath << endl;
+            //cout << "Modello caricato con successo: " << modelPath << endl;
             models.push_back(model);
         }
         else
@@ -166,11 +164,11 @@ void Scene::loadFromXML(const string& nameXML)
             cout << "Errore nel caricamento del modello: " << modelPath << endl;
             return; // Esci se un modello non viene caricato correttamente
         }
-        //manca la lettura del transform
     }
 
     updateViewMatrix(camera.position, camera.target, camera.up);
     projMatrix = projMatrix.perspectiveSimplify(camera.fov, (float)widthWindow / heightWindow, nearPlane, farPlane);
+    //leggiamo tutto dall'xml e non la modifichiamo mai
 }
 
 void Scene::addModel(const Model& model)
@@ -218,34 +216,30 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
     //DA CAPIRE
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    shader.useProgram(); // usa lo shader
+    shader.useProgram(); // usa lo shader (attiviamo lo shader generico)
     
     Vector3f x_axis = Vector3f(1.0f, 0.0f, 0.0f);
     Vector3f y_axis = Vector3f(0.0f, 1.0f, 0.0f);
     Vector3f z_axis = Vector3f(0.0f, 0.0f, 1.0f);
     
-	//LIBRO
-	modelMatrix = Matrix4x4f();
+	//DISEGNO DEL LIBRO
+	modelMatrix = Matrix4x4f(); //torna l'identità
 	updateCommonMatrices(shader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
     models[0].drawModel(shader, bookTextureIndex); // Disegna il primo modello sempre perchè è il libro
     
-	//OGGETTO
-	modelMatrix = Matrix4x4f();
+	//DISEGNO DELL'OGGETTO
+	modelMatrix = Matrix4x4f(); //inizialmente è l'identità poi cambia
 	Vector3f translate = Vector3f(0.0f, 0.0f, 10.0f); // posizione dell'oggetto
 	Vector3f scale = Vector3f(scaleModel); // scala dell'oggetto
 	modelMatrix = modelMatrix.model(translate, scale, rotation, z_axis); // ruota il modello attorno all'asse z nel tempo
 	shader.setMat4("model", modelMatrix); // Imposta la matrice del modello nello shader
-    models[currentVisibileObjectIndex].drawModel(shader, 0); // Disegna il modello attualmente visibile
+    models[currentVisibileObjectIndex].drawModel(shader, 0); // Disegna il modello attualmente visibile (0 perché la texture degli oggetti è sempre e solo 1)
     
     //setta le uniform per gli shader che hanno una luce (PHONG)
-    lights[0].SetUniform(shader);
+	lights[0].SetUniform(shader); //setta la lightPosition e la lightColor nello shader
     shader.setVec3("viewPosition", viewPosition);
     shader.setVec3("ambientLight", ambientLight);
     
-    //shader Piu' Texture
-	shader.setVec3("lightPosition", lights[0].position); // Imposta la posizione della vista nello shader
-	shader.setVec3("lightColor", lights[0].color); // Imposta il colore della luce nello shader
-
 
     if (isPageAnimationStarted)
     {
@@ -256,10 +250,10 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
         modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1.0f), -rotationPage, y_axis); // ruota il modello attorno all'asse y nel tempo
         updateCommonMatrices(pageShader, modelMatrix, viewMatrix, projMatrix); // aggiorna le matrici nel shader
 
-        double currentTime = glfwGetTime(); // tempo corrente
-		currentTimePage += currentTime - previousTimePage; // Aggiorna il tempo corrente della pagina
+        double currentTime = glfwGetTime(); // prende il tempo corrente
+		currentTimePage += currentTime - previousTimePage; // Aggiorna il tempo corrente della pagina (quanto tempo è passato dall'inizio dell'animazione della pagina)
         glUniform1f(glGetUniformLocation(pageShader.shaderID, "time"), currentTimePage);
-        glUniform1f(glGetUniformLocation(pageShader.shaderID, "curlAmplitude"), 3.0f);
+		glUniform1f(glGetUniformLocation(pageShader.shaderID, "curlAmplitude"), 3.0f); //quanto si curva la pagina
         glUniform1f(glGetUniformLocation(pageShader.shaderID, "curlAmount"), 0.2f);
         glUniform1f(glGetUniformLocation(pageShader.shaderID, "animationSpeed"), 1.5f);
 
@@ -271,14 +265,14 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
     }
     else
     {
-		currentTimePage = 0.0f; // Resetta il tempo corrente della pagina se l'animazione non è iniziata
+		currentTimePage = 0.0f; // Resetta il tempo corrente della pagina se l'animazione non è iniziata o è finita
     }
 
 	previousTimePage = glfwGetTime(); // Aggiorna il tempo precedente della pagina
 
 	// Disegna lo skybox
 	modelMatrix = Matrix4x4f();
-	modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1.0f), 90.0f, x_axis); // Ruota lo skybox se necessario
+	modelMatrix = modelMatrix.model(Vector3f(0.0f), Vector3f(1.0f), 90.0f, x_axis); // Ruota lo skybox di 90 sulla x (nostro siste. di riferimento diverso da quello di OPenGL)
 	skybox.draw(skyboxShader, viewMatrix, projMatrix, modelMatrix);
 }
 
@@ -289,8 +283,8 @@ void Scene::update(float currentTime)
     if (isCameraMoving)
     {
         cameraMoveElapsed += deltaTime;
-        float t = cameraMoveElapsed / cameraMoveDuration;
-        t = std::min(t, 1.0f); // clamp tra 0 e 1
+		float t = cameraMoveElapsed / cameraMoveDuration; //percentuale di completamento dell'animazione della camera
+        t = min(t, 1.0f); // clamp tra 0 e 1
 
         // Interpolazione lineare (puoi usare easing per effetto più naturale)
         Vector3f newPosition = cameraStartPos * (1.0f - t) + cameraTargetPos * t;
@@ -298,7 +292,7 @@ void Scene::update(float currentTime)
         updateViewMatrix(newPosition, getCamera().target, getCamera().up);
         setViewPosition(newPosition);
 
-        if (t >= 1.0f)
+		if (t >= 1.0f) //se la camera è arrivata alla posizione finale
         {
             isCameraMoving = false;
             cameraStartPos = cameraTargetPos;
@@ -317,7 +311,7 @@ void Scene::update(float currentTime)
             {
 				scaleModel = 0.0f; // Assicurati che la scala non scenda sotto 0
                 isPreviousObjectVisible = false;
-                currentVisibileObjectIndex = indexSelected;
+				currentVisibileObjectIndex = indexSelected; //cambia l'oggetto visibile all'indice selezionato
 			    isPageAnimationStarted = true; // Inizia l'animazione della pagina
             }
         }
@@ -325,7 +319,7 @@ void Scene::update(float currentTime)
         //ROTAZIONE
         if (currentTime - lastTime >= 1.0 / 60.0) // aggiorna ogni 1/60 di secondo
         {
-            rotation += 1.0f; // incrementa l'angolo di rotazione
+            rotation += 1.0f; // incrementa l'angolo di rotazione di tutti gli oggetti
             lastTime = currentTime; // aggiorna il tempo dell'ultimo frame
 
             if (isPageAnimationStarted)
@@ -339,15 +333,15 @@ void Scene::update(float currentTime)
 
                 if (rotationPage >= 170.0f)
                 {
-                    bookTextureIndex = bookTextureIndexToSet;
+					bookTextureIndex = bookTextureIndexToSet; //il libro cambia texture quando la pagina è quasi finita
                 }
 
-                if (rotationPage >= 180.0f) // resetta la rotazione dopo un giro completo
+                if (rotationPage >= 180.0f) // resetta la rotazione dopo un giro completo e la pagina si ferma
 	            {
 	            	rotationPage = 0.0f;
 		        	isPageAnimationEnded = true; // L'animazione della pagina è completata
 		        	isPageAnimationStarted = false; // Ferma l'animazione della pagina
-                    pageTextureIndex = pageFrontTextureIndex;
+                    pageTextureIndex = pageFrontTextureIndex; //così non sfoglia quello che ho cliccato dopo
 	            }
             }
         }
@@ -369,7 +363,7 @@ void Scene::update(float currentTime)
 		}
 
     }
-    else
+    else //l'oggetto continua comunque a ruotare
     {
         if (currentTime - lastTime >= 1.0 / 60.0) // aggiorna ogni 1/60 di secondo
         {
@@ -393,11 +387,6 @@ void Scene::showObject(int index)
 	}
 }
 
-void Scene::changeObject(int index)
-{
-    
-}
-
 void Scene::updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const Matrix4x4f& view, const Matrix4x4f& proj)
 {
     shader.setMat4("model", model);
@@ -407,11 +396,11 @@ void Scene::updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const 
 
 void Scene::updateViewMatrix(Vector3f position, Vector3f target, Vector3f up)
 {
-	viewMatrix = viewMatrix.view(position, target, up); // Crea la matrice di vista
+	viewMatrix = viewMatrix.view(position, target, up); // Crea la matrice di vista (interna alla scena)
 }
 
 void Scene::startCameraMove(const Vector3f& newPos)
 {
     cameraTargetPos = newPos;
-    isCameraMoving = true;
+    isCameraMoving = true; //inizia a muoversi la camera
 }

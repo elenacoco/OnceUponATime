@@ -19,30 +19,31 @@ void Model::drawModel(Shader& shader, int textureIndex)
 
 void Model::loadModel(string path)
 {
-	Assimp::Importer import;
+	Assimp::Importer import; //carica l'importer di assimp
     const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
+	//triangola le mesh, flippa gli UV lungo l'asse y, genera le normali ai vertici, calcola tangenti e bitangenti
 	
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) 
     {
         cout << "ERRORE DI ASSIMP " << import.GetErrorString() << endl;
         return;
     }
-    directory = path.substr(0, path.find_last_of('/'));
+    directory = path.substr(0, path.find_last_of('/')); //fa una substring da 0 fino allo / finale
 
-    processNode(scene->mRootNode, scene);
+	processNode(scene->mRootNode, scene); //processa il nodo radice della scena
 }
 
 void Model::processNode(aiNode* node, const aiScene* scene)
 {
-    for (unsigned int i = 0; i < node->mNumMeshes; i++)
+    for (unsigned int i = 0; i < node->mNumMeshes; i++) //dal nodo radice prendiamo il numero delle mesh
     {
-        aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        meshes.push_back(processMesh(mesh, scene));
+        aiMesh* mesh = scene->mMeshes[node->mMeshes[i]]; //prendo la mesh i-esima
+		meshes.push_back(processMesh(mesh, scene)); //nel vectore di meshes aggiungo la mesh i-esima processata
     }
 
     for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
-        processNode(node->mChildren[i], scene);
+        processNode(node->mChildren[i], scene); //chiama processNode per tutti gli altri figli (metodo iterativo)
     }
 }
 
@@ -58,12 +59,12 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
         //posizione
         Vector3f vector;
-        vector.x = mesh->mVertices[i].x;
+        vector.x = mesh->mVertices[i].x; 
         vector.y = mesh->mVertices[i].y;
         vector.z = mesh->mVertices[i].z;
         v.position = vector;
         //normali
-		if (mesh->mNormals) //controlla se ci sono normali
+		if (mesh->mNormals) //controlla se la mesh ha delle normali
 		{
 			Vector3f vector;
 			vector.x = mesh->mNormals[i].x;
@@ -78,9 +79,6 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             vec.x = mesh->mTextureCoords[0][i].x;
             vec.y = mesh->mTextureCoords[0][i].y;
             v.texCoords = vec;
-            //if (i < 5) // per non stampare tutto
-            //    std::cout << "UV[" << i << "] = " << v.texCoords.x << ", " << v.texCoords.y << std::endl;
-
         }else
             v.texCoords = Vector2f(0.0f, 0.0f);
         //tangenti
@@ -91,8 +89,6 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vector.y = mesh->mTangents[i].y;
 			vector.z = mesh->mTangents[i].z;
 			v.tangent = vector;
-            //if (i < 5) // per non stampare tutto
-            //    std::cout << "tangenti: \n" << v.tangent << endl;
 		}
 		//bitangenti
 		if (mesh->mBitangents) //controlla se ci sono bitangenti
@@ -102,12 +98,10 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vector.y = mesh->mBitangents[i].y;
 			vector.z = mesh->mBitangents[i].z;
 			v.bitangent = vector;
-            //if (i < 5) // per non stampare tutto
-            //    std::cout << "bitangenti: \n" << v.bitangent << endl;
 		}
         
 
-        vertices.push_back(v);
+		vertices.push_back(v); //aggiungo il vertice al vector di vertex
 		
     }
 
@@ -123,18 +117,10 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
     textures = loadTextures(pathTexture);
 
-	//se non ci sono texture caricate, carica una texture di default
+	//se non ci sono texture caricate, stampa un messaggio
 	if (textures.empty())
 	{
-		Texture defaultTexture = Texture("lamp_diffuse.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE);
-        std::cout << "CLASSE MODEL::Caricata Texture di Default, il suo ID: " << defaultTexture.id << std::endl;
-        if (defaultTexture.id == 0) 
-        {
-            std::cout << "ERRORE: Texture non caricata correttamente!" << std::endl;
-        }
-		defaultTexture.bind(); // Bind the default texture to ensure it's ready for use
-		Textures tex = { defaultTexture.id, "texture_diffuse" };
-		textures.push_back(tex);
+        std::cout << "CLASSE MODEL::Nessuna texture caricata " << std::endl;
 	}
 
     return Mesh(vertices, indices, textures);
@@ -155,13 +141,13 @@ vector<Textures> Model::loadTextures(vector<string> path)
     {
         for (int i = 0; i < path.size(); i++) 
         {
-            Texture tx = Texture(path[i].c_str(), GL_TEXTURE_2D, i, GL_RGB, GL_UNSIGNED_BYTE);
+            Texture tx = Texture(path[i].c_str(), GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE); //lo 0 indica la unit (ci serve solo quella)
             tx.bind();
 
             //Controllo di che tipo è la texture
             if (path[i].find("diffuse") != std::string::npos)
             {
-                Textures tex = { tx.id , "texture_diffuse" };
+                Textures tex = { tx.id , "texture_diffuse" }; 
                 vect.push_back(tex);
             }
 
@@ -183,7 +169,7 @@ vector<Textures> Model::loadTextures(vector<string> path)
                 vect.push_back(tex);
             }
 
-			cout << "CLASSE MODEL::Caricata Texture: " << path[i] << ", il suo ID: " << tx.id << endl;
+			//cout << "CLASSE MODEL::Caricata Texture: " << path[i] << ", il suo ID: " << tx.id << endl;
         }
     }
     return vect;

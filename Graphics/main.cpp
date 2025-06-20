@@ -33,7 +33,7 @@ void processInput(GLFWwindow* window);
 void showObject(int objectIndex);
 
 //mettere riferimento a oggetto di classe scene per controllare la scena da lì e fare le cose in modo più ordinato
-Scene* scene = nullptr;
+Scene* scene = nullptr; //puntatore alla scena
 bool isBeenPressed = false; // Indica se è stato premuto un tasto della tastiera
 
 
@@ -58,7 +58,7 @@ int main()
 	scene->initialize("prova.xml"); // Inizializza la scena
 
 	if (scene == nullptr) {
-		std::cerr << "Failed to initialize scene." << std::endl;
+		std::cerr << "Non ho trovato nessuna scena da inizializzare" << std::endl;
 		return -1;
 	}
 
@@ -67,7 +67,7 @@ int main()
 	GLFWwindow* window = glfwCreateWindow(scene->getWindowWidth(), scene->getWindowHeight(), "OnceUponATime", NULL, NULL);
 	if (window == NULL)
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
+		std::cout << "Non ho trovato nessuna finestra GLFW da creare" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -76,9 +76,9 @@ int main()
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) //dopo aver costruito il contesto OPenGL
 	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
+		std::cout << "Non sono riuscito a inizalizzare GLAD" << std::endl;
 		return -1;
 	}
 
