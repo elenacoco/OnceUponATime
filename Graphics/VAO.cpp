@@ -8,6 +8,11 @@ VAO::~VAO()
 {
 }
 
+void VAO::bind() const
+{
+    glBindVertexArray(id);
+}
+
 void VAO::unbind() const {
     glBindVertexArray(0);
 }

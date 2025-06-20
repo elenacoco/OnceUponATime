@@ -134,7 +134,7 @@ int main()
 	}
 	if (piramide)
 	{
-		std::cout << "Errore nel caricamento del modello." << std::endl;
+		std::cout << "main::Errore nel caricamento del modello." << std::endl;
 		
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
