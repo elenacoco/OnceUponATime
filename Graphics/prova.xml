@@ -43,16 +43,16 @@
 			<name>Libro</name>
 			<path>Models/Book/libroProva1.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Book/book0_diffuse.png</texture>
-				<texture type="diffuse">Models/Book/book1_diffuse.png</texture>
-				<texture type="diffuse">Models/Book/book2_diffuse.png</texture>
-				<texture type="diffuse">Models/Book/book3_diffuse.png</texture>
-				<texture type="diffuse">Models/Book/book4_diffuse.png</texture>
-				<texture type="diffuse">Models/Book/book5_diffuse.png</texture>
-				<texture type="diffuse">Models/Book/book6_diffuse.png</texture>
-				<texture type="diffuse">Models/Book/book7_diffuse.png</texture>
-				<texture type="diffuse">Models/Book/book8_diffuse.png</texture>
-				<texture type="diffuse">Models/Book/book9_diffuse.png</texture>
+				<texture>Models/Book/book0_diffuse.png</texture>
+				<texture>Models/Book/book1_diffuse.png</texture>
+				<texture>Models/Book/book2_diffuse.png</texture>
+				<texture>Models/Book/book3_diffuse.png</texture>
+				<texture>Models/Book/book4_diffuse.png</texture>
+				<texture>Models/Book/book5_diffuse.png</texture>
+				<texture>Models/Book/book6_diffuse.png</texture>
+				<texture>Models/Book/book7_diffuse.png</texture>
+				<texture>Models/Book/book8_diffuse.png</texture>
+				<texture>Models/Book/book9_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>
@@ -65,26 +65,26 @@
 			<name>Pagina</name>
 			<path>Models/Page/pagina3_uv_double_sided.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Page/page0_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page1_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page2_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page3_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page4_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page5_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page6_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page7_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page8_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page9_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page10_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page11_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page12_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page13_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page14_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page15_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page16_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page17_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page18_diffuse.png</texture>
-				<texture type="diffuse">Models/Page/page19_diffuse.png</texture>
+				<texture>Models/Page/page0_diffuse.png</texture>
+				<texture>Models/Page/page1_diffuse.png</texture>
+				<texture>Models/Page/page2_diffuse.png</texture>
+				<texture>Models/Page/page3_diffuse.png</texture>
+				<texture>Models/Page/page4_diffuse.png</texture>
+				<texture>Models/Page/page5_diffuse.png</texture>
+				<texture>Models/Page/page6_diffuse.png</texture>
+				<texture>Models/Page/page7_diffuse.png</texture>
+				<texture>Models/Page/page8_diffuse.png</texture>
+				<texture>Models/Page/page9_diffuse.png</texture>
+				<texture>Models/Page/page10_diffuse.png</texture>
+				<texture>Models/Page/page11_diffuse.png</texture>
+				<texture>Models/Page/page12_diffuse.png</texture>
+				<texture>Models/Page/page13_diffuse.png</texture>
+				<texture>Models/Page/page14_diffuse.png</texture>
+				<texture>Models/Page/page15_diffuse.png</texture>
+				<texture>Models/Page/page16_diffuse.png</texture>
+				<texture>Models/Page/page17_diffuse.png</texture>
+				<texture>Models/Page/page18_diffuse.png</texture>
+				<texture>Models/Page/page19_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>
@@ -97,144 +97,80 @@
 			<name>Gusgus</name>
 			<path>Models/Objects/Gusgus1.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/gus_diffuse.png</texture>
-				<texture type="specular">Models/Objects/gus_specular.png</texture>
-				<texture type="specular">Models/Objects/gus_normal.png</texture>
+				<texture>Models/Objects/gus_diffuse.png</texture>
 			</textures>
-			<transform>
-				<translate x="0" y="4" z="20"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="0.2" y="0.2" z="0.2"/>
-			</transform>
-		</model>
 
+		</model>
 		<model>
 			<name>Merlino</name>
 			<path>Models/Objects/MERLINWIZARD.obj</path>
 			<textures>
 				<texture type="diffuse">Models/Objects/Merlin_diffuse.png</texture>
-				<texture type="normal">Models/Objects/Merlin_nm.png</texture>
 			</textures>
-			<transform>
-				<translate x="0" y="4" z="20"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="0.2" y="0.2" z="0.2"/>
-			</transform>
 		</model>
 
 		<model>
 			<name>Lampada</name>
 			<path>Models/Objects/lamp.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/Lamp_diffuse.jpg</texture>
-				<texture type="specular">Models/Objects/lamp_specular2.jpg</texture>
+				<texture>Models/Objects/Lamp_diffuse.jpg</texture>
 			</textures>
-			<transform>
-				<translate x="0" y="4" z="0"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="0.5" y="0.5" z="0.5"/>
-			</transform>
 		</model>
 		
 		<model>
 			<name>Nala</name>
 			<path>Models/Objects/nala.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/nala_diffuse.jpeg</texture>
+				<texture>Models/Objects/nala_diffuse.jpeg</texture>
 			</textures>
-			<transform>
-				<translate x="0" y="4" z="20"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="0.2" y="0.2" z="0.2"/>
-			</transform>
 		</model>
 
 		<model>
 			<name>MaialinoSalvadanaio</name>
 			<path>Models/Objects/hamm.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/hamm_diffuse.png</texture>
+				<texture>Models/Objects/hamm_diffuse.png</texture>
 			</textures>
-			<transform>
-				<translate x="0" y="4" z="0"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="1" y="1" z="1"/>
-			</transform>
 		</model>
 
 		<model>
 			<name>FantasiaBroom</name>
 			<path>Models/Objects/Fantasia_broom.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/FantasiaBroom_diffuse.png</texture>
+				<texture>Models/Objects/FantasiaBroom_diffuse.png</texture>
 			</textures>
-			<transform>
-				<translate x="0" y="4" z="0"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="1" y="1" z="1"/>
-			</transform>
 		</model>
 
 		<model>
 			<name>MikeWazowski</name>
 			<path>Models/Objects/mike.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/Mike_diffuse.png</texture>
+				<texture>Models/Objects/Mike_diffuse.png</texture>
 			</textures>
-			<transform>
-				<translate x="0" y="4" z="0"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="1" y="1" z="1"/>
-			</transform>
 		</model>
 
 		<model>
 			<name>Stitch</name>
 			<path>Models/Objects/stitch.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/Stitch_diffuse.png</texture>
+				<texture>Models/Objects/Stitch_diffuse.png</texture>
 			</textures>
-			<transform>
-				<translate x="0" y="4" z="0"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="1" y="1" z="1"/>
-			</transform>
 		</model>
 
 		<model>
 			<name>Pascal</name>
 			<path>Models/Objects/Pascal.fbx</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/Pascal_diffuse.jpeg</texture>
+				<texture>Models/Objects/Pascal_diffuse.jpeg</texture>
 			</textures>
-			<transform>
-				<translate x="0" y="4" z="0"/>
-				<rotate axis="x" angle="90"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="0.5" y="0.5" z="0.5"/>
-			</transform>
 		</model>
 
 		<model>
 			<name>ScrittaDisney</name>
 			<path>Models/Objects/disney.obj</path>
 			<textures>
-				<texture type="diffuse">Models/Objects/disney_diffuse.png</texture>
+				<texture>Models/Objects/disney_diffuse.png</texture>
 			</textures>
-			<transform>
-				<translate x="0" y="4" z="0"/>
-				<rotate axis="y" angle="0"/>
-				<scaleIni x="0" y="0" z="0"/>
-				<scaleFin x="1" y="1" z="1"/>
-			</transform>
 		</model>
 	</models>
 
