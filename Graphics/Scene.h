@@ -56,6 +56,13 @@ private:
 	float currentTimePage; // tempo corrente per l'animazione della pagina
 	float previousTimePage; // tempo precedente per l'animazione della pagina
 
+	//movimento camera
+	Vector3f cameraStartPos;
+	Vector3f cameraTargetPos;
+	float cameraMoveDuration = 5.0f; // secondi
+	float cameraMoveElapsed = 0.0f;
+
+
 public:
 
 	bool isAnimationCompleted = false; // Indica se l'animazione totale è completata
@@ -70,6 +77,8 @@ public:
 	int pageTextureIndex;
 	int pageFrontTextureIndex;
 	int pageBackTextureIndex;
+
+	bool isCameraMoving = false;
 
 	//costruttore
 	Scene(int width, int height);
@@ -118,6 +127,7 @@ public:
 	Matrix4x4f getProjMatrix() const { return projMatrix; }
 	Vector3f getViewPosition() const { return viewPosition; }
 	void setViewPosition(Vector3f view) { viewPosition = view; }
+	void startCameraMove(const Vector3f& newPos);
 
 	// Getters
 	Vector3f getBackgroundColor() const { return backgroundColor; }

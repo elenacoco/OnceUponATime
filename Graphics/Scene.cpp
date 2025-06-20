@@ -26,6 +26,10 @@ Scene::Scene(int width, int height)
     pageFrontTextureIndex = 0;
     bookTextureIndexToSet = 0;
     pageBackTextureIndex = 0;
+
+    cameraStartPos = Vector3f(0.0f);
+    cameraTargetPos = Vector3f(0.0f);
+
 }
 
 Scene::~Scene()
@@ -129,6 +133,7 @@ void Scene::loadFromXML(const string& nameXML)
     cout << "Camera FOV: " << fov << endl;
     camera = Camera(cameraPos, cameraTarget, cameraUp, fov); // Imposta la camera con i valori letti dal file XML
     viewPosition = camera.position;
+    cameraStartPos = camera.position;
 
 	float nearPlane = stof(cameraNode->first_node("nearPlane")->value());
 	float farPlane = stof(cameraNode->first_node("farPlane")->value());
@@ -279,6 +284,29 @@ void Scene::render(Shader& shader, Shader& skyboxShader, Shader& pageShader)
 
 void Scene::update(float currentTime)
 {
+    float deltaTime = currentTime - lastTime;
+
+    if (isCameraMoving)
+    {
+        cameraMoveElapsed += deltaTime;
+        float t = cameraMoveElapsed / cameraMoveDuration;
+        t = std::min(t, 1.0f); // clamp tra 0 e 1
+
+        // Interpolazione lineare (puoi usare easing per effetto più naturale)
+        Vector3f newPosition = cameraStartPos * (1.0f - t) + cameraTargetPos * t;
+
+        updateViewMatrix(newPosition, getCamera().target, getCamera().up);
+        setViewPosition(newPosition);
+
+        if (t >= 1.0f)
+        {
+            isCameraMoving = false;
+            cameraStartPos = cameraTargetPos;
+            cameraMoveElapsed = 0;
+        }
+    }
+
+
     if (isAnimationStarted)
     {
         if (isPreviousObjectVisible)
@@ -380,4 +408,10 @@ void Scene::updateCommonMatrices(Shader& shader, const Matrix4x4f& model, const 
 void Scene::updateViewMatrix(Vector3f position, Vector3f target, Vector3f up)
 {
 	viewMatrix = viewMatrix.view(position, target, up); // Crea la matrice di vista
+}
+
+void Scene::startCameraMove(const Vector3f& newPos)
+{
+    cameraTargetPos = newPos;
+    isCameraMoving = true;
 }
