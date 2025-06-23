@@ -157,7 +157,7 @@
 
 		<model>
 			<name>Pascal</name>
-			<path>Models/Objects/Pascal.fbx</path>
+			<path>Models/Objects/pascal.obj</path>
 			<textures>
 				<texture>Models/Objects/Pascal_diffuse.jpeg</texture>
 			</textures>
