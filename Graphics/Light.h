@@ -11,7 +11,7 @@ public :
 	Vector3f color;
 
 	//costruttore
-	Light(Vector3f direction, Vector3f color);
+	Light(Vector3f position, Vector3f color);
 
 
 	void SetUniform(Shader &shader);

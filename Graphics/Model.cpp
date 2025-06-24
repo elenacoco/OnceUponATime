@@ -28,7 +28,6 @@ void Model::loadModel(string path)
         cout << "ERRORE DI ASSIMP " << import.GetErrorString() << endl;
         return;
     }
-    directory = path.substr(0, path.find_last_of('/')); //fa una substring da 0 fino allo / finale
 
 	processNode(scene->mRootNode, scene); //processa il nodo radice della scena
 }

@@ -51,6 +51,7 @@
 				<texture>Models/Book/book7_diffuse.png</texture>
 				<texture>Models/Book/book8_diffuse.png</texture>
 				<texture>Models/Book/book9_diffuse.png</texture>
+				<texture>Models/Book/book10_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>
@@ -83,6 +84,8 @@
 				<texture>Models/Page/page17_diffuse.png</texture>
 				<texture>Models/Page/page18_diffuse.png</texture>
 				<texture>Models/Page/page19_diffuse.png</texture>
+				<texture>Models/Page/page20_diffuse.png</texture>
+				<texture>Models/Page/page21_diffuse.png</texture>
 			</textures>
 			<transform>
 				<translate x="0" y="0" z="0"/>
@@ -168,6 +171,14 @@
 			<path>Models/Objects/disney.obj</path>
 			<textures>
 				<texture>Models/Objects/disney_diffuse.png</texture>
+			</textures>
+		</model>
+
+		<model>
+			<name>Cuore</name>
+			<path>Models/Objects/heart.obj</path>
+			<textures>
+				<texture>Models/Objects/rosso_diffuse.png</texture>
 			</textures>
 		</model>
 	</models>

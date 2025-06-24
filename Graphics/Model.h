@@ -14,7 +14,6 @@ class Model
 public:
 
     vector<Mesh> meshes;
-    string directory;
     vector<string> pathTexture;
 
     //2 costruttori

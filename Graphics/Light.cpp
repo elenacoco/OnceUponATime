@@ -1,8 +1,8 @@
 #include "Light.h"
 
-Light::Light(Vector3f direction, Vector3f color)
+Light::Light(Vector3f position, Vector3f color)
 {
-	this->position = direction;
+	this->position = position;
 	this->color = color;
 }
 

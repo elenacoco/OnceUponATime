@@ -196,6 +196,14 @@ void processInput(GLFWwindow* window)
 		scene->pageBackTextureIndex = 1;
 		showObject(11);
 	}
+	else if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS && !isBeenPressed)
+	{
+		std::cout << "Auguri Giulia" << std::endl;
+		scene->bookTextureIndexToSet = 10;
+		scene->pageFrontTextureIndex = 20;
+		scene->pageBackTextureIndex = 21;
+		showObject(12);
+	}
 
 
 	//POSIZIONI CAMERA

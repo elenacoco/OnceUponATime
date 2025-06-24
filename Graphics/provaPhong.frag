@@ -5,9 +5,7 @@ in vec2 coordTex;
 in vec3 normal; // Normale interpolata dal vertex shader
 in vec3 fragPos;
 
-uniform sampler2D texture_diffuse1; //non viene modificata dallo shader
-uniform sampler2D texture_normal1; //non viene modificata dallo shader
-uniform sampler2D texture_specular1; //non viene modificata dallo shader
+uniform sampler2D texture_diffuse1; 
 
 uniform vec3 lightColor; // Colore della luce
 uniform vec3 lightPosition; // Posizione della luce

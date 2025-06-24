@@ -7,8 +7,6 @@ in vec3 fragPos;       // Posizione del frammento nel mondo
 out vec4 FragColor;
 
 uniform sampler2D texture_diffuse1;
-uniform sampler2D texture_normal1;
-uniform sampler2D texture_specular1;
 
 // Uniforms for lighting
 uniform vec3 lightColor;      // Colore della luce
